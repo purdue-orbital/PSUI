@@ -1,4 +1,4 @@
-gnore everything in this directory
-*
+# Ignore everything in this directory
+# ADD IGNORED FILES HERE
 # Except this file
 !.gitignore
