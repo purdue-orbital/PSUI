@@ -11,6 +11,7 @@
     "react-scripts": "3.4.3"
   },
   "main": "main.js",
+  "homepage": "./",
   "scripts": {
     "start": "BROWSER=none react-scripts start",
     "build": "react-scripts build",
