@@ -16,8 +16,8 @@ class DataWindow extends React.Component {
       <div className="App">
         <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
         <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
-        <button onClick={() => { this.setState(state => ({ mission_start: true })); console.log(this.state) }}>Start Mission</button>
-        <button onClick={() => { this.setState(state => ({ launch_start: true })); console.log(this.state) }}>Start Launch</button>
+        <button onClick={() => { this.setState(state => ({ mission_start: true }));} }>Start Mission</button>
+        <button onClick={() => { this.setState(state => ({ launch_start: true })); }}>Start Launch</button>
       </div>
     );
   }
