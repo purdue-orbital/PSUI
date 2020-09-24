@@ -9,7 +9,7 @@ class Timer extends React.Component {
       this.minutes = 0;
       this.hours = 0;
       this.state = {
-         time: 0
+         time: "00:00:00:0"
       };
    }
 
@@ -21,8 +21,10 @@ class Timer extends React.Component {
          }
          return number
       }
+      
       let now_time = new Date().getTime();
       let time_diff = now_time - this.start_time;
+
       this.milliseconds = time_diff % 1000;
       this.milliseconds = Math.floor(this.milliseconds / 100);
       this.seconds = Math.floor(time_diff / 1000);
@@ -30,13 +32,16 @@ class Timer extends React.Component {
       this.seconds = this.seconds % 60;
       this.hours = Math.floor(this.minutes / 60);
       this.minutes = this.minutes % 60;
+      
       this.setState(state => ({
          time: `${pad_zeros(this.hours)}:${pad_zeros(this.minutes)}:${pad_zeros(this.seconds)}:${this.milliseconds}`
       }));
    }
 
    componentDidMount() {
-      this.interval = setInterval(() => this.tick(), 10);
+      this.interval = setInterval(() => { 
+         this.props.tick ? this.tick() : this.start_time = new Date().getTime(); 
+      }, 10);
    }
 
    componentWillUnmount() {
