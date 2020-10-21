@@ -8,12 +8,13 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "^3.4.4"
   },
   "main": "main.js",
   "homepage": "./",
   "scripts": {
     "start": "BROWSER=none react-scripts start",
+    "dev": "concurrently \"npm start\" \"electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -35,6 +36,9 @@
     ]
   },
   "devDependencies": {
-    "electron": "^10.1.2"
+    "concurrently": "^5.3.0",
+    "electron": "^10.1.4",
+    "electron-builder": "^22.9.1",
+    "wait-on": "^5.2.0"
   }
 }
