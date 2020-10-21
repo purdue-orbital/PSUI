@@ -14,7 +14,7 @@
   "homepage": "./",
   "scripts": {
     "start": "BROWSER=none react-scripts start",
-    "dev": "concurrently \"npm start\" \"electron .\"",
+    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
