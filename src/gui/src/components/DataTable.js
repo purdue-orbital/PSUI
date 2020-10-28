@@ -7,6 +7,21 @@ class DataTable extends React.Component {
     this.state = {};
   }
 
+  makeTableRows() {
+    return (
+      <tbody>
+        {
+          Object.keys(this.props.data).map((key, i) => (
+            <tr className={i % 2 === 0 ? "DarkRow" : ""} key={key}>
+              <td>{key}</td>
+              <td>{this.props.data[key]}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -17,16 +32,7 @@ class DataTable extends React.Component {
               <th>DATA</th>
             </tr>
           </thead>
-          <tbody>
-            {
-              Object.keys(this.props.data).map((key, i) => (
-                <tr className={i % 2 === 0 ? "DarkRow" : ""} key={key}>
-                  <td>{key}</td>
-                  <td>{this.props.data[key]}</td>
-                </tr>
-              ))
-            }
-          </tbody>
+          {this.makeTableRows()}
         </table>
       </div>
     );
