@@ -19,7 +19,7 @@ class DataWindow extends React.Component {
         <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
         <button onClick={() => { this.setState(state => ({ mission_start: true }));} }>Start Mission</button>
         <button onClick={() => { this.setState(state => ({ launch_start: true })); }}>Start Launch</button>
-        <DataTable data={{"This": 1, "is": 2, "Some": 3, "Data": 4}} />
+        <DataTable data={{"This": 1, "is": 2, "Some": 3, "Data": 4, "Another": 789}} />
       </div>
     );
   }

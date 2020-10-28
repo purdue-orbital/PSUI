@@ -1,4 +1,5 @@
 import React from 'react';
+import './styles/DataTable.css';
 
 class DataTable extends React.Component {
   constructor(props) {
@@ -6,31 +7,24 @@ class DataTable extends React.Component {
     this.state = {};
   }
 
-  renderTableRows() {
-    for (const label in this.props.data) {
-      console.log(`${label} with val ${this.props.data[label]}`);
-      return (
-        <tr>
-          <td>{label}</td>
-          <td>{this.props.data[label]}</td>
-        </tr>
-      );
-    }
-  }
-
   render() {
-    this.renderTableRows()
     return (
       <div>
         <table>
+          <thead>
+            <tr key="TITLE">
+              <th>LABEL</th>
+              <th>DATA</th>
+            </tr>
+          </thead>
           <tbody>
             {
               Object.keys(this.props.data).map((key, i) => (
-                  <tr key={key}>
-                    <td>{key}</td>
-                    <td>{this.props.data[key]}</td>
-                  </tr>
-                ))
+                <tr className={i % 2 === 0 ? "YO" : ""} key={key}>
+                  <td>{key}</td>
+                  <td>{this.props.data[key]}</td>
+                </tr>
+              ))
             }
           </tbody>
         </table>
