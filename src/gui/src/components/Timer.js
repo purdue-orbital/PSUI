@@ -2,9 +2,17 @@ import React from 'react';
 import './styles/Timer.css';
 
 class Timer extends React.Component {
+  /*
+   * Accepted Props:
+   * --------------
+   * timer_name, String, name of the timer
+   * tick, bool, should the timer be counting
+   * 
+   */
+
   constructor(props) {
     super(props);
-    this.start_time = new Date().getTime()
+    this.start_time = sessionStorage.getItem(`${this.props.timer_name}_start`);
     this.milliseconds = 0;
     this.seconds = 0;
     this.minutes = 0;
@@ -23,7 +31,7 @@ class Timer extends React.Component {
       return number
     }
 
-    let now_time = new Date().getTime();
+    let now_time = Date.now();
     let time_diff = now_time - this.start_time;
 
     this.milliseconds = time_diff % 1000;
@@ -39,9 +47,17 @@ class Timer extends React.Component {
     }));
   }
 
+  setStartTime() {
+    this.start_time = Date.now();
+    sessionStorage.setItem(`${this.props.timer_name}_start`, this.start_time);
+  }
+
   componentDidMount() {
     this.interval = setInterval(() => {
-      this.props.tick ? this.tick() : this.start_time = new Date().getTime();
+      if (this.start_time != null || this.props.tick) {
+        if (this.start_time == null) { this.setStartTime(); }
+        this.tick();
+      } 
     }, 10);
   }
 
