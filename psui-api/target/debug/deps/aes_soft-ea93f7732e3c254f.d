@@ -1,0 +1,12 @@
+/mnt/j/Foundry/PSUI/backend/psui-api/target/debug/deps/aes_soft-ea93f7732e3c254f.rmeta: /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/lib.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/simd.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/bitslice.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/expand.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/consts.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/impls.rs
+
+/mnt/j/Foundry/PSUI/backend/psui-api/target/debug/deps/libaes_soft-ea93f7732e3c254f.rlib: /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/lib.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/simd.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/bitslice.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/expand.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/consts.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/impls.rs
+
+/mnt/j/Foundry/PSUI/backend/psui-api/target/debug/deps/aes_soft-ea93f7732e3c254f.d: /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/lib.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/simd.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/bitslice.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/expand.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/consts.rs /home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/impls.rs
+
+/home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/lib.rs:
+/home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/simd.rs:
+/home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/bitslice.rs:
+/home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/expand.rs:
+/home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/consts.rs:
+/home/jrixie/.cargo/registry/src/github.com-1ecc6299db9ec823/aes-soft-0.3.3/src/impls.rs:
