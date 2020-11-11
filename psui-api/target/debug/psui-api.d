@@ -1,1 +1,1 @@
-/mnt/j/Foundry/PSUI/backend/psui-api/target/debug/psui-api: /mnt/j/Foundry/PSUI/backend/psui-api/src/main.rs
+/mnt/j/Foundry/PSUI/psui-api/target/debug/psui-api: /mnt/j/Foundry/PSUI/psui-api/src/main.rs
