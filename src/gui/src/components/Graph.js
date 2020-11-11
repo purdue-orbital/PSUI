@@ -1,4 +1,6 @@
 import React from 'react';
+import Chart from "chart.js";
+
 
 class Graph extends React.Component {
   constructor(props) {
@@ -9,6 +11,7 @@ class Graph extends React.Component {
 
   componentDidMount() {
     const chart = this.canvasRef.current.getContext("2d");
+    new Chart(chart, {});
   }
 
   render() {
