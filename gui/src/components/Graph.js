@@ -7,31 +7,30 @@ class Graph extends React.Component {
     super(props);
     this.state = {};
     this.canvasRef = React.createRef();
+    this.chart = null;
+    this.data_points = [];
+    this.start_time = Date.now()
   }
 
   componentDidMount() {
     // Make random data for now
-    const NUM_POINTS = 50;
-    let rng_data = [];
+    const NUM_POINTS = 20;
     for (let i = 0; i < NUM_POINTS; i++) {
-      rng_data.push({
-        "x": Math.random(),
-        "y": Math.random()
+      this.data_points.push({
+        "x": 0,
+        "y": 0
       });
     }
-    rng_data.sort(function(first, second) {
-      return first.x - second.x
-    });
 
     const chart = this.canvasRef.current.getContext("2d");
-    new Chart(chart, {
+    this.chart = new Chart(chart, {
       // The type of chart we want to create
       type: 'line',
       data: {
         datasets: [{
           label: 'Graph',
           borderColor: 'rgb(0, 0, 0)',
-          data: rng_data
+          data: this.data_points
         }]
       },
 
@@ -50,6 +49,17 @@ class Graph extends React.Component {
         }
       }
     });
+  }
+
+  componentDidUpdate() {
+    this.data_points.shift()
+    this.data_points.push({
+      "x": Date.now() - this.start_time,
+      "y": this.props.data_point
+    })
+    console.log(this.data_points)
+    this.chart.data.datasets.data = this.data_points
+    this.chart.update()
   }
 
   render() {
