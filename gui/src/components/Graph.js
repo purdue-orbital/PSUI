@@ -1,5 +1,6 @@
 import React from 'react';
 import Chart from "chart.js";
+import './styles/Graph.css';
 
 
 class Graph extends React.Component {
@@ -44,7 +45,15 @@ class Graph extends React.Component {
         scales: {
           xAxes: [{
             type: 'linear',
-            position: 'bottom'
+            position: 'bottom',
+            ticks: {
+            }
+          }],
+          yAxes:[{
+            ticks: {
+              suggestedMin: 0,
+              suggestedMax: 1
+            }
           }]
         }
       }
@@ -53,19 +62,19 @@ class Graph extends React.Component {
 
   componentDidUpdate() {
     this.data_points.shift()
+    console.log(this.data_points[0].x)
     this.data_points.push({
       "x": Date.now() - this.start_time,
       "y": this.props.data_point
     })
-    console.log(this.data_points)
     this.chart.data.datasets.data = this.data_points
     this.chart.update()
   }
 
   render() {
     return (
-      <div>
-        <canvas id="chart" ref={this.canvasRef} />
+      <div className="GraphDiv">
+        <canvas className="GraphCanvas" id="chart" ref={this.canvasRef} width={this.props.width} height={this.props.height} />
       </div>
     );
   }

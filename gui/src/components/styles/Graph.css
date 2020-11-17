@@ -1,0 +1,8 @@
+.GraphDiv {
+    width: 300;
+    height: 400;
+}
+
+.GraphCanvas {
+    border: 1px solid;
+}
