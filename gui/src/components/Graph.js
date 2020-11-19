@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from "chart.js";
-import './styles/Graph.css';
 
+import './styles/Graph.css';
 
 class Graph extends React.Component {
   constructor(props) {
@@ -10,7 +10,11 @@ class Graph extends React.Component {
     this.canvasRef = React.createRef();
     this.chart = null;
     this.data_points = [];
-    this.start_time = Date.now()
+    this.start_time = Date.now();
+
+    window.addEventListener('resize', () => {
+      console.log("Fuck");
+    });
   }
 
   componentDidMount() {
@@ -79,5 +83,11 @@ class Graph extends React.Component {
     );
   }
 }
+
+Graph.defaultProps = {
+  title: "Untitled Graph",
+  width: 400,
+  height: 200
+};
 
 export default Graph

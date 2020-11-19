@@ -1,8 +1,7 @@
 .GraphDiv {
-    width: 300;
-    height: 400;
+    width: auto;
+    height: auto;
 }
 
 .GraphCanvas {
-    border: 1px solid;
 }
