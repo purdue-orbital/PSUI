@@ -29,7 +29,7 @@ class Graph extends React.Component {
       type: 'line',
       data: {
         datasets: [{
-          label: 'Graph',
+          label: this.props.title,
           borderColor: 'rgb(0, 0, 0)',
           data: this.data_points
         }]
@@ -44,12 +44,13 @@ class Graph extends React.Component {
         },
         scales: {
           xAxes: [{
-            type: 'linear',
+            type: 'time',
             position: 'bottom',
             ticks: {
+              suggestedMin: 0
             }
           }],
-          yAxes:[{
+          yAxes: [{
             ticks: {
               suggestedMin: 0,
               suggestedMax: 1
@@ -61,14 +62,13 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
-    this.data_points.shift()
-    console.log(this.data_points[0].x)
+    this.data_points.shift();
     this.data_points.push({
       "x": Date.now() - this.start_time,
       "y": this.props.data_point
-    })
-    this.chart.data.datasets.data = this.data_points
-    this.chart.update()
+    });
+    this.chart.data.datasets.data = this.data_points;
+    this.chart.update();
   }
 
   render() {

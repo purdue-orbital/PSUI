@@ -37,7 +37,7 @@ class DataWindow extends React.Component {
         <button onClick={() => { this.setState(state => ({ mission_start: true })); }}>Start Mission</button>
         <button onClick={() => { this.setState(state => ({ launch_start: true })); }}>Start Launch</button>
         <DataTable data={this.state.current_data} />
-        <Graph data_point={this.state.current_data.This} width={100} height={50}/>
+        <Graph data_point={this.state.current_data.This} title={'This vs Time'} width={100} height={50}/>
       </div>
     );
   }
