@@ -20,7 +20,7 @@ class DataWindow extends React.Component {
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
-          "This": Math.random(),
+          "This": (1000 - 1) * Math.random() + 1, // random from 1 to 10
           "is": Math.random(),
           "Some": Math.random(),
           "Data": Math.random(),
@@ -42,6 +42,9 @@ class DataWindow extends React.Component {
           <DataTable data={this.state.current_data} />
         </div>
         <div id={'rightPannel'}>
+          TODO: Put all of the radio stuff here!!
+        </div>
+        <div id={'bottomPannel'}>
           <Graph
             data_point={this.state.current_data.This}
             title={'This vs Time'}

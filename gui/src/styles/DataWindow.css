@@ -12,10 +12,20 @@
 #leftPannel {
     float: left;
     width: 50%;
+    height: 50%;
+    background-color: bisque;
 }
 
 #rightPannel {
     float: left;
-    width: auto;
+    width: 50%;
     height: 50%;
+    background-color: aquamarine;
+}
+
+#bottomPannel {
+    float: left;
+    width: 100%;
+    height: 50%;
+    background-color: lightcoral;
 }

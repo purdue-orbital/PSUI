@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from "chart.js";
+import Chart from 'chart.js';
 
 import './styles/Graph.css';
 
@@ -11,10 +11,6 @@ class Graph extends React.Component {
     this.chart = null;
     this.data_points = [];
     this.start_time = Date.now();
-
-    window.addEventListener('resize', () => {
-      console.log("Fuck");
-    });
   }
 
   componentDidMount() {
@@ -22,7 +18,7 @@ class Graph extends React.Component {
     const NUM_POINTS = 20;
     for (let i = 0; i < NUM_POINTS; i++) {
       this.data_points.push({
-        "x": 0,
+        "x": this.start_time,
         "y": 0
       });
     }
@@ -50,6 +46,7 @@ class Graph extends React.Component {
           xAxes: [{
             type: 'time',
             position: 'bottom',
+            display: false,
             ticks: {
               suggestedMin: 0
             }
@@ -68,17 +65,23 @@ class Graph extends React.Component {
   componentDidUpdate() {
     this.data_points.shift();
     this.data_points.push({
-      "x": Date.now() - this.start_time,
+      "x": Date.now(),
       "y": this.props.data_point
     });
     this.chart.data.datasets.data = this.data_points;
     this.chart.update();
+
+    // console.log(window.location.pathname);
+
+    // const worker = new Worker('./workers/GraphWorker.js');
+    // const api = wrap(worker);
+    // await api.updateChart();
   }
 
   render() {
     return (
-      <div className="GraphDiv">
-        <canvas className="GraphCanvas" id="chart" ref={this.canvasRef} width={this.props.width} height={this.props.height} />
+      <div id="GraphDiv">
+        <canvas id="GraphCanvas" ref={this.canvasRef} width={this.props.width} height={this.props.height} />
       </div>
     );
   }
@@ -87,7 +90,7 @@ class Graph extends React.Component {
 Graph.defaultProps = {
   title: "Untitled Graph",
   width: 400,
-  height: 200
+  height: 100
 };
 
 export default Graph
