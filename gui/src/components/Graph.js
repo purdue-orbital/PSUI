@@ -1,9 +1,6 @@
 import React from 'react';
 import Chart from 'chart.js';
 
-import * as Comlink from 'comlink';
-import Worker from './workers/Graph.worker.js'
-
 import './styles/Graph.css';
 
 class Graph extends React.Component {
@@ -66,15 +63,13 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
-    const worker = new Worker(); 
-    async function updateChart(worker, data_points, data_point) {
-      const api = Comlink.wrap(worker);
-      await api.updateChart(data_points, data_point);
-    }
-    updateChart(worker, Comlink.proxy(this.data_points), this.props.data_point).then(() => {
-      this.chart.update();
-      worker.terminate();
+    this.data_points.shift();
+    this.data_points.push({
+      "x": Date.now(),
+      "y": this.props.data_point
     });
+    this.chart.data.datasets.data = this.data_points;
+    this.chart.update();
   }
 
   render() {
