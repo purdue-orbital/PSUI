@@ -6,14 +6,14 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "^3.4.4"
   },
   "main": "main.js",
   "homepage": "./",
   "scripts": {
-    "start": "BROWSER=none react-scripts start",
+    "start": "BROWSER=none react-app-rewired start",
     "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -37,9 +37,12 @@
   },
   "devDependencies": {
     "chart.js": "^2.9.4",
+    "comlink": "^4.3.0",
     "concurrently": "^5.3.0",
-    "electron": "^10.1.4",
+    "electron": "^10.1.5",
     "electron-builder": "^22.9.1",
-    "wait-on": "^5.2.0"
+    "react-app-rewired": "^2.1.6",
+    "wait-on": "^5.2.0",
+    "worker-loader": "^3.0.5"
   }
 }
