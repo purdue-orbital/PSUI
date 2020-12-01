@@ -70,12 +70,6 @@ class Graph extends React.Component {
     });
     this.chart.data.datasets.data = this.data_points;
     this.chart.update();
-
-    // console.log(window.location.pathname);
-
-    // const worker = new Worker('./workers/GraphWorker.js');
-    // const api = wrap(worker);
-    // await api.updateChart();
   }
 
   render() {
