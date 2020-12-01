@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Timer from './components/Timer'
-import DataTable from './components/DataTable'
-import Graph from './components/Graph'
+import Timer from './components/Timer';
+import DataTable from './components/DataTable';
+import Graph from './components/Graph';
+import GenericIndicator from './components/Indicators/GenericIndicator';
 
 // import * as Comlink from 'comlink';
 // import Worker from '';
@@ -46,6 +47,7 @@ class DataWindow extends React.Component {
         </div>
         <div id={'rightPannel'}>
           TODO: Put all of the radio stuff here!!
+          <GenericIndicator />
         </div>
         <div id={'bottomPannel'}>
           <Graph
