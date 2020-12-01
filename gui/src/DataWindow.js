@@ -23,7 +23,7 @@ class DataWindow extends React.Component {
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
-          "This": (1000 - 1) * Math.random() + 1, // random from 1 to 10
+          "This": (1000 - 1) * Math.random() + 1, // random from 1 to 1000
           "is": Math.random(),
           "Some": Math.random(),
           "Data": Math.random(),
