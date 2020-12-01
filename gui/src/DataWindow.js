@@ -4,6 +4,9 @@ import Timer from './components/Timer'
 import DataTable from './components/DataTable'
 import Graph from './components/Graph'
 
+// import * as Comlink from 'comlink';
+// import Worker from '';
+
 import './styles/DataWindow.css'
 
 class DataWindow extends React.Component {
