@@ -4,6 +4,12 @@ import Chart from 'chart.js';
 import './styles/Graph.css';
 
 class Graph extends React.Component {
+  static defaultProps = {
+    title: "Untitled Graph",
+    width: 400,
+    height: 100
+  };
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -80,11 +86,5 @@ class Graph extends React.Component {
     );
   }
 }
-
-Graph.defaultProps = {
-  title: "Untitled Graph",
-  width: 400,
-  height: 100
-};
 
 export default Graph
