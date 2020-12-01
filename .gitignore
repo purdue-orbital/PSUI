@@ -1,4 +1,5 @@
 # Ignore everything in this directory
-# ADD IGNORED FILES HERE
+psui-api/target
+psui-api/Cargo.lock
 # Except this file
 !.gitignore
