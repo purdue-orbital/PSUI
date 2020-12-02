@@ -4,13 +4,17 @@ import GenericIndicator from './Indicators/GenericIndicator.js';
 
 class IndicatorTable extends React.Component {
   static defaultProps = {
-    packetsSent: 0,
-    packetsRecieved: 0,
-    QDM: false,
-    Ignition: false,
-    GSRadio: false,
-    PlatformStability: false,
-    PlatformRadio: false,
+    indicators: {
+      packetsSent: {name: "Packets Sent", Data: 0, },
+      packetsRecieved: {name: "Packets Sent", Data: 0, },
+      QDM: {name: "Packets Sent", Data: 0, },
+      Ignition: {name: "Packets Sent", Data: 0, },
+      GSRadio: {name: "Packets Sent", Data: 0, },
+      PlatformStability: {name: "Packets Sent", Data: 0, },
+      PlatformRadio: {name: "Packets Sent", Data: 0, },
+    },
+    rows: null,
+    cols: null,
   }
 
   constructor(props) {
@@ -19,13 +23,27 @@ class IndicatorTable extends React.Component {
   }
 
   buildTable() {
-
+    return (
+      <tbody>
+        {
+          Object.keys(this.props.indicators).map((key, i) => (
+            <tr>
+              <td>{key}</td>
+              <td><GenericIndicator /></td>
+            </tr>
+          ))
+        }
+      </tbody>
+    )
   }
 
   render() {
     return (
       <div>
-        Put table here
+        Put table
+        <table>
+          {this.buildTable()}
+        </table>
       </div>
     );
   }
