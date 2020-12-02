@@ -5,13 +5,13 @@ import GenericIndicator from './Indicators/GenericIndicator.js';
 class IndicatorTable extends React.Component {
   static defaultProps = {
     indicators: {
-      packetsSent: {name: "Packets Sent", Data: 0, },
-      packetsRecieved: {name: "Packets Sent", Data: 0, },
-      QDM: {name: "Packets Sent", Data: 0, },
-      Ignition: {name: "Packets Sent", Data: 0, },
-      GSRadio: {name: "Packets Sent", Data: 0, },
-      PlatformStability: {name: "Packets Sent", Data: 0, },
-      PlatformRadio: {name: "Packets Sent", Data: 0, },
+      packetsSent: {name: "Packets Sent", data: 0, },
+      packetsRecieved: {name: "Packets Recieved", data: 0, },
+      QDM: {name: "QDM", data: false, },
+      Ignition: {name: "Ignition", data: false, },
+      GSRadio: {name: "GS Radio", data: false, },
+      PlatformStability: {name: "Platform Stability", data: false, },
+      PlatformRadio: {name: "Platform Radio", data: false, },
     },
     rows: null,
     cols: null,
@@ -23,18 +23,19 @@ class IndicatorTable extends React.Component {
   }
 
   buildTable() {
+    const indicators = this.props.indicators;
+    const inidcaorKeys = Object.keys(indicators);
     return (
       <tbody>
         {
-          Object.keys(this.props.indicators).map((key, i) => (
+          inidcaorKeys.map((key, i) => (
             <tr>
-              <td>{key}</td>
-              <td><GenericIndicator /></td>
+              <td><GenericIndicator name={indicators[key].name} data={indicators[key].data}/></td>
             </tr>
           ))
         }
       </tbody>
-    )
+    );
   }
 
   render() {

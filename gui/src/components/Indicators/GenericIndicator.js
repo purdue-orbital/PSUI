@@ -4,7 +4,7 @@ import React from 'react';
 class GenericIndicator extends React.Component {
   static defaultProps = {
     name: "Un-nammed Indicator",
-    displayVal: " ¯\\_(ツ)_/¯"
+    data: " ¯\\_(ツ)_/¯"
   }
 
   constructor(props) {
@@ -13,10 +13,12 @@ class GenericIndicator extends React.Component {
   }
 
   render() {
+    const data = this.props.data;
+    const displayVal = typeof(data) === "boolean" ?  data === true ? "Online" : "Offline" : this.props.data;
     return (
       <div>
         <div>{this.props.name}</div>
-        <div>{this.props.displayVal}</div>
+        <div>{displayVal}</div>
       </div>
     );
   }
