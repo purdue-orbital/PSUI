@@ -47,7 +47,7 @@ class IndicatorTable extends React.Component {
 
     const buildRow = (arrayOfKeys) => {
       return arrayOfKeys.map((key, i) => {
-        if (key == null) {return (<td></td>)}
+        if (key == null) { return (<td></td>); }
         return (<td><GenericIndicator name={indicators[key].name} data={indicators[key].data} /></td>)
       });
     };

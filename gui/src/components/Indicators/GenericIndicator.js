@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+import '../styles/GenericIndicator.css'; 
 class GenericIndicator extends React.Component {
   static defaultProps = {
     name: "Un-nammed Indicator",
@@ -14,11 +14,11 @@ class GenericIndicator extends React.Component {
 
   render() {
     const data = this.props.data;
-    const displayVal = typeof(data) === "boolean" ?  data === true ? "Online" : "Offline" : this.props.data;
+    const displayVal = typeof (data) === "boolean" ? data === true ? "Online" : "Offline" : this.props.data;
     return (
-      <div>
-        <div>{this.props.name}</div>
-        <div>{displayVal}</div>
+      <div className="IndicatorDiv">
+        <div className="IndicatorLabelDiv">{this.props.name}</div>
+        <div className="IndicatorDataDiv">{displayVal}</div>
       </div>
     );
   }

@@ -1,0 +1,12 @@
+.IndicatorDiv {
+  margin: auto;
+}
+
+.IndicatorLabelDiv {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.IndicatorDataDiv {
+  text-align: center;
+}
