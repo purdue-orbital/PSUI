@@ -7,11 +7,6 @@ class IndicatorTable extends React.Component {
     indicators: {
       packetsSent: { name: "Packets Sent", data: 0, },
       packetsRecieved: { name: "Packets Recieved", data: 0, },
-      QDM: { name: "QDM", data: false, },
-      Ignition: { name: "Ignition", data: false, },
-      GSRadio: { name: "GS Radio", data: false, },
-      PlatformStability: { name: "Platform Stability", data: false, },
-      PlatformRadio: { name: "Platform Radio", data: false, },
     },
     layout: null,
     cols: 3,

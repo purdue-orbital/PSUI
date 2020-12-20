@@ -16,19 +16,35 @@ class DataWindow extends React.Component {
     this.state = {
       mission_start: false,
       launch_start: false,
-      current_data: { "This": 0, "is": 0, "Some": 0, "Data": 0, "Another": 0 }
-    };
+      current_data: {
+        This: 0,
+        is: 0,
+        Some: 0,
+        Data: 0,
+        Another: 0
+      },
+      current_indicators: {
+        packetsSent: { name: "Packets Sent", data: 0, },
+        packetsRecieved: { name: "Packets Recieved", data: 0, },
+        QDM: { name: "QDM", data: false, },
+        Ignition: { name: "Ignition", data: false, },
+        GSRadio: { name: "GS Radio", data: false, },
+        PlatformStability: { name: "Platform Stability", data: false, },
+        PlatformRadio: { name: "Platform Radio", data: false, },
+
+      },
+    }
   }
 
   componentDidMount() {
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
-          "This": (1000 - 1) * Math.random() + 1, // random from 1 to 1000
-          "is": Math.random(),
-          "Some": Math.random(),
-          "Data": Math.random(),
-          "Another": Math.random(),
+          This: (1000 - 1) * Math.random() + 1, // random from 1 to 1000
+          is: Math.random(),
+          Some: Math.random(),
+          Data: Math.random(),
+          Another: Math.random(),
         }
       })
 
@@ -47,7 +63,7 @@ class DataWindow extends React.Component {
         </div>
         <div id={'rightPannel'}>
           TODO: Put all of the radio stuff here!!
-          <IndicatorTable />
+          <IndicatorTable indicators={this.state.current_indicators}/>
         </div>
         <div id={'bottomPannel'}>
           <Graph
