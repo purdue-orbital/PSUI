@@ -4,7 +4,7 @@ import '../styles/GenericIndicator.css';
 class GenericIndicator extends React.Component {
   static defaultProps = {
     name: "Un-nammed Indicator",
-    data: " ¯\\_(ツ)_/¯"
+    data: "¯\\_(ツ)_/¯",
   }
 
   constructor(props) {

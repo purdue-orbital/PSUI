@@ -59,12 +59,18 @@ class DataWindow extends React.Component {
           <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
           <button onClick={() => { this.setState(state => ({ mission_start: true })); }}>Start Mission</button>
           <button onClick={() => { this.setState(state => ({ launch_start: true })); }}>Start Launch</button>
-          <DataTable data={this.state.current_data} />
+          <DataTable
+            data={this.state.current_data}
+          />
         </div>
+
         <div id={'rightPannel'}>
-          TODO: Put all of the radio stuff here!!
-          <IndicatorTable indicators={this.state.current_indicators}/>
+          <IndicatorTable
+            indicators={this.state.current_indicators}
+          />
+          <button onClick={() => alert("¯\\_(ツ)_/¯")}>Stabilization</button>
         </div>
+
         <div id={'bottomPannel'}>
           <Graph
             data_point={this.state.current_data.This}

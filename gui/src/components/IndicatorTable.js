@@ -16,6 +16,13 @@ class IndicatorTable extends React.Component {
     super(props);
     this.state = {};
     this.__layout = this.props.layout != null ? this.props.layout : this.__generateLayout();
+    this.__numRows = 1;
+    this.__layout.forEach(element => {
+      const len = element.length;
+      if (len > this.__numRows) {
+        this.__numRows = len;
+      }
+    });
   }
 
   __generateLayout() {
@@ -43,14 +50,17 @@ class IndicatorTable extends React.Component {
     const buildRow = (arrayOfKeys) => {
       return arrayOfKeys.map((key, i) => {
         if (key == null) { return (<td></td>); }
-        return (<td><GenericIndicator name={indicators[key].name} data={indicators[key].data} /></td>)
+        return (<td><GenericIndicator name={indicators[key].name} data={indicators[key].data} /></td>);
       });
     };
 
     return (
       <tbody>
         {
-          layout.map((x, i) => (<tr key={i}>{buildRow(x)}</tr>))
+          layout.map((x, i) => {
+            const key = `IndicatorTableRow${i}`;
+            return (<tr key={key}>{buildRow(x)}</tr>);
+          })
         }
       </tbody>
     );
@@ -59,8 +69,12 @@ class IndicatorTable extends React.Component {
   render() {
     return (
       <div>
-        Put table
         <table>
+          <thead>
+            <tr key={"IndicatorTableTitle"}>
+              <th colSpan={3}>Radio Stuff</th>
+            </tr>
+          </thead>
           {this.__buildTable()}
         </table>
       </div>
