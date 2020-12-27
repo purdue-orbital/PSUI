@@ -2,8 +2,8 @@ import React from 'react';
 
 import Timer from './components/Timer';
 import DataTable from './components/DataTable';
-import Graph from './components/Graph';
 import IndicatorTable from './components/IndicatorTable';
+import GraphSelector from './components/GraphSelector';
 
 // import * as Comlink from 'comlink';
 // import Worker from '';
@@ -52,6 +52,7 @@ class DataWindow extends React.Component {
   }
 
   render() {
+    const data = this.state.current_data;
     return (
       <div id={'container'}>
         <div id={'leftPannel'}>
@@ -60,7 +61,7 @@ class DataWindow extends React.Component {
           <button onClick={() => { this.setState(state => ({ mission_start: true })); }}>Start Mission</button>
           <button onClick={() => { this.setState(state => ({ launch_start: true })); }}>Start Launch</button>
           <DataTable
-            data={this.state.current_data}
+            data={data}
           />
         </div>
 
@@ -72,10 +73,7 @@ class DataWindow extends React.Component {
         </div>
 
         <div id={'bottomPannel'}>
-          <Graph
-            data_point={this.state.current_data.This}
-            title={'This vs Time'}
-          />
+          <GraphSelector data={data}/>
         </div>
       </div>
     );

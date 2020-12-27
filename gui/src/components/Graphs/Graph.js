@@ -69,10 +69,14 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
+    const new_data = this.props.data_point;
+    if (Number.isNaN(new_data)) {
+      return;
+    }
     this.data_points.shift();
     this.data_points.push({
       "x": Date.now(),
-      "y": this.props.data_point
+      "y": new_data
     });
     this.chart.data.datasets.data = this.data_points;
     this.chart.update();
