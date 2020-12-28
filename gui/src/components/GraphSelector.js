@@ -25,9 +25,8 @@ class GraphSelector extends React.Component {
         continue;
       }
       this.prevData[k].data.shift();
-      this.prevData[k].data.push({"x": now, "y": currData[k]});
+      this.prevData[k].data.push({ "x": now, "y": currData[k] });
     }
-    // console.log(this.prevData);
   }
 
   __createDataHistory(data) {
@@ -37,7 +36,7 @@ class GraphSelector extends React.Component {
     let historyCacheObj = {};
     keys.forEach(k => historyCacheObj[k] = {
       label: k,
-      data: Array(histLen).fill({"x": now, "y": 0}),
+      data: Array(histLen).fill({ "x": now, "y": 0 }),
     });
     return historyCacheObj;
   }
@@ -59,12 +58,13 @@ class GraphSelector extends React.Component {
   render() {
     const showGraph = this.state.currentGraph;
 
-    const datasets = [this.prevData[showGraph], this.prevData["Another"]]; 
-    console.log(datasets);
+    // Because we are pasing in entier datasets now it is completly possible to view many datasets at once
+    // Might be worth while changing dropdown list to a selection box
+    const datasets = [this.prevData[showGraph]];
 
     return (
       <div>
-        <Graph datasets={datasets}/>
+        <Graph datasets={datasets} />
         <form>
           <label>
             Pick Graph to View:
