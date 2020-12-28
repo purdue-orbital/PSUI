@@ -57,9 +57,7 @@ class GraphSelector extends React.Component {
   }
 
   render() {
-    const data = this.props.data;
     const showGraph = this.state.currentGraph;
-    const graphTitle = `${showGraph} vs Time`;
 
     const datasets = [this.prevData[showGraph], this.prevData["Another"]]; 
     console.log(datasets);
