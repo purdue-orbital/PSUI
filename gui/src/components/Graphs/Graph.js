@@ -21,8 +21,8 @@ class Graph extends React.Component {
 
   componentDidMount() {
     const datasets = this.props.datasets;
-    const chart = this.canvasRef.current.getContext("2d");
-    this.chart = new Chart(chart, {
+    const ctx = this.canvasRef.current.getContext("2d");
+    this.chart = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
       data: {
@@ -51,6 +51,9 @@ class Graph extends React.Component {
               suggestedMax: 1
             }
           }]
+        },
+        animation: {
+          duration: 0,
         }
       }
     });
@@ -58,7 +61,7 @@ class Graph extends React.Component {
 
   componentDidUpdate() {
     const new_datasets = this.props.datasets
-    this.chart.data.datasets = new_datasets;
+    this.chart.config.data.datasets = new_datasets;
     this.chart.update();
   }
 
