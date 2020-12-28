@@ -20,25 +20,13 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    // Make random data for now
-    const NUM_POINTS = 20;
-    for (let i = 0; i < NUM_POINTS; i++) {
-      this.data_points.push({
-        "x": this.start_time,
-        "y": 0
-      });
-    }
-
+    const datasets = this.props.datasets;
     const chart = this.canvasRef.current.getContext("2d");
     this.chart = new Chart(chart, {
       // The type of chart we want to create
       type: 'line',
       data: {
-        datasets: [{
-          label: this.props.title,
-          borderColor: 'rgb(0, 0, 0)',
-          data: this.data_points
-        }]
+        datasets: datasets
       },
 
       // Configuration options go here
@@ -69,17 +57,8 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
-    const new_data = this.props.data_point;
-    const new_title = this.props.title;
-    if (Number.isNaN(new_data)) {
-      return;
-    }
-    this.data_points.shift();
-    this.data_points.push({
-      "x": Date.now(),
-      "y": new_data
-    });
-    this.chart.data.datasets[0].label = new_title;
+    const new_datasets = this.props.datasets
+    this.chart.data.datasets = new_datasets;
     this.chart.update();
   }
 
