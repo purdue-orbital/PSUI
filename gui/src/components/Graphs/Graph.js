@@ -70,6 +70,7 @@ class Graph extends React.Component {
 
   componentDidUpdate() {
     const new_data = this.props.data_point;
+    const new_title = this.props.title;
     if (Number.isNaN(new_data)) {
       return;
     }
@@ -78,7 +79,7 @@ class Graph extends React.Component {
       "x": Date.now(),
       "y": new_data
     });
-    this.chart.data.datasets.data = this.data_points;
+    this.chart.data.datasets[0].label = new_title;
     this.chart.update();
   }
 
