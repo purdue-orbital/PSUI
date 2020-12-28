@@ -10,21 +10,22 @@ class GraphSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: "This",
+      currentGraph: "is",
     };
+
+    this.__handleChange = this.__handleChange.bind(this);
   }
 
-  __handleSubmit(e) {
-    console.log("Got Event");
-    e.preventDefault();
+  __handleChange(e) {
+    this.setState({currentGraph: e.target.value})
   }
 
   __createDataSelectOptions() {
     const data = this.props.data;
     const keys = Object.keys(data);
-    return keys.map((k) => {
+    return keys.map((k, i) => {
       return (
-        <option value={k} key={k}>{k}</option>
+        <option value={k} key={i}>{k}</option>
       )
     });
   }
@@ -32,21 +33,21 @@ class GraphSelector extends React.Component {
   render() {
     const data = this.props.data;
     const showGraph = this.state.currentGraph;
+    const graphTitle = `${showGraph} vs Time`;
 
     return (
       <div>
         <Graph
           data_point={data[showGraph]}
-          title={`${showGraph} vs Time`}
+          title={graphTitle}
         />
-        <form onSubmit={this.__handleSubmit}>
+        <form>
           <label>
             Pick Graph to View:
-            <select>
+            <select value={showGraph} onChange={this.__handleChange}>
               {this.__createDataSelectOptions()}
             </select>
           </label>
-          <input type="submit" value="Submit" />
         </form>
       </div>
     );
