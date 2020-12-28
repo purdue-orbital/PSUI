@@ -31,6 +31,13 @@ class Graph extends React.Component {
 
       // Configuration options go here
       options: {
+        events: [],
+        tooltips: {
+          enabled: false,
+        },
+        hover: {
+          mode: null,
+        },
         elements: {
           line: {
             tension: 0
@@ -60,7 +67,7 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
-    const new_datasets = this.props.datasets
+    const new_datasets = this.props.datasets;
     this.chart.config.data.datasets = new_datasets;
     this.chart.update();
   }
