@@ -5,9 +5,9 @@ import './styles/Graph.css';
 
 class Graph extends React.Component {
   static defaultProps = {
-    title: "Untitled Graph",
     width: 400,
-    height: 100
+    height: 100,
+    datasets: [],
   };
 
   constructor(props) {

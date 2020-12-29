@@ -10,7 +10,7 @@ class GraphSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: "is",
+      currentGraph: Object.keys(this.props.data)[0],
     };
 
     this.prevData = this.__createDataHistory(this.props.data);
@@ -36,6 +36,7 @@ class GraphSelector extends React.Component {
     let historyCacheObj = {};
     keys.forEach(k => historyCacheObj[k] = {
       label: k,
+      borderColor: 'rgb(0,0,0)',
       data: Array(histLen).fill({ "x": now, "y": 0 }),
     });
     return historyCacheObj;
