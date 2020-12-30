@@ -51,6 +51,10 @@ class DataWindow extends React.Component {
     }, 1000);
   }
 
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
     const data = this.state.current_data;
     return (
