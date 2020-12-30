@@ -5,9 +5,9 @@ import './styles/Graph.css';
 
 class Graph extends React.Component {
   static defaultProps = {
-    title: "Untitled Graph",
     width: 400,
-    height: 100
+    height: 100,
+    datasets: [],
   };
 
   constructor(props) {
@@ -20,29 +20,24 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    // Make random data for now
-    const NUM_POINTS = 20;
-    for (let i = 0; i < NUM_POINTS; i++) {
-      this.data_points.push({
-        "x": this.start_time,
-        "y": 0
-      });
-    }
-
-    const chart = this.canvasRef.current.getContext("2d");
-    this.chart = new Chart(chart, {
+    const datasets = this.props.datasets;
+    const ctx = this.canvasRef.current.getContext("2d");
+    this.chart = new Chart(ctx, {
       // The type of chart we want to create
       type: 'line',
       data: {
-        datasets: [{
-          label: this.props.title,
-          borderColor: 'rgb(0, 0, 0)',
-          data: this.data_points
-        }]
+        datasets: datasets
       },
 
       // Configuration options go here
       options: {
+        events: [],
+        tooltips: {
+          enabled: false,
+        },
+        hover: {
+          mode: null,
+        },
         elements: {
           line: {
             tension: 0
@@ -63,18 +58,17 @@ class Graph extends React.Component {
               suggestedMax: 1
             }
           }]
+        },
+        animation: {
+          duration: 0,
         }
       }
     });
   }
 
   componentDidUpdate() {
-    this.data_points.shift();
-    this.data_points.push({
-      "x": Date.now(),
-      "y": this.props.data_point
-    });
-    this.chart.data.datasets.data = this.data_points;
+    const new_datasets = this.props.datasets;
+    this.chart.config.data.datasets = new_datasets;
     this.chart.update();
   }
 
