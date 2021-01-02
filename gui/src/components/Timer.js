@@ -10,6 +10,11 @@ class Timer extends React.Component {
    * 
    */
 
+  static defaultProps = {
+    timer_name: "Default Timer",
+    tick: false,
+  };
+
   constructor(props) {
     super(props);
     this.start_time = sessionStorage.getItem(`${this.props.timer_name}_start`);
