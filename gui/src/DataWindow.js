@@ -4,6 +4,7 @@ import Timer from './components/Timer';
 import DataTable from './components/DataTable';
 import IndicatorTable from './components/IndicatorTable';
 import GraphSelector from './components/GraphSelector';
+import CurrentStatus from './components/CurrentStatus';
 
 // import * as Comlink from 'comlink';
 // import Worker from '';
@@ -70,6 +71,7 @@ class DataWindow extends React.Component {
         </div>
 
         <div id={'rightPannel'}>
+          <CurrentStatus />
           <IndicatorTable
             indicators={this.state.current_indicators}
           />
