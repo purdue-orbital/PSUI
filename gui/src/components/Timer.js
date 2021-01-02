@@ -2,13 +2,6 @@ import React from 'react';
 import './styles/Timer.css';
 
 class Timer extends React.Component {
-  /*
-   * Accepted Props:
-   * --------------
-   * timer_name, String, name of the timer
-   * tick, bool, should the timer be counting
-   * 
-   */
 
   static defaultProps = {
     timer_name: "Default Timer",
