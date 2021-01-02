@@ -59,7 +59,7 @@ class DataWindow extends React.Component {
   render() {
     const data = this.state.current_data;
     return (
-      <div id={'container'}>
+      <div id='container'>
         <div id={'leftPannel'}>
           <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
           <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
@@ -70,7 +70,7 @@ class DataWindow extends React.Component {
           />
         </div>
 
-        <div id={'rightPannel'}>
+        <div id='rightPannel'>
           <CurrentStatus />
           <IndicatorTable
             indicators={this.state.current_indicators}
@@ -78,7 +78,7 @@ class DataWindow extends React.Component {
           <button onClick={() => alert("¯\\_(ツ)_/¯")}>Stabilization</button>
         </div>
 
-        <div id={'bottomPannel'}>
+        <div id='bottomPannel'>
           <GraphSelector data={data}/>
         </div>
       </div>

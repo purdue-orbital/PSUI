@@ -1,5 +1,6 @@
 import React from 'react';
 
+import './styles/CurrentStatus.css';
 class CurrentStatus extends React.Component {
 
   constructor(props) {
@@ -24,10 +25,10 @@ class CurrentStatus extends React.Component {
   render() {
     return (
       <div className="CurrentStatusObj">
-        <div>Current Status</div>
-        <div>TODO: Status here</div>
-        <button>Verify</button>
-        <button>Abort</button>
+        <div className="CurrentStatusLabel">Current Status</div>
+        <div className="CurrentStatus">TODO: Status here</div>
+        <button className="VerifyButton">Verify</button>
+        <button className="AbortButton">Abort</button>
       </div>
     )
   }
