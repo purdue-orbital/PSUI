@@ -32,6 +32,11 @@ class CurrentStatus extends React.Component {
     this.setState({ status: newStatus });
   }
 
+  __nonblockingConfirmation(message) {
+    // FIXME: Couldn't be asked to make this actually nonblocking right now
+    return window.confirm(message);
+  }
+
   __runIfAble(func) {
     if (typeof func === "function") {
       func();
@@ -45,21 +50,27 @@ class CurrentStatus extends React.Component {
   }
 
   __verifyLaunch() {
-    // TODO: verify the launch
-    this.__runIfAble(this.props.onVerify);
-    this.__changeStatus(StatusEnum.VERIFIED);
+    if (this.__nonblockingConfirmation("You are about to verify the mission")) {
+      // TODO: verify the launch
+      this.__runIfAble(this.props.onVerify);
+      this.__changeStatus(StatusEnum.VERIFIED);
+    }
   }
 
   __unverifyLaunch() {
-    // TODO: unverify the launch
-    this.__runIfAble(this.props.onUnverify);
-    this.__changeStatus(StatusEnum.UNVERIFIED);
+    if (this.__nonblockingConfirmation("You are about to unverify the mission")) {
+      // TODO: unverify the launch
+      this.__runIfAble(this.props.onUnverify);
+      this.__changeStatus(StatusEnum.UNVERIFIED);
+    }
   }
 
   __abortLaunch() {
-    // TODO: abort the launch
-    this.__runIfAble(this.props.onAbort);
-    this.__changeStatus(StatusEnum.ABORTED);;
+    if (this.__nonblockingConfirmation("You are about to abort the mission; This action is irreversable!")) {
+      // TODO: abort the launch
+      this.__runIfAble(this.props.onAbort);
+      this.__changeStatus(StatusEnum.ABORTED);
+    }
   }
 
   __renderActionButtons() {
