@@ -63,8 +63,11 @@ class DataWindow extends React.Component {
         <div id={'leftPannel'}>
           <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
           <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
-          <button onClick={() => { this.setState({ mission_start: true }); }}>Start Mission</button>
-          <button onClick={() => { this.setState({ launch_start: true }); }}>Start Launch</button>
+          <button onClick={() => {
+            if (this.state.mission_start === true && this.state.launch_start === false) {
+              this.setState({ launch_start: true });
+            }
+          }}>Start Launch</button>
           <DataTable
             data={data}
           />
@@ -85,7 +88,7 @@ class DataWindow extends React.Component {
         <div id='bottomPannel'>
           <GraphSelector data={data} />
         </div>
-      </div>
+      </div >
     );
   }
 }
