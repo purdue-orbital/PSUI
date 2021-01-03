@@ -13,23 +13,28 @@ class CurrentStatus extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: StatusEnum.UNVERIFIED,
+      status: sessionStorage.getItem("CurrentStatusStorage") || StatusEnum.UNVERIFIED,
     };
+  }
+
+  __changeStatus(newStatus) {
+    sessionStorage.setItem("CurrentStatusStorage", newStatus);
+    this.setState({status: newStatus});
   }
 
   __verifyLaunch() {
     // TODO: verify the launch
-    this.setState({status: StatusEnum.VERIFIED});
+    this.__changeStatus(StatusEnum.VERIFIED);
   }
 
   __unverifyLaunch() {
     // TODO: unverify the launch
-    this.setState({status: StatusEnum.UNVERIFIED});
+    this.__changeStatus(StatusEnum.UNVERIFIED);
   }
 
   __abortLaunch() {
     // TODO: abort the launch
-    this.setState({status: StatusEnum.ABORTED});
+    this.__changeStatus(StatusEnum.ABORTED);;
   }
 
   render() {
