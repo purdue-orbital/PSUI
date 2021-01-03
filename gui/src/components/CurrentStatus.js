@@ -18,8 +18,12 @@ class CurrentStatus extends React.Component {
   }
 
   __changeStatus(newStatus) {
+    if (newStatus === this.state.status) {
+      return;
+    }
     sessionStorage.setItem("CurrentStatusStorage", newStatus);
     this.setState({status: newStatus});
+    console.log(newStatus);
   }
 
   __verifyLaunch() {
