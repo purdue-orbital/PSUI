@@ -10,6 +10,12 @@ const StatusEnum = Object.freeze({
 });
 
 class CurrentStatus extends React.Component {
+  static defaultProps = {
+    onMissionStart: null,
+    onVerify: null,
+    onUnverify: null,
+    onAbort: null,
+  }
 
   constructor(props) {
     super(props);
@@ -26,23 +32,33 @@ class CurrentStatus extends React.Component {
     this.setState({ status: newStatus });
   }
 
+  __runIfAble(func) {
+    if (typeof func === "function") {
+      func();
+    }
+  }
+
   __startMission() {
     // TODO: StartMission
+    this.__runIfAble(this.props.onMissionStart);
     this.__changeStatus(StatusEnum.UNVERIFIED);
   }
 
   __verifyLaunch() {
     // TODO: verify the launch
+    this.__runIfAble(this.props.onVerify);
     this.__changeStatus(StatusEnum.VERIFIED);
   }
 
   __unverifyLaunch() {
     // TODO: unverify the launch
+    this.__runIfAble(this.props.onUnverify);
     this.__changeStatus(StatusEnum.UNVERIFIED);
   }
 
   __abortLaunch() {
     // TODO: abort the launch
+    this.__runIfAble(this.props.onAbort);
     this.__changeStatus(StatusEnum.ABORTED);;
   }
 
@@ -64,11 +80,11 @@ class CurrentStatus extends React.Component {
       );
       case StatusEnum.VERIFIED: return (
         <>
-        {unverifyMissionButton}
-        {abortMissionButton}
+          {unverifyMissionButton}
+          {abortMissionButton}
         </>
       )
-      case StatusEnum.ABORTED: 
+      case StatusEnum.ABORTED:
       default: return abortMissionButton;
     }
   }
