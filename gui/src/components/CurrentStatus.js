@@ -19,14 +19,17 @@ class CurrentStatus extends React.Component {
 
   __verifyLaunch() {
     // TODO: verify the launch
+    this.setState({status: StatusEnum.VERIFIED});
   }
 
   __unverifyLaunch() {
     // TODO: unverify the launch
+    this.setState({status: StatusEnum.UNVERIFIED});
   }
 
   __abortLaunch() {
     // TODO: abort the launch
+    this.setState({status: StatusEnum.ABORTED});
   }
 
   render() {
@@ -35,8 +38,8 @@ class CurrentStatus extends React.Component {
       <div className="CurrentStatusObj">
         <div className="CurrentStatusLabel">Current Status</div>
         <div className="CurrentStatus">{currStatus}</div>
-        <button className="VerifyButton">Verify</button>
-        <button className="AbortButton">Abort</button>
+        <button className="VerifyButton" onClick={() => this.__verifyLaunch()}>Verify</button>
+        <button className="AbortButton" onClick={() => this.__abortLaunch()}>Abort</button>
       </div>
     )
   }
