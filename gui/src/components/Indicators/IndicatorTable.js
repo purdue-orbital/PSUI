@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GenericIndicator from './Indicators/GenericIndicator.js';
+import GenericIndicator from './GenericIndicator.js';
 
 class IndicatorTable extends React.Component {
   static defaultProps = {

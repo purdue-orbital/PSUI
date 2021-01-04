@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Graph from './Graphs/Graph';
+import Graph from './Graph';
 
 class GraphSelector extends React.Component {
   static defaultProps = {

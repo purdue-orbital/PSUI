@@ -2,8 +2,8 @@ import React from 'react';
 
 import Timer from './components/Timer';
 import DataTable from './components/DataTable';
-import IndicatorTable from './components/IndicatorTable';
-import GraphSelector from './components/GraphSelector';
+import IndicatorTable from './components/Indicators/IndicatorTable';
+import GraphSelector from './components/Graphs/GraphSelector';
 import CurrentStatus from './components/CurrentStatus';
 
 // import * as Comlink from 'comlink';
