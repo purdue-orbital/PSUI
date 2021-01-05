@@ -1,5 +1,7 @@
 import React from 'react';
 
+import ConfirmationPopUp from './ConfirmationPopUp.js';
+
 import './styles/CurrentStatus.css';
 
 const StatusEnum = Object.freeze({
@@ -21,6 +23,7 @@ class CurrentStatus extends React.Component {
     super(props);
     this.state = {
       status: sessionStorage.getItem("CurrentStatusStorage") || StatusEnum.STARTMISSION,
+      confirmWindowOpen: false,
     };
   }
 
@@ -34,7 +37,8 @@ class CurrentStatus extends React.Component {
 
   __nonblockingConfirmation(message) {
     // FIXME: Couldn't be asked to make this actually nonblocking right now
-    return window.confirm(message);
+    this.setState({ confirmWindowOpen: true })
+    return true;
   }
 
   __runIfAble(func) {
@@ -107,6 +111,7 @@ class CurrentStatus extends React.Component {
         <div className="CurrentStatusLabel">Current Status</div>
         <div className="CurrentStatus">{currStatus}</div>
         {this.__renderActionButtons()}
+        {this.state.confirmWindowOpen ? <ConfirmationPopUp toggle={() => { this.setState({ confirmWindowOpen: false }) }} /> : null}
       </div>
     )
   }

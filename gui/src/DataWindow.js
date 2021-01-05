@@ -4,10 +4,10 @@ import Timer from './components/Timer';
 import DataTable from './components/DataTable';
 import IndicatorTable from './components/Indicators/IndicatorTable';
 import GraphSelector from './components/Graphs/GraphSelector';
-import CurrentStatus from './components/CurrentStatus';
+import CurrentStatus from './components/MissionStatus/CurrentStatus';
 
 // import * as Comlink from 'comlink';
-// import Worker from '';
+// import Worker from './path/to/worker/file.eorker.js';
 
 import './styles/DataWindow.css'
 
