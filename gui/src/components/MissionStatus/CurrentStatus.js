@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ConfirmationPopUp from './ConfirmationPopUp.js';
+import ConfirmationPopUp from '../../utils/ConfirmationPopUp.js';
 
 import './styles/CurrentStatus.css';
 
