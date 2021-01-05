@@ -38,7 +38,6 @@ class CurrentStatus extends React.Component {
   }
 
   __nonblockingConfirmation(message, func) {
-    // FIXME: Couldn't be asked to make this actually nonblocking right now
     this.confirmationOverlay = (
       <ConfirmationPopUp onAccept={() => {
         this.__runIfAble(func);
