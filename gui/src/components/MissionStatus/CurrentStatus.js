@@ -19,6 +19,8 @@ class CurrentStatus extends React.Component {
     onAbort: null,
   }
 
+  confirmationOverlay = null;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -35,10 +37,19 @@ class CurrentStatus extends React.Component {
     this.setState({ status: newStatus });
   }
 
-  __nonblockingConfirmation(message) {
+  __nonblockingConfirmation(message, func) {
     // FIXME: Couldn't be asked to make this actually nonblocking right now
-    this.setState({ confirmWindowOpen: true })
-    return true;
+    this.confirmationOverlay = (
+      <ConfirmationPopUp onAccept={() => {
+        this.__runIfAble(func);
+        this.setState({ confirmWindowOpen: false });
+      }} onDecline={() => {
+        this.setState({ confirmWindowOpen: false });
+      }}>
+        {message}
+      </ConfirmationPopUp>
+    );
+    this.setState({ confirmWindowOpen: true });
   }
 
   __runIfAble(func) {
@@ -54,27 +65,27 @@ class CurrentStatus extends React.Component {
   }
 
   __verifyLaunch() {
-    if (this.__nonblockingConfirmation("You are about to verify the mission")) {
+    this.__nonblockingConfirmation("You are about to verify the mission", () => {
       // TODO: verify the launch
       this.__runIfAble(this.props.onVerify);
       this.__changeStatus(StatusEnum.VERIFIED);
-    }
+    });
   }
 
   __unverifyLaunch() {
-    if (this.__nonblockingConfirmation("You are about to unverify the mission")) {
+    this.__nonblockingConfirmation("You are about to unverify the mission", () => {
       // TODO: unverify the launch
       this.__runIfAble(this.props.onUnverify);
       this.__changeStatus(StatusEnum.UNVERIFIED);
-    }
+    });
   }
 
   __abortLaunch() {
-    if (this.__nonblockingConfirmation("You are about to abort the mission; This action is irreversable!")) {
+    this.__nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", () => {
       // TODO: abort the launch
       this.__runIfAble(this.props.onAbort);
       this.__changeStatus(StatusEnum.ABORTED);
-    }
+    });
   }
 
   __renderActionButtons() {
@@ -106,12 +117,16 @@ class CurrentStatus extends React.Component {
 
   render() {
     const currStatus = this.state.status;
+    const isOverlay = this.state.confirmWindowOpen;
+
+    const overaly = this.confirmationOverlay;
+
     return (
       <div className="CurrentStatusObj">
         <div className="CurrentStatusLabel">Current Status</div>
         <div className="CurrentStatus">{currStatus}</div>
         {this.__renderActionButtons()}
-        {this.state.confirmWindowOpen ? <ConfirmationPopUp toggle={() => { this.setState({ confirmWindowOpen: false }) }} /> : null}
+        {isOverlay ? overaly : null}
       </div>
     )
   }
