@@ -65,27 +65,42 @@ class CurrentStatus extends React.Component {
   }
 
   __verifyLaunch() {
-    this.__nonblockingConfirmation("You are about to verify the mission", () => {
-      // TODO: verify the launch
-      this.__runIfAble(this.props.onVerify);
-      this.__changeStatus(StatusEnum.VERIFIED);
-    });
+    const currStatus = this.state.status;
+    const newStatus = StatusEnum.VERIFIED;
+
+    if (currStatus !== newStatus) {
+      this.__nonblockingConfirmation("You are about to verify the mission", () => {
+        // TODO: verify the launch
+        this.__runIfAble(this.props.onVerify);
+        this.__changeStatus(StatusEnum.VERIFIED);
+      });
+    }
   }
 
   __unverifyLaunch() {
-    this.__nonblockingConfirmation("You are about to unverify the mission", () => {
-      // TODO: unverify the launch
-      this.__runIfAble(this.props.onUnverify);
-      this.__changeStatus(StatusEnum.UNVERIFIED);
-    });
+    const currStatus = this.state.status;
+    const newStatus = StatusEnum.UNVERIFIED;
+
+    if (currStatus !== newStatus) {
+      this.__nonblockingConfirmation("You are about to unverify the mission", () => {
+        // TODO: unverify the launch
+        this.__runIfAble(this.props.onUnverify);
+        this.__changeStatus(newStatus);
+      });
+    }
   }
 
   __abortLaunch() {
-    this.__nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", () => {
-      // TODO: abort the launch
-      this.__runIfAble(this.props.onAbort);
-      this.__changeStatus(StatusEnum.ABORTED);
-    });
+    const currStatus = this.state.status;
+    const newStatus = StatusEnum.ABORTED;
+
+    if (currStatus !== newStatus) {
+      this.__nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", () => {
+        // TODO: abort the launch
+        this.__runIfAble(this.props.onAbort);
+        this.__changeStatus(newStatus);
+      });
+    }
   }
 
   __renderActionButtons() {
