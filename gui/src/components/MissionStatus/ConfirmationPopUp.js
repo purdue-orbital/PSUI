@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './styles/ConfirmationPopUp.css'
+
 class ConfirmationPopUp extends React.Component {
   constructor(props) {
     super(props);
@@ -8,9 +10,11 @@ class ConfirmationPopUp extends React.Component {
 
   render() {
     return (
-      <div>
-        <span className="close" onClick={() => { this.props.toggle(); }}>&times;</span>
-        <p>This is some dummy text to go in the pop up window</p>
+      <div className="modal">
+        <div className="modalContent">
+          <span className="close" onClick={() => { this.props.toggle(); }}>&times;</span>
+          <p>This is some dummy text to go in the pop up window</p>
+        </div>
       </div>
     );
   }
