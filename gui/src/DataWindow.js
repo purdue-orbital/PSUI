@@ -7,7 +7,7 @@ import GraphSelector from './components/Graphs/GraphSelector';
 import CurrentStatus from './components/MissionStatus/CurrentStatus';
 
 // import * as Comlink from 'comlink';
-// import Worker from './path/to/worker/file.eorker.js';
+// import Worker from './path/to/worker/file.worker.js';
 
 import './styles/DataWindow.css'
 
