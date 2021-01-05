@@ -1,6 +1,6 @@
 import React from 'react';
 
-import GenericIndicator from './Indicators/GenericIndicator.js';
+import GenericIndicator from './GenericIndicator.js';
 
 class IndicatorTable extends React.Component {
   static defaultProps = {
@@ -16,11 +16,11 @@ class IndicatorTable extends React.Component {
     super(props);
     this.state = {};
     this.__layout = this.props.layout != null ? this.props.layout : this.__generateLayout();
-    this.__numRows = 1;
+    this.__numCols = 1;
     this.__layout.forEach(element => {
       const len = element.length;
-      if (len > this.__numRows) {
-        this.__numRows = len;
+      if (len > this.__numCols) {
+        this.__numCols = len;
       }
     });
   }
@@ -67,12 +67,13 @@ class IndicatorTable extends React.Component {
   }
 
   render() {
+    const titleSpan = this.__numCols;
     return (
       <div>
         <table>
           <thead>
             <tr key={"IndicatorTableTitle"}>
-              <th colSpan={3}>Radio Stuff</th>
+              <th colSpan={titleSpan}>Radio Stuff</th>
             </tr>
           </thead>
           {this.__buildTable()}

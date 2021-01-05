@@ -2,11 +2,12 @@ import React from 'react';
 
 import Timer from './components/Timer';
 import DataTable from './components/DataTable';
-import IndicatorTable from './components/IndicatorTable';
-import GraphSelector from './components/GraphSelector';
+import IndicatorTable from './components/Indicators/IndicatorTable';
+import GraphSelector from './components/Graphs/GraphSelector';
+import CurrentStatus from './components/MissionStatus/CurrentStatus';
 
 // import * as Comlink from 'comlink';
-// import Worker from '';
+// import Worker from './path/to/worker/file.worker.js';
 
 import './styles/DataWindow.css'
 
@@ -58,28 +59,36 @@ class DataWindow extends React.Component {
   render() {
     const data = this.state.current_data;
     return (
-      <div id={'container'}>
+      <div id='container'>
         <div id={'leftPannel'}>
           <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
           <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
-          <button onClick={() => { this.setState(state => ({ mission_start: true })); }}>Start Mission</button>
-          <button onClick={() => { this.setState(state => ({ launch_start: true })); }}>Start Launch</button>
+          <button onClick={() => {
+            if (this.state.mission_start === true && this.state.launch_start === false) {
+              this.setState({ launch_start: true });
+            }
+          }}>Start Launch</button>
           <DataTable
             data={data}
           />
         </div>
 
-        <div id={'rightPannel'}>
+        <div id='rightPannel'>
+          <CurrentStatus
+            onMissionStart={() => {
+              this.setState({ mission_start: true });
+            }}
+          />
           <IndicatorTable
             indicators={this.state.current_indicators}
           />
           <button onClick={() => alert("¯\\_(ツ)_/¯")}>Stabilization</button>
         </div>
 
-        <div id={'bottomPannel'}>
-          <GraphSelector data={data}/>
+        <div id='bottomPannel'>
+          <GraphSelector data={data} />
         </div>
-      </div>
+      </div >
     );
   }
 }

@@ -1,0 +1,13 @@
+.CurrentStatusObj {
+  text-align: center;
+}
+
+.CurrentStatusLabel {
+  font-size: 20px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.CurrentStatus {
+  font-size: 24px;
+}
