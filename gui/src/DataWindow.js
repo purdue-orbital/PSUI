@@ -60,14 +60,10 @@ class DataWindow extends React.Component {
     const data = this.state.current_data;
     return (
       <div id='container'>
-        <div id={'leftPannel'}>
+        <div id='leftPannel'>
           <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
           <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
-          <button onClick={() => {
-            if (this.state.mission_start === true && this.state.launch_start === false) {
-              this.setState({ launch_start: true });
-            }
-          }}>Start Launch</button>
+          <br />
           <DataTable
             title="BALLOON DATA"
             data={data}
@@ -83,6 +79,11 @@ class DataWindow extends React.Component {
           <IndicatorTable
             indicators={this.state.current_indicators}
           />
+          <button onClick={() => {
+            if (this.state.mission_start === true && this.state.launch_start === false) {
+              this.setState({ launch_start: true });
+            }
+          }}>Start Launch</button>
           <button onClick={() => alert("¯\\_(ツ)_/¯")}>Stabilization</button>
         </div>
 
