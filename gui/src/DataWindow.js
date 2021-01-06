@@ -69,6 +69,7 @@ class DataWindow extends React.Component {
             }
           }}>Start Launch</button>
           <DataTable
+            title="BALLOON DATA"
             data={data}
           />
         </div>

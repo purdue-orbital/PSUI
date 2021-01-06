@@ -1,3 +1,16 @@
+.DataTable {
+  width: 70%;
+  margin: auto;
+}
+
+.LabelCol {
+  width: 35%;
+}
+
+.ValueCol {
+  text-align: right;
+}
+
 table, td, th {
   border-collapse: collapse;
   border: 1px solid black;
@@ -6,3 +19,4 @@ table, td, th {
 .DarkRow {
   background-color: #dddddd;
 }
+
