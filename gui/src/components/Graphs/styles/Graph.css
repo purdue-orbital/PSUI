@@ -1,8 +1,7 @@
 #GraphDiv {
     position: relative;
     width: auto;
-    height: auto;
-    border: 3px solid turquoise;
+    height: 100%;
 }
 
 #GraphCanvas {
