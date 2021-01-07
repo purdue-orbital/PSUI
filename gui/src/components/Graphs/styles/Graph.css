@@ -1,4 +1,11 @@
 #GraphDiv {
+    position: relative;
     width: auto;
     height: auto;
+    border: 3px solid turquoise;
+}
+
+#GraphCanvas {
+    position: relative;
+    margin: auto;
 }

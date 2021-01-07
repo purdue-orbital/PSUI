@@ -61,7 +61,8 @@ class Graph extends React.Component {
         },
         animation: {
           duration: 0,
-        }
+        },
+        maintainAspectRatio: false,
       }
     });
   }
