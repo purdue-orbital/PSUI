@@ -1,4 +1,9 @@
 /* Style the Label of the Timer */
+.TimerContainer {
+  margin: auto;
+  width: 80%;
+}
+
 .TimerLable { 
   background-color: #969694;
 }
