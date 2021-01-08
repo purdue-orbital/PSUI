@@ -2,12 +2,15 @@ import React from 'react';
 
 import GenericIndicator from './GenericIndicator.js';
 
+import './styles/IndicatorTable.css';
+
 class IndicatorTable extends React.Component {
   static defaultProps = {
     indicators: {
       packetsSent: { name: "Packets Sent", data: 0, },
       packetsRecieved: { name: "Packets Recieved", data: 0, },
     },
+    title: null,
     layout: null,
     cols: 3,
   }
@@ -43,7 +46,24 @@ class IndicatorTable extends React.Component {
     return indicatorTable;
   }
 
-  __buildTable() {
+  __buildTableTitle() {
+    const title = this.props.title;
+    const titleSpan = this.__numCols;
+
+    if (title === null) {
+      return null;
+    }
+
+    return (
+      <thead>
+        <tr key={"IndicatorTableTitle"}>
+          <th colSpan={titleSpan}>{title}</th>
+        </tr>
+      </thead>
+    );
+  }
+
+  __buildTableBody() {
     const indicators = this.props.indicators;
     const layout = this.__layout;
 
@@ -67,16 +87,12 @@ class IndicatorTable extends React.Component {
   }
 
   render() {
-    const titleSpan = this.__numCols;
+
     return (
       <div>
-        <table>
-          <thead>
-            <tr key={"IndicatorTableTitle"}>
-              <th colSpan={titleSpan}>Radio Stuff</th>
-            </tr>
-          </thead>
-          {this.__buildTable()}
+        <table className="IndicatorTable">
+          {this.__buildTableTitle()}
+          {this.__buildTableBody()}
         </table>
       </div>
     );
