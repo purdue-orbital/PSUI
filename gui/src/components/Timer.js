@@ -66,8 +66,8 @@ class Timer extends React.Component {
   render() {
     return (
       <div className="TimerContainer">
-        <span className="TimerLable" >{this.props.timer_name}: </span>
-        <span className="TimerClock">{this.state.time}</span>
+        <div className="TimerLabel" >{this.props.timer_name}: </div>
+        <div className="TimerClock">{this.state.time}</div>
       </div>
     );
   }
