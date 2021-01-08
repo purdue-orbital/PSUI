@@ -55,7 +55,7 @@ class Timer extends React.Component {
       if (this.start_time != null || this.props.tick) {
         if (this.start_time == null) { this.setStartTime(); }
         this.tick();
-      } 
+      }
     }, 10);
   }
 
@@ -66,8 +66,15 @@ class Timer extends React.Component {
   render() {
     return (
       <div className="TimerContainer">
-        <div className="TimerLabel" >{this.props.timer_name}: </div>
-        <div className="TimerClock">{this.state.time}</div>
+        <div className="TimerLabelContainer" >
+          <div className="TimerLabelElement">
+            {this.props.timer_name}:
+          </div>
+        </div>
+        <div className="TimerClockContainer">
+          <div className="TimerClockElement">{this.state.time}
+          </div>
+        </div>
       </div>
     );
   }
