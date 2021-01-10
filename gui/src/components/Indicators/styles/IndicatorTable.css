@@ -1,4 +1,8 @@
+.IndicatorTableContainer {
+  padding-top: 5px;
+}
+
 .IndicatorTable {
-  width: 70%;
+  width: 80%;
   margin: auto;
 }

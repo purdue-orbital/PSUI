@@ -89,7 +89,7 @@ class IndicatorTable extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="IndicatorTableContainer">
         <table className="IndicatorTable">
           {this.__buildTableTitle()}
           {this.__buildTableBody()}

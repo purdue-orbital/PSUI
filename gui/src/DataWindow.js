@@ -89,7 +89,7 @@ class DataWindow extends React.Component {
           <button onClick={() => alert("¯\\_(ツ)_/¯")}>Stabilization</button>
         </div>
 
-        <div id='bottomPannel'>
+        <div id='graphPannel'>
           <GraphSelector data={data} />
         </div>
       </div >
