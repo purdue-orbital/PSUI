@@ -71,7 +71,7 @@ class DataWindow extends React.Component {
             }}
           />
           <div id="logoPannel">
-            <img src={process.env.PUBLIC_URL + '/img/orbital-logo-reduced.gif'} alt="" />
+            <img src={process.env.PUBLIC_URL + '/img/orbital-logo.gif'} alt="" />
           </div>
         </div>
 
