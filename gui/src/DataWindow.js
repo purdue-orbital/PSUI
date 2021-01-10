@@ -15,8 +15,8 @@ class DataWindow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mission_start: false,
-      launch_start: false,
+      mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
+      launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
       current_data: {
         This: 0,
         is: 0,
@@ -38,6 +38,7 @@ class DataWindow extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.state); // TODO: Remove
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
@@ -65,6 +66,8 @@ class DataWindow extends React.Component {
           <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
           <button onClick={() => {
             if (this.state.mission_start === true && this.state.launch_start === false) {
+              // Needs to be saved as a string, bool not recognized
+              sessionStorage.setItem("DataWindowLaunchStart", "true");
               this.setState({ launch_start: true });
             }
           }}>Start Launch</button>
@@ -76,6 +79,8 @@ class DataWindow extends React.Component {
         <div id='rightPannel'>
           <CurrentStatus
             onMissionStart={() => {
+              // Needs to be saved as a string, bool not recognized
+              sessionStorage.setItem("DataWindowMissionStart", "true");
               this.setState({ mission_start: true });
             }}
           />
