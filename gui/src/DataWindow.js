@@ -32,7 +32,6 @@ class DataWindow extends React.Component {
         GSRadio: { name: "GS Radio", data: false, },
         PlatformStability: { name: "Platform Stability", data: false, },
         PlatformRadio: { name: "Platform Radio", data: false, },
-
       },
     }
   }
@@ -66,20 +65,25 @@ class DataWindow extends React.Component {
             <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
           </div>
           <br />
-          <DataTable
-            title="BALLOON DATA"
-            data={data}
-          />
-        </div>
-
-        <div id='rightPannel'>
           <CurrentStatus
             onMissionStart={() => {
               this.setState({ mission_start: true });
             }}
           />
+          <div id="logoPannel">
+            <img src={process.env.PUBLIC_URL + '/img/orbital-logo-reduced.gif'} alt="" />
+          </div>
+        </div>
+
+        <div id='rightPannel'>
+          <DataTable
+            title="BALLOON DATA"
+            data={data}
+          />
+          <br />
           <IndicatorTable
             indicators={this.state.current_indicators}
+            cols={4}
           />
           <button onClick={() => {
             if (this.state.mission_start === true && this.state.launch_start === false) {

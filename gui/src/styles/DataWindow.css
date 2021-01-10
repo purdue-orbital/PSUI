@@ -27,6 +27,10 @@
     background-color: aquamarine;
 }
 
+#logoPannel {
+    display: none;
+}
+
 #graphPannel {
     float: left;
     width: 100%;

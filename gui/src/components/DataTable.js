@@ -29,7 +29,7 @@ class DataTable extends React.Component {
   render() {
     const tableTitle = this.props.title;
     return (
-      <div>
+      <div className="DataTableContainer">
         <table className="DataTable">
           <thead>
             <tr key="DataTableTitle">

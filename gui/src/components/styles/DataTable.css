@@ -1,3 +1,7 @@
+.DataTableContainer {
+  padding-top: 10px;
+}
+
 .DataTable {
   width: 70%;
   margin: auto;
