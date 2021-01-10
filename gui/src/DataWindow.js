@@ -38,7 +38,6 @@ class DataWindow extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.state); // TODO: Remove
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
