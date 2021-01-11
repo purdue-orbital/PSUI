@@ -70,8 +70,20 @@ class DataWindow extends React.Component {
               this.setState({ mission_start: true });
             }}
           />
+
+          <div id="additionalControls">
+            <button onClick={() => {
+              if (this.state.mission_start === true && this.state.launch_start === false) {
+                this.setState({ launch_start: true });
+              }
+            }}>Start Launch</button>
+            <button onClick={() => {
+              alert("¯\\_(ツ)_/¯");
+            }}>Stabilization</button>
+          </div>
+
           <div id="logoPannel">
-            <img src={process.env.PUBLIC_URL + '/img/orbital-logo.gif'} alt="" />
+            <img src={process.env.PUBLIC_URL + '/img/orbital-logo.gif'} alt="Purdue Orbital" />
           </div>
         </div>
 
@@ -80,17 +92,10 @@ class DataWindow extends React.Component {
             title="BALLOON DATA"
             data={data}
           />
-          <br />
           <IndicatorTable
             indicators={this.state.current_indicators}
             cols={4}
           />
-          <button onClick={() => {
-            if (this.state.mission_start === true && this.state.launch_start === false) {
-              this.setState({ launch_start: true });
-            }
-          }}>Start Launch</button>
-          <button onClick={() => alert("¯\\_(ツ)_/¯")}>Stabilization</button>
         </div>
 
         <div id='graphPannel'>
