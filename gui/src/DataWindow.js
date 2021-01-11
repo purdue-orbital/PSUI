@@ -9,7 +9,8 @@ import CurrentStatus from './components/MissionStatus/CurrentStatus';
 // import * as Comlink from 'comlink';
 // import Worker from './path/to/worker/file.worker.js';
 
-import './styles/DataWindow.css'
+import './styles/DataWindow.css';
+import './styles/BasicElements.css';
 
 class DataWindow extends React.Component {
   constructor(props) {
