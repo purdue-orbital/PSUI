@@ -16,7 +16,7 @@ class DataTable extends React.Component {
       <tbody>
         {
           Object.keys(this.props.data).map((key, i) => (
-            <tr className={i % 2 === 0 ? "DarkRow" : ""} key={`DataTableRow${key}`}>
+            <tr className={i % 2 === 0 ? "AltRow" : ""} key={`DataTableRow${key}`}>
               <td className="LabelCol">{key}</td>
               <td className="ValueCol">{this.props.data[key]}</td>
             </tr>

@@ -5,6 +5,7 @@
 .DataTable {
   width: 70%;
   margin: auto;
+  background-color: #969696;
 }
 
 .LabelCol {
@@ -20,7 +21,7 @@ table, td, th {
   border: 1px solid black;
 }
 
-.DarkRow {
-  background-color: #dddddd;
+.AltRow {
+  background-color: #c6c6c6;
 }
 

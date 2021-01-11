@@ -4,7 +4,7 @@
   margin: auto;
   width: 80%;
   height: 50%;
-  margin-bottom: 5px;
+  margin-top: 5px;
 }
 
 /* Style the Label of the Timer */
@@ -12,8 +12,10 @@
   position: relative; 
   flex: 1;
   display: flex;
-  background-color: #969696;
   align-items: center;
+  border-radius: 5px 0px 0px 5px;
+  background-color: #969696;
+  border: 1px solid black;
 }
 
 .TimerLabelElement {
@@ -26,9 +28,11 @@
   position: relative;
   flex: 1;
   display: flex;
-  background-color: #1e1e1e;
   text-align: center;
   font-size: 22px;
+  border-radius: 0px 5px 5px 0px;
+  background-color: black;
+  border: 1px solid black;
 }
 
 .TimerClockElement {

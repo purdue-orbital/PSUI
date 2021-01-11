@@ -7,13 +7,14 @@
     left: 0;
     height: 100%;
     width: 100%;
+    background-color: #646464;
 }
 
 #leftPannel {
     float: left;
     width: 50%;
     height: 60%;
-    background-color: bisque;
+    /* background-color: bisque; */
 }
 
 #timerContainer {
@@ -43,12 +44,12 @@
     float: left;
     width: 50%;
     height: 60%;
-    background-color: aquamarine;
+    /* background-color: aquamarine; */
 }
 
 #graphPannel {
     float: left;
     width: 100%;
     height: 40%;
-    background-color: lightcoral;
+    /* background-color: lightcoral; */
 }

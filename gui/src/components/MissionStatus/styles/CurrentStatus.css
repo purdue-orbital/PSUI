@@ -1,6 +1,11 @@
 .CurrentStatusObj {
   text-align: center;
   padding: 5px;
+  width: 66%;
+  border-radius: 5px;
+  margin: auto;
+  background-color: #969696;
+  border: 1px solid black;
 }
 
 .CurrentStatusLabel {
