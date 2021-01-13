@@ -19,16 +19,16 @@ class DataWindow extends React.Component {
       mission_start: false,
       launch_start: false,
       current_data: {
-        "Altitude" : 0,
-        "Longitude" : 0,
-        "Latitude" : 0,
-        "Gyro X" : 0,
-        "Gyro Y" : 0,
-        "Gyro Z" : 0,
-        "Temperature" : 0,
-        "Acceleration X" : 0,
-        "Acceleration Y" : 0,
-        "Acceleration Z" : 0,
+        "Altitude": 0,
+        "Longitude": 0,
+        "Latitude": 0,
+        "Gyro X": 0,
+        "Gyro Y": 0,
+        "Gyro Z": 0,
+        "Temperature": 0,
+        "Acceleration X": 0,
+        "Acceleration Y": 0,
+        "Acceleration Z": 0,
       },
       current_indicators: {
         packetsSent: { name: "Packets Sent", data: 0, },
@@ -46,16 +46,16 @@ class DataWindow extends React.Component {
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
-          "Altitude" : (1000 - 1) * Math.random() + 1, // random from 1 to 1000
-          "Longitude" : Math.random(),
-          "Latitude" : Math.random(),
-          "Gyro X" : Math.random(),
-          "Gyro Y" : Math.random(),
-          "Gyro Z" : Math.random(),
-          "Temperature" : Math.random(),
-          "Acceleration X" : Math.random(),
-          "Acceleration Y" : Math.random(),
-          "Acceleration Z" : Math.random(),
+          "Altitude": (1000 - 1) * Math.random() + 1, // random from 1 to 1000
+          "Longitude": Math.random(),
+          "Latitude": Math.random(),
+          "Gyro X": Math.random(),
+          "Gyro Y": Math.random(),
+          "Gyro Z": Math.random(),
+          "Temperature": Math.random(),
+          "Acceleration X": Math.random(),
+          "Acceleration Y": Math.random(),
+          "Acceleration Z": Math.random(),
         }
       })
 
@@ -81,6 +81,18 @@ class DataWindow extends React.Component {
             }}
           />
 
+          <IndicatorTable
+            indicators={this.state.current_indicators}
+            cols={4}
+          />
+        </div>
+
+        <div id='rightPannel'>
+          <DataTable
+            title="BALLOON DATA"
+            data={data}
+          />
+
           <div id="additionalControls">
             <button onClick={() => {
               if (this.state.mission_start === true && this.state.launch_start === false) {
@@ -95,17 +107,6 @@ class DataWindow extends React.Component {
           <div id="logoPannel">
             <img src={process.env.PUBLIC_URL + '/img/orbital-logo.gif'} alt="Purdue Orbital" />
           </div>
-        </div>
-
-        <div id='rightPannel'>
-          <DataTable
-            title="BALLOON DATA"
-            data={data}
-          />
-          <IndicatorTable
-            indicators={this.state.current_indicators}
-            cols={4}
-          />
         </div>
 
         <div id='graphPannel'>
