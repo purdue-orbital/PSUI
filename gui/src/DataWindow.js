@@ -19,11 +19,16 @@ class DataWindow extends React.Component {
       mission_start: false,
       launch_start: false,
       current_data: {
-        This: 0,
-        is: 0,
-        Some: 0,
-        Data: 0,
-        Another: 0
+        "Altitude" : 0,
+        "Longitude" : 0,
+        "Latitude" : 0,
+        "Gyro X" : 0,
+        "Gyro Y" : 0,
+        "Gyro Z" : 0,
+        "Temperature" : 0,
+        "Acceleration X" : 0,
+        "Acceleration Y" : 0,
+        "Acceleration Z" : 0,
       },
       current_indicators: {
         packetsSent: { name: "Packets Sent", data: 0, },
@@ -41,11 +46,16 @@ class DataWindow extends React.Component {
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
-          This: (1000 - 1) * Math.random() + 1, // random from 1 to 1000
-          is: Math.random(),
-          Some: Math.random(),
-          Data: Math.random(),
-          Another: Math.random(),
+          "Altitude" : (1000 - 1) * Math.random() + 1, // random from 1 to 1000
+          "Longitude" : Math.random(),
+          "Latitude" : Math.random(),
+          "Gyro X" : Math.random(),
+          "Gyro Y" : Math.random(),
+          "Gyro Z" : Math.random(),
+          "Temperature" : Math.random(),
+          "Acceleration X" : Math.random(),
+          "Acceleration Y" : Math.random(),
+          "Acceleration Z" : Math.random(),
         }
       })
 

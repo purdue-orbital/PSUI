@@ -15,12 +15,15 @@ class DataTable extends React.Component {
     return (
       <tbody>
         {
-          Object.keys(this.props.data).map((key, i) => (
-            <tr className={i % 2 === 0 ? "AltRow" : ""} key={`DataTableRow${key}`}>
-              <td className="LabelCol">{key}</td>
-              <td className="ValueCol">{this.props.data[key]}</td>
-            </tr>
-          ))
+          Object.keys(this.props.data).map((key, i) => {
+            const val = parseFloat(this.props.data[key]).toFixed(4);
+            return (
+              <tr className={i % 2 === 0 ? "AltRow" : ""} key={`DataTableRow${key}`}>
+                <td className="LabelCol">{key}</td>
+                <td className="ValueCol">{val}</td>
+              </tr>
+            )
+          })
         }
       </tbody>
     );
