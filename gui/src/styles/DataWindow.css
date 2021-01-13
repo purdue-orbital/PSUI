@@ -21,11 +21,20 @@
     height: 25%;
 }
 
+/* 
+ * Consider making additional Controls its own prop with 
+ * objects passed as props for buttons 
+ */
 #additionalControls {
-    display: flex;
-    justify-content: center;
-    width: 85%;
+    width: 50%;
     margin: auto;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    background-color: #979799
+}
+
+#additionalControls button {
+    width: 100%;
 }
 
 #logoPannel {

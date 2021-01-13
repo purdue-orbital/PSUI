@@ -65,7 +65,6 @@ class DataWindow extends React.Component {
             <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
             <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
           </div>
-          <br />
           <CurrentStatus
             onMissionStart={() => {
               this.setState({ mission_start: true });
