@@ -16,8 +16,8 @@ class DataWindow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mission_start: false,
-      launch_start: false,
+      mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
+      launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
       current_data: {
         "Altitude": 0,
         "Longitude": 0,
@@ -77,6 +77,8 @@ class DataWindow extends React.Component {
           </div>
           <CurrentStatus
             onMissionStart={() => {
+              // Needs to be saved as a string, bool not recognized
+              sessionStorage.setItem("DataWindowMissionStart", "true");
               this.setState({ mission_start: true });
             }}
           />
