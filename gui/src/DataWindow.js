@@ -98,6 +98,8 @@ class DataWindow extends React.Component {
           <div id="additionalControls">
             <button className="additionalControlButton" onClick={() => {
               if (this.state.mission_start === true && this.state.launch_start === false) {
+                // This is just for testing the timer, button starts timer if mission is started
+                // Does NOT check if verified or if mission is aborted
                 this.setState({ launch_start: true });
               }
             }}>Start Launch</button>
