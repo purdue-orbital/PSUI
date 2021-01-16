@@ -96,12 +96,12 @@ class DataWindow extends React.Component {
           />
 
           <div id="additionalControls">
-            <button onClick={() => {
+            <button className="additionalControlButton" onClick={() => {
               if (this.state.mission_start === true && this.state.launch_start === false) {
                 this.setState({ launch_start: true });
               }
             }}>Start Launch</button>
-            <button onClick={() => {
+            <button className="additionalControlButton" onClick={() => {
               alert("¯\\_(ツ)_/¯");
             }}>Stabilization</button>
           </div>

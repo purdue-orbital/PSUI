@@ -105,10 +105,10 @@ class CurrentStatus extends React.Component {
   __renderActionButtons() {
     const currStatus = this.state.status;
 
-    const startMissionButton = (<button className="StartMissionButton" onClick={() => this.__startMission()}>Start Mission</button>);
-    const verifyMissionButton = (<button className="VerifyButton" onClick={() => this.__verifyLaunch()}>Verify</button>);
-    const unverifyMissionButton = (<button className="UnverifyButton" onClick={() => this.__unverifyLaunch()}>Unverify</button>);
-    const abortMissionButton = (<button className="AbortButton" onClick={() => this.__abortLaunch()}>Abort</button>);
+    const startMissionButton = (<button className="StatusButton StartButton" onClick={() => this.__startMission()}>Start Mission</button>);
+    const verifyMissionButton = (<button className="StatusButton VerifyButton" onClick={() => this.__verifyLaunch()}>Verify</button>);
+    const unverifyMissionButton = (<button className="StatusButton UnverifyButton" onClick={() => this.__unverifyLaunch()}>Unverify</button>);
+    const abortMissionButton = (<button className="StatusButton AbortButton" onClick={() => this.__abortLaunch()}>Abort</button>);
 
     switch (currStatus) {
       case StatusEnum.STARTMISSION: return startMissionButton;

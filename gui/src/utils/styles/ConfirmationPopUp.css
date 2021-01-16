@@ -27,6 +27,10 @@
 }
 
 .close:hover {
-  color: cyan;
+  color: blue;
   cursor: pointer;
+}
+
+.PopUpButton {
+  width: 75px;
 }

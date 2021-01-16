@@ -18,3 +18,23 @@
 .CurrentStatus {
   font-size: 24px;
 }
+
+.StatusButton {
+  width: 75px;
+}
+
+.StartButton {
+  width: 150px;
+}
+
+.VerifyButton {
+  background-color: green;
+}
+
+.UnverifyButton {
+  background-color: yellow;
+}
+
+.AbortButton {
+  background-color: red;
+}
