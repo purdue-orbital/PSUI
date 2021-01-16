@@ -25,16 +25,17 @@
 
 .StartButton {
   width: 150px;
+  background-color: #ffbc12;
 }
 
 .VerifyButton {
-  background-color: green;
+  background-color: #09b000;
 }
 
 .UnverifyButton {
-  background-color: yellow;
+  background-color: #ffbc12;
 }
 
 .AbortButton {
-  background-color: red;
+  background-color: #e00000;
 }
