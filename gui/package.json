@@ -10,7 +10,7 @@
     "react-dom": "^16.14.0",
     "react-scripts": "^3.4.4"
   },
-  "main": "main.js",
+  "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
     "start": "BROWSER=none react-app-rewired start",
