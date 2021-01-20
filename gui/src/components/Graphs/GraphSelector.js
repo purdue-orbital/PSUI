@@ -2,6 +2,8 @@ import React from 'react';
 
 import Graph from './Graph';
 
+import './styles/GraphSelector.css';
+
 class GraphSelector extends React.Component {
   static defaultProps = {
     data: { defaultData: 0 }
@@ -64,16 +66,20 @@ class GraphSelector extends React.Component {
     const datasets = [this.prevData[showGraph]];
 
     return (
-      <div>
-        <Graph datasets={datasets} />
-        <form>
-          <label>
-            Pick Graph to View:
+      <div id="GraphSelectorDiv">
+        <div id="GraphContainer">
+          <Graph datasets={datasets} />
+        </div>
+        <div id="FormContainer">
+          <form>
+            <label>
+              Pick Graph to View:
             <select value={showGraph} onChange={this.__handleChange}>
-              {this.__createDataSelectOptions()}
-            </select>
-          </label>
-        </form>
+                {this.__createDataSelectOptions()}
+              </select>
+            </label>
+          </form>
+        </div>
       </div>
     );
 

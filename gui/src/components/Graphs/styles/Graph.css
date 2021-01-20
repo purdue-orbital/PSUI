@@ -1,4 +1,10 @@
 #GraphDiv {
+    position: relative;
     width: auto;
-    height: auto;
+    height: 100%;
+}
+
+#GraphCanvas {
+    position: relative;
+    margin: auto;
 }

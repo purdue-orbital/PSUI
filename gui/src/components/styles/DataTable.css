@@ -1,8 +1,27 @@
+.DataTableContainer {
+  margin-top: 5px;
+}
+
+.DataTable {
+  width: 75%;
+  margin: auto;
+  background-color: #969696;
+}
+
+.LabelCol {
+  width: 45%;
+}
+
+.ValueCol {
+  text-align: right;
+}
+
 table, td, th {
   border-collapse: collapse;
   border: 1px solid black;
 }
 
-.DarkRow {
-  background-color: #dddddd;
+.AltRow {
+  background-color: #c6c6c6;
 }
+

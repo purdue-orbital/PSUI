@@ -24,8 +24,8 @@ class ConfirmationPopUp extends React.Component {
             &times;
           </span>
           <p>{this.props.children}</p>
-          <button onClick={accept}>Continue</button>
-          <button onClick={decline}>Cancel</button>
+          <button className="PopUpButton" onClick={accept}>Continue</button>
+          <button className="PopUpButton" onClick={decline}>Cancel</button>
         </div>
       </div>
     );

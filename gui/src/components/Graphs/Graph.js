@@ -5,8 +5,6 @@ import './styles/Graph.css';
 
 class Graph extends React.Component {
   static defaultProps = {
-    width: 400,
-    height: 100,
     datasets: [],
   };
 
@@ -61,7 +59,8 @@ class Graph extends React.Component {
         },
         animation: {
           duration: 0,
-        }
+        },
+        maintainAspectRatio: false,
       }
     });
   }
@@ -75,7 +74,7 @@ class Graph extends React.Component {
   render() {
     return (
       <div id="GraphDiv">
-        <canvas id="GraphCanvas" ref={this.canvasRef} width={this.props.width} height={this.props.height} />
+        <canvas id="GraphCanvas" ref={this.canvasRef} />
       </div>
     );
   }

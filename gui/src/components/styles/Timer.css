@@ -1,11 +1,42 @@
+.TimerContainer {
+  position: relative;
+  display: flex;
+  margin: auto;
+  width: 85%;
+  height: 50%;
+  margin-top: 5px;
+}
+
 /* Style the Label of the Timer */
-.TimerLable { 
-  background-color: #969694;
+.TimerLabelContainer {
+  position: relative; 
+  flex: 1;
+  display: flex;
+  align-items: center;
+  border-radius: 5px 0px 0px 5px;
+  background-color: #969696;
+  border: 1px solid black;
+}
+
+.TimerLabelElement {
+  margin: auto;
+  font-size: 22px;
 }
 
 /* Style the Counting part of the Timer */
-.TimerClock {
+.TimerClockContainer {
+  position: relative;
+  flex: 1;
+  display: flex;
+  text-align: center;
+  font-size: 22px;
+  border-radius: 0px 5px 5px 0px;
+  background-color: black;
+  border: 1px solid black;
+}
+
+.TimerClockElement {
+  margin: auto;
   color: white;
-  background-color: #1e1e1e;
 }
 

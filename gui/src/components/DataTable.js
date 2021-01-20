@@ -2,6 +2,10 @@ import React from 'react';
 import './styles/DataTable.css';
 
 class DataTable extends React.Component {
+  static defaultProps = {
+    title: "DATA",
+  };
+
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,25 +15,32 @@ class DataTable extends React.Component {
     return (
       <tbody>
         {
-          Object.keys(this.props.data).map((key, i) => (
-            <tr className={i % 2 === 0 ? "DarkRow" : ""} key={`DataTableRow${key}`}>
-              <td>{key}</td>
-              <td>{this.props.data[key]}</td>
-            </tr>
-          ))
+          Object.keys(this.props.data).map((key, i) => {
+            const val = parseFloat(this.props.data[key]).toFixed(4);
+            return (
+              <tr className={i % 2 === 0 ? "AltRow" : ""} key={`DataTableRow${key}`}>
+                <td className="LabelCol">{key}</td>
+                <td className="ValueCol">{val}</td>
+              </tr>
+            )
+          })
         }
       </tbody>
     );
   }
 
   render() {
+    const tableTitle = this.props.title;
     return (
-      <div>
-        <table>
+      <div className="DataTableContainer">
+        <table className="DataTable">
           <thead>
             <tr key="DataTableTitle">
+              <th colSpan={2}>{tableTitle}</th>
+            </tr>
+            <tr key="DataTableLabels">
               <th>LABEL</th>
-              <th>DATA</th>
+              <th>VALUE</th>
             </tr>
           </thead>
           {this.makeTableRows()}

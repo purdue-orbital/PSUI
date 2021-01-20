@@ -5,9 +5,11 @@ function createWindow () {
   const win = new BrowserWindow({
     width: 800,
     height: 600,
+    minWidth: 692,
+    minHeight: 590,
     webPreferences: {
       nodeIntegration: true
-    }
+    },
   });
 
   // and load the index.html of the app.
