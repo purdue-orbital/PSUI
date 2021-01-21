@@ -11,7 +11,7 @@ class DataTable extends React.Component {
     this.state = {};
   }
 
-  makeTableRows(dataObj, options) {
+  __makeTableRows(dataObj, options) {
     if (typeof options === "undefined") { options = {}; } 
     if (typeof options.startRowNum === "undefined") { options.startRowNum = 0; } 
     if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; } 
@@ -22,7 +22,7 @@ class DataTable extends React.Component {
             const index = i + options.startRowNum;
             const data = dataObj[key];
             if (typeof data === "object") {
-              return this.makeTableRows(data, {
+              return this.__makeTableRows(data, {
                 rowPrefix: `${key} - `,
                 startRowNum: index,
               })
@@ -56,7 +56,7 @@ class DataTable extends React.Component {
               <th>VALUE</th>
             </tr>
           </thead>
-          <tbody>{this.makeTableRows(data)}</tbody>
+          <tbody>{this.__makeTableRows(data)}</tbody>
         </table>
       </div>
     );
