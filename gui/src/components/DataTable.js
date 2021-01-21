@@ -11,26 +11,39 @@ class DataTable extends React.Component {
     this.state = {};
   }
 
-  makeTableRows() {
+  makeTableRows(dataObj, options) {
+    if (typeof options === "undefined") { options = {}; } 
+    if (typeof options.startRowNum === "undefined") { options.startRowNum = 0; } 
+    if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; } 
     return (
-      <tbody>
+      <>
         {
-          Object.keys(this.props.data).map((key, i) => {
-            const val = parseFloat(this.props.data[key]).toFixed(4);
+          Object.keys(dataObj).map((key, i) => {
+            const index = i + options.startRowNum;
+            const data = dataObj[key];
+            if (typeof data === "object") {
+              return this.makeTableRows(data, {
+                rowPrefix: `${key} - `,
+                startRowNum: index,
+              })
+            }
+            const rowName = `${options.rowPrefix}${key}`
+            const val = parseFloat(data).toFixed(4);
             return (
-              <tr className={i % 2 === 0 ? "AltRow" : ""} key={`DataTableRow${key}`}>
-                <td className="LabelCol">{key}</td>
+              <tr className={index % 2 === 0 ? "AltRow" : ""} key={`DataTableRow - ${rowName}`}>
+                <td className="LabelCol">{rowName}</td>
                 <td className="ValueCol">{val}</td>
               </tr>
             )
           })
         }
-      </tbody>
+      </>
     );
   }
 
   render() {
     const tableTitle = this.props.title;
+    const data = this.props.data;
     return (
       <div className="DataTableContainer">
         <table className="DataTable">
@@ -43,7 +56,7 @@ class DataTable extends React.Component {
               <th>VALUE</th>
             </tr>
           </thead>
-          {this.makeTableRows()}
+          <tbody>{this.makeTableRows(data)}</tbody>
         </table>
       </div>
     );
