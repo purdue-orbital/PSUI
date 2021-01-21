@@ -47,23 +47,26 @@ class DataWindow extends React.Component {
   }
 
   componentDidMount() {
-    // this.interval = setInterval(() => {
-    //   this.setState({
-    //     current_data: {
-    //       "Altitude": (1000 - 1) * Math.random() + 1, // random from 1 to 1000
-    //       "Longitude": Math.random(),
-    //       "Latitude": Math.random(),
-    //       "Gyro X": Math.random(),
-    //       "Gyro Y": Math.random(),
-    //       "Gyro Z": Math.random(),
-    //       "Temperature": Math.random(),
-    //       "Acceleration X": Math.random(),
-    //       "Acceleration Y": Math.random(),
-    //       "Acceleration Z": Math.random(),
-    //     }
-    //   })
-
-    // }, 1000);
+    this.interval = setInterval(() => {
+      this.setState({
+        current_data: {
+          Altitude: Math.random(),
+          Longitude: Math.random(),
+          Latitude: Math.random(),
+          Gyro: {
+            X: Math.random(),
+            Y: Math.random(),
+            Z: Math.random(),
+          },
+          Temperature: Math.random(),
+          Acceleration: {
+            X: Math.random(),
+            Y: Math.random(),
+            Z: Math.random(),
+          }
+        },
+      });
+    }, 1000);
   }
 
   componentWillUnmount() {
@@ -118,7 +121,7 @@ class DataWindow extends React.Component {
         </div>
 
         <div id='graphPannel'>
-          <GraphSelector data={data} />
+          <GraphSelector />
         </div>
       </div >
     );
