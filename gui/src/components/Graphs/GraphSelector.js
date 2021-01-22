@@ -15,11 +15,8 @@ class GraphSelector extends React.Component {
       currentGraph: Object.keys(this.props.data)[0],
     };
 
+    console.log(this.__flattenDataObj(this.props.data));
     this.prevData = this.__createDataHistory(this.props.data);
-    this.displayableDatasets = {
-      Altitude: [this.prevData["Altitude"]],
-      Gyro: [this.prevData["Gyro-X"], this.prevData["Gyro-Y"], this.prevData["Gyro-Z"]]
-    };
     this.__handleChange = this.__handleChange.bind(this);
   }
 
@@ -36,6 +33,8 @@ class GraphSelector extends React.Component {
         Object.assign(flatDataObj, this.__flattenDataObj(dictValue, {
           featurePrefix: `${dictKey}-`,
         }));
+      } else {
+        continue;
       }
     }
     return flatDataObj;
@@ -45,7 +44,7 @@ class GraphSelector extends React.Component {
     const currData = this.__flattenDataObj(this.props.data);
     const now = Date.now();
     for (const k in this.prevData) {
-      if (isNaN(currData[k])) {
+      if (Number.isNaN(currData[k])) {
         continue;
       }
       this.prevData[k].data.shift();
@@ -71,7 +70,7 @@ class GraphSelector extends React.Component {
   }
 
   __createDataSelectOptions() {
-    const keys = Object.keys(this.displayableDatasets); // Object.keys(this.prevData);
+    const keys = Object.keys(this.prevData);
     return keys.map((k, i) => {
       return (
         <option value={k} key={i}>{k}</option>
@@ -84,7 +83,7 @@ class GraphSelector extends React.Component {
 
     // Because we are pasing in entier datasets now it is completly possible to view many datasets at once
     // Might be worth while changing dropdown list to a selection box
-    const datasets = this.displayableDatasets[showGraph] // [this.prevData[showGraph]];
+    const datasets = [this.prevData[showGraph]];
 
     return (
       <div id="GraphSelectorDiv">
