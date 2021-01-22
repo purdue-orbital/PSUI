@@ -47,26 +47,26 @@ class DataWindow extends React.Component {
   }
 
   componentDidMount() {
-    // this.interval = setInterval(() => {
-    //   this.setState({
-    //     current_data: {
-    //       Altitude: Math.random(),
-    //       Longitude: Math.random(),
-    //       Latitude: Math.random(),
-    //       Gyro: {
-    //         X: Math.random(),
-    //         Y: Math.random(),
-    //         Z: Math.random(),
-    //       },
-    //       Temperature: Math.random(),
-    //       Acceleration: {
-    //         X: Math.random(),
-    //         Y: Math.random(),
-    //         Z: Math.random(),
-    //       }
-    //     },
-    //   });
-    // }, 1000);
+    this.interval = setInterval(() => {
+      this.setState({
+        current_data: {
+          Altitude: Math.random(),
+          Longitude: Math.random(),
+          Latitude: Math.random(),
+          Gyro: {
+            X: Math.random(),
+            Y: Math.random(),
+            Z: Math.random(),
+          },
+          Temperature: Math.random(),
+          Acceleration: {
+            X: Math.random(),
+            Y: Math.random(),
+            Z: Math.random(),
+          }
+        },
+      });
+    }, 1000);
     console.log("Mounted!!");
   }
 

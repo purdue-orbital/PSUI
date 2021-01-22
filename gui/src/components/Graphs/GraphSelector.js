@@ -41,7 +41,7 @@ class GraphSelector extends React.Component {
   }
 
   componentDidUpdate() {
-    const currData = this.props.data;
+    const currData = this.__flattenDataObj(this.props.data);
     const now = Date.now();
     for (const k in this.prevData) {
       if (Number.isNaN(currData[k])) {
@@ -55,7 +55,7 @@ class GraphSelector extends React.Component {
   __createDataHistory(data) {
     const histLen = 20;
     const now = Date.now();
-    const keys = Object.keys(data);
+    const keys = Object.keys(this.__flattenDataObj(data));
     let historyCacheObj = {};
     keys.forEach(k => historyCacheObj[k] = {
       label: k,
@@ -70,8 +70,7 @@ class GraphSelector extends React.Component {
   }
 
   __createDataSelectOptions() {
-    const data = this.props.data;
-    const keys = Object.keys(data);
+    const keys = Object.keys(this.prevData);
     return keys.map((k, i) => {
       return (
         <option value={k} key={i}>{k}</option>
