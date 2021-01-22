@@ -67,7 +67,6 @@ class DataWindow extends React.Component {
         },
       });
     }, 1000);
-    console.log("Mounted!!");
   }
 
   componentWillUnmount() {

@@ -15,7 +15,6 @@ class GraphSelector extends React.Component {
       currentGraph: Object.keys(this.props.data)[0],
     };
 
-    console.log(this.__flattenDataObj(this.props.data));
     this.prevData = this.__createDataHistory(this.props.data);
     this.__handleChange = this.__handleChange.bind(this);
   }
@@ -33,8 +32,6 @@ class GraphSelector extends React.Component {
         Object.assign(flatDataObj, this.__flattenDataObj(dictValue, {
           featurePrefix: `${dictKey}-`,
         }));
-      } else {
-        continue;
       }
     }
     return flatDataObj;
