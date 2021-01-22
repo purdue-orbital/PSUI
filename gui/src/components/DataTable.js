@@ -21,7 +21,7 @@ class DataTable extends React.Component {
           Object.keys(dataObj).map((key, i) => {
             const index = i + options.startRowNum;
             const data = dataObj[key];
-            if (typeof data === "object") {
+            if (typeof data === "object" && data !== null) {
               return this.__makeTableRows(data, {
                 rowPrefix: `${key} - `,
                 startRowNum: index,
