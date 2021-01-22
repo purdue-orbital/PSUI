@@ -32,7 +32,7 @@ class DataWindow extends React.Component {
           X: 0,
           Y: 0,
           Z: 0,
-        }
+        },
       },
       current_indicators: {
         packetsSent: { name: "Packets Sent", data: 0, },
@@ -47,26 +47,27 @@ class DataWindow extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current_data: {
-          Altitude: Math.random(),
-          Longitude: Math.random(),
-          Latitude: Math.random(),
-          Gyro: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          },
-          Temperature: Math.random(),
-          Acceleration: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }
-        },
-      });
-    }, 1000);
+    // this.interval = setInterval(() => {
+    //   this.setState({
+    //     current_data: {
+    //       Altitude: Math.random(),
+    //       Longitude: Math.random(),
+    //       Latitude: Math.random(),
+    //       Gyro: {
+    //         X: Math.random(),
+    //         Y: Math.random(),
+    //         Z: Math.random(),
+    //       },
+    //       Temperature: Math.random(),
+    //       Acceleration: {
+    //         X: Math.random(),
+    //         Y: Math.random(),
+    //         Z: Math.random(),
+    //       }
+    //     },
+    //   });
+    // }, 1000);
+    console.log("Mounted!!");
   }
 
   componentWillUnmount() {
@@ -121,7 +122,7 @@ class DataWindow extends React.Component {
         </div>
 
         <div id='graphPannel'>
-          <GraphSelector />
+          <GraphSelector data={data}/>
         </div>
       </div >
     );

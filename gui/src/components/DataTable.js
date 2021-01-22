@@ -23,14 +23,14 @@ class DataTable extends React.Component {
             const data = dataObj[key];
             if (typeof data === "object" && data !== null) {
               return this.__makeTableRows(data, {
-                rowPrefix: `${key} - `,
+                rowPrefix: `${key}-`,
                 startRowNum: index,
               })
             }
             const rowName = `${options.rowPrefix}${key}`
             const val = parseFloat(data).toFixed(4);
             return (
-              <tr className={index % 2 === 0 ? "AltRow" : ""} key={`DataTableRow - ${rowName}`}>
+              <tr className={index % 2 === 0 ? "AltRow" : ""} key={`DataTableRow-${rowName}`}>
                 <td className="LabelCol">{rowName}</td>
                 <td className="ValueCol">{val}</td>
               </tr>

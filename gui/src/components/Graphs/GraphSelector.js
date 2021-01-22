@@ -15,8 +15,29 @@ class GraphSelector extends React.Component {
       currentGraph: Object.keys(this.props.data)[0],
     };
 
+    console.log(this.__flattenDataObj(this.props.data));
     this.prevData = this.__createDataHistory(this.props.data);
     this.__handleChange = this.__handleChange.bind(this);
+  }
+
+  __flattenDataObj(obj, options) {
+    if (typeof options === "undefined") { options = {}; }
+    if (typeof options.featurePrefix === "undefined") { options.featurePrefix = ""; }
+
+    let flatDataObj = {};
+    for (const dictKey in obj) {
+      const dictValue = obj[dictKey];
+      if (!isNaN(dictValue)) {
+        flatDataObj[`${options.featurePrefix}${dictKey}`] = dictValue;
+      } else if (typeof dictValue === "object" && dictValue !== null) {
+        Object.assign(flatDataObj, this.__flattenDataObj(dictValue, {
+          featurePrefix: `${dictKey}-`,
+        }));
+      } else {
+        continue;
+      }
+    }
+    return flatDataObj;
   }
 
   componentDidUpdate() {
