@@ -18,7 +18,14 @@ class Graph extends React.Component {
   }
 
   componentDidMount() {
-    const datasets = this.props.datasets;
+    this.__makeNewChart(this.props.datasets)
+  }
+  
+  __makeNewChart(datasets) {
+    if (this.chart != null) {
+      this.chart.destroy();
+      this.chart = null;
+    }
     const ctx = this.canvasRef.current.getContext("2d");
     this.chart = new Chart(ctx, {
       // The type of chart we want to create
@@ -48,7 +55,7 @@ class Graph extends React.Component {
             display: false,
             ticks: {
               suggestedMin: 0
-            }
+            },
           }],
           yAxes: [{
             ticks: {
@@ -66,9 +73,18 @@ class Graph extends React.Component {
   }
 
   componentDidUpdate() {
+    const curr_datasets = this.chart.data.datasets;
     const new_datasets = this.props.datasets;
-    this.chart.config.data.datasets = new_datasets;
-    this.chart.update();
+
+    if (curr_datasets !== new_datasets) {
+      console.log("DATA CHANGE!!");
+      this.chart.stop().reset();
+      this.__makeNewChart(new_datasets);
+      // this.chart.data.datasets = new_datasets;
+    } else {
+      this.chart.update();
+    }
+
   }
 
   render() {

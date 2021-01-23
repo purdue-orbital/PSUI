@@ -16,6 +16,12 @@ class GraphSelector extends React.Component {
     };
 
     this.prevData = this.__createDataHistory(this.props.data);
+
+    this.graphChoices = {
+      Altitude: [this.prevData['Altitude']],
+      Gyro: [this.prevData["Gyro-X"], this.prevData["Gyro-Y"], this.prevData["Gyro-Z"]]
+    }
+
     this.__handleChange = this.__handleChange.bind(this);
   }
 
@@ -67,7 +73,7 @@ class GraphSelector extends React.Component {
   }
 
   __createDataSelectOptions() {
-    const keys = Object.keys(this.prevData);
+    const keys = Object.keys(this.graphChoices);
     return keys.map((k, i) => {
       return (
         <option value={k} key={i}>{k}</option>
@@ -80,7 +86,7 @@ class GraphSelector extends React.Component {
 
     // Because we are pasing in entier datasets now it is completly possible to view many datasets at once
     // Might be worth while changing dropdown list to a selection box
-    const datasets = [this.prevData[showGraph]];
+    const datasets = this.graphChoices[showGraph];
 
     return (
       <div id="GraphSelectorDiv">
