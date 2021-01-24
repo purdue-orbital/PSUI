@@ -30,7 +30,10 @@ class DataWindow extends React.Component {
         Temperature: 0,
         Acceleration: {
           X: 0,
-          Y: 0,
+          Y: {
+            A: 0,
+            B: 0,
+          },
           Z: 0,
         },
       },
@@ -61,7 +64,10 @@ class DataWindow extends React.Component {
           Temperature: Math.random(),
           Acceleration: {
             X: Math.random(),
-            Y: Math.random(),
+            Y: {
+              A: Math.random(),
+              B: Math.random(),
+            },
             Z: Math.random(),
           }
         },
@@ -121,7 +127,7 @@ class DataWindow extends React.Component {
         </div>
 
         <div id='graphPannel'>
-          <GraphSelector data={data}/>
+          <GraphSelector data={data} />
         </div>
       </div >
     );

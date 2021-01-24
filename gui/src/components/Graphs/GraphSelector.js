@@ -44,10 +44,11 @@ class GraphSelector extends React.Component {
         flatDataObj[`${options.featurePrefix}${dictKey}`] = dictValue;
       } else if (typeof dictValue === "object" && dictValue !== null) {
         Object.assign(flatDataObj, this.__flattenDataObj(dictValue, {
-          featurePrefix: `${dictKey}-`,
+          featurePrefix: `${options.featurePrefix}${dictKey}-`,
         }));
       }
     }
+    console.log(flatDataObj); // TODO: Remove after debug
     return flatDataObj;
   }
 

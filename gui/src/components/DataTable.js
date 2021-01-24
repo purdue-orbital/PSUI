@@ -12,9 +12,10 @@ class DataTable extends React.Component {
   }
 
   __makeTableRows(dataObj, options) {
-    if (typeof options === "undefined") { options = {}; } 
-    if (typeof options.startRowNum === "undefined") { options.startRowNum = 0; } 
-    if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; } 
+    if (typeof options === "undefined") { options = {}; }
+    if (typeof options.startRowNum === "undefined") { options.startRowNum = 0; } // FIXME: This is used to choose the color of a row and it does not work
+    if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; }
+    // console.log(options.rowPrefix); // TODO: Remove after debug
     return (
       <>
         {
@@ -23,7 +24,7 @@ class DataTable extends React.Component {
             const data = dataObj[key];
             if (typeof data === "object" && data !== null) {
               return this.__makeTableRows(data, {
-                rowPrefix: `${key}-`,
+                rowPrefix: `${options.rowPrefix}${key}-`,
                 startRowNum: index,
               })
             }
