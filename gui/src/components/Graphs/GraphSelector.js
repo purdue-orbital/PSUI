@@ -25,7 +25,7 @@ class GraphSelector extends React.Component {
       if (subsetDatasetKeys.length === 0) {
         this.graphChoices[k] = [this.prevData[k]];
       } else {
-        const lineColors = ['rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
+        const lineColors = ['rgb(255, 255, 0)', 'rgb(0, 255, 255)', 'rgb(255, 0, 255)', 'rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
         this.graphChoices[k] = subsetDatasetKeys.map((key, i) => {
           this.prevData[`${k}-${key}`].borderColor = lineColors[i % lineColors.length];
           return this.prevData[`${k}-${key}`];

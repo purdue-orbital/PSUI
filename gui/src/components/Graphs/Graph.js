@@ -37,6 +37,7 @@ class Graph extends React.Component {
       // Configuration options go here
       options: {
         events: [],
+        maintainAspectRatio: false,
         tooltips: {
           enabled: false,
         },
@@ -48,6 +49,11 @@ class Graph extends React.Component {
             tension: 0
           }
         },
+        legend: {
+          labels: {
+            fontColor: "rgb(0,0,0)"
+          },
+        },
         scales: {
           xAxes: [{
             type: 'time',
@@ -58,17 +64,20 @@ class Graph extends React.Component {
             },
           }],
           yAxes: [{
+            gridLines: {
+              color: "rgba(0,0,0,0.2)"
+            },
             ticks: {
+              fontColor: "rgb(0,0,0)",
               suggestedMin: 0,
               suggestedMax: 1
-            }
-          }]
+            },
+          }],
         },
         animation: {
           duration: 0,
         },
-        maintainAspectRatio: false,
-      }
+      },
     });
   }
 
