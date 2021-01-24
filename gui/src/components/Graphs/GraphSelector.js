@@ -18,14 +18,18 @@ class GraphSelector extends React.Component {
     const startingDataSet = this.props.data;
     this.prevData = this.__createDataHistory(startingDataSet);
     
-    this.graphChoices = {}; 
+    this.graphChoices = {};
     for (const k in startingDataSet) {
       const subsetDataset = this.__flattenDataObj(startingDataSet[k]);
       const subsetDatasetKeys = Object.keys(subsetDataset);
       if (subsetDatasetKeys.length === 0) {
         this.graphChoices[k] = [this.prevData[k]];
       } else {
-        this.graphChoices[k] = subsetDatasetKeys.map(key => this.prevData[`${k}-${key}`]);
+        const lineColors = ['rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
+        this.graphChoices[k] = subsetDatasetKeys.map((key, i) => {
+          this.prevData[`${k}-${key}`].borderColor = lineColors[i % lineColors.length];
+          return this.prevData[`${k}-${key}`];
+        });
       }
     }
     console.log(this.graphChoices); // TODO: Remove this after debugging
@@ -48,7 +52,7 @@ class GraphSelector extends React.Component {
         }));
       }
     }
-    console.log(flatDataObj); // TODO: Remove after debug
+    // console.log(flatDataObj); // TODO: Remove after debug
     return flatDataObj;
   }
 
