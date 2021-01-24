@@ -11,35 +11,40 @@ class DataTable extends React.Component {
     this.state = {};
   }
 
-  __makeTableRows(dataObj, options) {
-    if (typeof options === "undefined") { options = {}; }
-    if (typeof options.startRowNum === "undefined") { options.startRowNum = 0; } // FIXME: This is used to choose the color of a row and it does not work
-    if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; }
-    // console.log(options.rowPrefix); // TODO: Remove after debug
-    return (
-      <>
-        {
-          Object.keys(dataObj).map((key, i) => {
-            const index = i + options.startRowNum;
-            const data = dataObj[key];
-            if (typeof data === "object" && data !== null) {
-              return this.__makeTableRows(data, {
-                rowPrefix: `${options.rowPrefix}${key}-`,
-                startRowNum: index,
-              })
-            }
-            const rowName = `${options.rowPrefix}${key}`
-            const val = parseFloat(data).toFixed(4);
-            return (
-              <tr className={index % 2 === 0 ? "AltRow" : ""} key={`DataTableRow-${rowName}`}>
-                <td className="LabelCol">{rowName}</td>
-                <td className="ValueCol">{val}</td>
-              </tr>
-            )
-          })
-        }
-      </>
-    );
+  __renderTableRows(dataObj) {
+    let numRowsRendered = 0;
+
+    const makeTableRows = (dataObj, options) => {
+      if (typeof options === "undefined") { options = {}; }
+      if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; }
+      return (
+        <>
+          {
+            Object.keys(dataObj).map(key => {
+              const data = dataObj[key];
+              if (typeof data === "object" && data !== null) {
+                return makeTableRows(data, {
+                  rowPrefix: `${options.rowPrefix}${key}-`,
+                })
+              } else if (typeof data === "number") {
+                const rowName = `${options.rowPrefix}${key}`
+                const val = parseFloat(data).toFixed(4);
+                return (
+                  <tr className={numRowsRendered++ % 2 === 0 ? "AltRow" : ""} key={`DataTableRow-${rowName}`}>
+                    <td className="LabelCol">{rowName}</td>
+                    <td className="ValueCol">{val}</td>
+                  </tr>
+                );
+              } else {
+                return null;
+              }
+            })
+          }
+        </>
+      );
+    }
+
+    return makeTableRows(dataObj);
   }
 
   render() {
@@ -57,7 +62,7 @@ class DataTable extends React.Component {
               <th>VALUE</th>
             </tr>
           </thead>
-          <tbody>{this.__makeTableRows(data)}</tbody>
+          <tbody>{this.__renderTableRows(data)}</tbody>
         </table>
       </div>
     );
