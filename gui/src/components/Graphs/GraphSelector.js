@@ -15,13 +15,21 @@ class GraphSelector extends React.Component {
       currentGraph: Object.keys(this.props.data)[0],
     };
 
-    this.prevData = this.__createDataHistory(this.props.data);
-
-    this.graphChoices = {
-      Altitude: [this.prevData['Altitude']],
-      Gyro: [this.prevData["Gyro-X"], this.prevData["Gyro-Y"], this.prevData["Gyro-Z"]]
+    const startingDataSet = this.props.data;
+    this.prevData = this.__createDataHistory(startingDataSet);
+    
+    this.graphChoices = {}; 
+    for (const k in startingDataSet) {
+      const subsetDataset = this.__flattenDataObj(startingDataSet[k]);
+      const subsetDatasetKeys = Object.keys(subsetDataset);
+      if (subsetDatasetKeys.length === 0) {
+        this.graphChoices[k] = [this.prevData[k]];
+      } else {
+        this.graphChoices[k] = subsetDatasetKeys.map(key => this.prevData[`${k}-${key}`]);
+      }
     }
-
+    console.log(this.graphChoices); // TODO: Remove this after debugging
+    
     this.__handleChange = this.__handleChange.bind(this);
   }
 
