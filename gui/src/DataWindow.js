@@ -30,10 +30,7 @@ class DataWindow extends React.Component {
         Temperature: 0,
         Acceleration: {
           X: 0,
-          Y: {
-            A: 0,
-            B: 0,
-          },
+          Y: 0,
           Z: 0,
         },
       },
@@ -64,10 +61,7 @@ class DataWindow extends React.Component {
           Temperature: Math.random(),
           Acceleration: {
             X: Math.random(),
-            Y: {
-              A: Math.random(),
-              B: Math.random(),
-            },
+            Y: Math.random(),
             Z: Math.random(),
           }
         },
