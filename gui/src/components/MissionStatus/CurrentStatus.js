@@ -1,15 +1,10 @@
 import React from 'react';
 
-import ConfirmationPopUp from '../../utils/ConfirmationPopUp.js';
+import StatusEnum from '../../utils/MissionStatuses.js'
+
+import ConfirmationPopUp from '../../utils/UtilComponents/ConfirmationPopUp.js';
 
 import './styles/CurrentStatus.css';
-
-const StatusEnum = Object.freeze({
-  STARTMISSION: "Waiting to Start",
-  UNVERIFIED: "Not Verified",
-  VERIFIED: "Verified",
-  ABORTED: "Aborted",
-});
 
 class CurrentStatus extends React.Component {
   static defaultProps = {
