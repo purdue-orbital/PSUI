@@ -25,7 +25,7 @@ class GraphSelector extends React.Component {
       if (subsetDatasetKeys.length === 0) {
         this.graphChoices[k] = [this.prevData[k]];
       } else {
-        const lineColors = ['rgb(255, 255, 0)', 'rgb(0, 255, 255)', 'rgb(255, 0, 255)', 'rgb(0, 0, 0)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
+        const lineColors = ['rgb(255, 255, 0)', 'rgb(0, 255, 255)', 'rgb(255, 0, 255)', 'rgb(0, 0, 0)', 'rgb(255,188,18)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
         this.graphChoices[k] = subsetDatasetKeys.map((key, i) => {
           this.prevData[`${k}-${key}`].borderColor = lineColors[i % lineColors.length];
           return this.prevData[`${k}-${key}`];
@@ -58,7 +58,7 @@ class GraphSelector extends React.Component {
     const currData = this.__flattenDataObj(this.props.data);
     const now = Date.now();
     for (const k in this.prevData) {
-      if (Number.isNaN(currData[k])) {
+      if (isNaN(currData[k])) {
         continue;
       }
       this.prevData[k].data.shift();
@@ -73,7 +73,7 @@ class GraphSelector extends React.Component {
     let historyCacheObj = {};
     keys.forEach(k => historyCacheObj[k] = {
       label: k,
-      borderColor: 'rgb(0,0,0)',
+      borderColor: 'rgb(255,188,18)', // Is the same gold as the buttons, if no like use black 'rgb(0,0,0)'
       data: Array(histLen).fill({ "x": now, "y": 0 }),
     });
     return historyCacheObj;
