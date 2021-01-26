@@ -37,15 +37,15 @@ class DataWindow extends React.Component {
           Z: 0,
         },
       },
-      current_indicators: {
-        packetsSent: { name: "Packets Sent", data: 0, },
-        packetsRecieved: { name: "Packets Recieved", data: 0, },
-        QDM: { name: "QDM", data: false, },
-        Ignition: { name: "Ignition", data: false, },
-        GSRadio: { name: "GS Radio", data: false, },
-        PlatformStability: { name: "Platform Stability", data: false, },
-        PlatformRadio: { name: "Platform Radio", data: false, },
-      },
+      current_indicators: [
+        { name: "Packets Sent", data: 0, },
+        { name: "Packets Recieved", data: 0, },
+        { name: "QDM", data: false, },
+        { name: "Ignition", data: false, },
+        { name: "GS Radio", data: false, },
+        { name: "Platform Stability", data: false, },
+        { name: "Platform Radio", data: false, },
+      ],
     }
   }
 

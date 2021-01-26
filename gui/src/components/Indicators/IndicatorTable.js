@@ -30,13 +30,13 @@ class IndicatorTable extends React.Component {
 
   __generateLayout() {
     const indicators = this.props.indicators;
-    const indicatorKeys = Object.keys(indicators);
+    const indicatorIndexes = Object.keys(indicators); // Get array of indexes of of indeicators in increasing order
     const cols = this.props.cols;
-    const rows = Math.ceil(indicatorKeys.length / cols);
+    const rows = Math.ceil(indicatorIndexes.length / cols);
 
     let indicatorTable = [];
     for (let i = 0; i < rows; i++) {
-      indicatorTable[i] = indicatorKeys.slice(i * cols, (i + 1) * cols);
+      indicatorTable[i] = indicatorIndexes.slice(i * cols, (i + 1) * cols);
     }
 
     for (let i = indicatorTable[rows - 1].length; i < cols; i++) {
@@ -67,19 +67,19 @@ class IndicatorTable extends React.Component {
     const indicators = this.props.indicators;
     const layout = this.__layout;
 
-    const buildRow = (arrayOfKeys) => {
-      return arrayOfKeys.map((key, i) => {
-        if (key == null) { return (<td></td>); }
-        return (<td><GenericIndicator name={indicators[key].name} data={indicators[key].data} /></td>);
+    const buildRow = (arrayOfIndices) => {
+      return arrayOfIndices.map((index) => {
+        if (index == null) { return (<td></td>); }
+        return (<td><GenericIndicator name={indicators[index].name} data={indicators[index].data} /></td>);
       });
     };
 
     return (
       <tbody>
         {
-          layout.map((x, i) => {
-            const key = `IndicatorTableRow${i}`;
-            return (<tr key={key}>{buildRow(x)}</tr>);
+          layout.map((RowArr, RowNum) => {
+            const key = `IndicatorTableRow${RowNum}`;
+            return (<tr key={key}>{buildRow(RowArr)}</tr>);
           })
         }
       </tbody>
