@@ -32,7 +32,6 @@ class GraphSelector extends React.Component {
         });
       }
     }
-    console.log(this.graphChoices); // TODO: Remove this after debugging
     
     this.__handleChange = this.__handleChange.bind(this);
   }
@@ -52,7 +51,6 @@ class GraphSelector extends React.Component {
         }));
       }
     }
-    // console.log(flatDataObj); // TODO: Remove after debug
     return flatDataObj;
   }
 

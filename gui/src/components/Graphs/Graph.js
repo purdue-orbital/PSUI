@@ -86,7 +86,6 @@ class Graph extends React.Component {
     const new_datasets = this.props.datasets;
 
     if (curr_datasets !== new_datasets) {
-      console.log("DATA CHANGE!!"); // TODO: Remove this after debugging
       this.chart.stop().reset();
       this.__makeNewChart(new_datasets);
     } else {
