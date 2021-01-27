@@ -1,6 +1,7 @@
 import React from 'react';
 
 import StatusEnum from './utils/StatusEnum.js'
+import PopUpGenerator from './utils/PopUpGenerator.js'
 
 import Timer from './components/Timer/Timer.js';
 import DataTable from './components/DataTable/DataTable';
@@ -14,10 +15,9 @@ import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
 import './styles/DataWindow.css';
 import './styles/BasicElements.css';
 
-class DataWindow extends React.Component {
+class DataWindow extends PopUpGenerator {
   constructor(props) {
-    super(props);
-    this.state = {
+    super(props, {
       mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
       launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
       current_data: {
@@ -45,7 +45,7 @@ class DataWindow extends React.Component {
         { name: "Platform Stability", data: false, },
         { name: "Platform Radio", data: false, },
       ],
-    };
+    });
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
     this.missionStatusControl = React.createRef();
@@ -109,13 +109,15 @@ class DataWindow extends React.Component {
             data={data}
           />
 
-          <div id="additionalControls">
+          <div className="additionalControls">
             <button
               className="additionalControlButton"
               onClick={() => {
-                if (this.state.mission_start === true &&
-                  this.state.launch_start === false &&
-                  this.missionStatusControl.current.getStatus() === StatusEnum.VERIFIED) {
+                if (this.state.mission_start !== true) {
+                  this.nonblockingMessage("The mission must be started before you attempt to launch");
+                } else if (this.missionStatusControl.current.getStatus() !== StatusEnum.VERIFIED) {
+                  this.nonblockingMessage("The mission must be verified before you attempt to launch");
+                } else if (this.state.launch_start === false) {
                   // Will change the mission status to LAUNCHED if mission started and verified
                   this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
                   this.setState({ launch_start: true });
@@ -125,7 +127,9 @@ class DataWindow extends React.Component {
             <button
               className="additionalControlButton"
               onClick={() => {
-                alert("¯\\_(ツ)_/¯");
+                this.nonblockingConfirmation("You are about to active stabilization", () => {
+                  alert("¯\\_(ツ)_/¯");
+                })
               }}>Stabilization</button>
           </div>
 
@@ -137,6 +141,7 @@ class DataWindow extends React.Component {
         <div id='graphPannel'>
           <GraphSelector data={data} />
         </div>
+        {this.renderPopUp()}
       </div >
     );
   }

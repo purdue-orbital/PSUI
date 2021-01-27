@@ -19,6 +19,16 @@
   padding: 20px;
   border-radius: 5px;
   border: 2px solid black;
+  justify-content: center;
+}
+
+.modalText {
+  text-align: center;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: center;
 }
 
 .close {
