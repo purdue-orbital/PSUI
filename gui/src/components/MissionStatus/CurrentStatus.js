@@ -24,7 +24,11 @@ class CurrentStatus extends React.Component {
     };
   }
 
-  __changeStatus(newStatus) {
+  getStatus() {
+    return this.state.status;
+  }
+
+  changeStatus(newStatus) {
     if (newStatus === this.state.status) {
       return;
     }
@@ -55,7 +59,7 @@ class CurrentStatus extends React.Component {
   __startMission() {
     // TODO: StartMission
     this.__runIfAble(this.props.onMissionStart);
-    this.__changeStatus(StatusEnum.UNVERIFIED);
+    this.changeStatus(StatusEnum.UNVERIFIED);
   }
 
   __verifyLaunch() {
@@ -66,7 +70,7 @@ class CurrentStatus extends React.Component {
       this.__nonblockingConfirmation("You are about to verify the mission", () => {
         // TODO: verify the launch
         this.__runIfAble(this.props.onVerify);
-        this.__changeStatus(StatusEnum.VERIFIED);
+        this.changeStatus(StatusEnum.VERIFIED);
       });
     }
   }
@@ -79,7 +83,7 @@ class CurrentStatus extends React.Component {
       this.__nonblockingConfirmation("You are about to unverify the mission", () => {
         // TODO: unverify the launch
         this.__runIfAble(this.props.onUnverify);
-        this.__changeStatus(newStatus);
+        this.changeStatus(newStatus);
       });
     }
   }
@@ -92,7 +96,7 @@ class CurrentStatus extends React.Component {
       this.__nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", () => {
         // TODO: abort the launch
         this.__runIfAble(this.props.onAbort);
-        this.__changeStatus(newStatus);
+        this.changeStatus(newStatus);
       });
     }
   }
@@ -119,6 +123,7 @@ class CurrentStatus extends React.Component {
           {abortMissionButton}
         </>
       )
+      case StatusEnum.LAUNCHED:
       case StatusEnum.ABORTED:
       default: return abortMissionButton;
     }
