@@ -1,6 +1,6 @@
 import React from 'react';
 
-import StatusEnum from '../../utils/MissionStatuses.js'
+import StatusEnum from '../../utils/StatusEnum.js'
 
 import ConfirmationPopUp from '../../utils/UtilComponents/ConfirmationPopUp.js';
 
