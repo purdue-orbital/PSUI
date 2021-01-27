@@ -20,12 +20,14 @@ class ConfirmationPopUp extends React.Component {
     return (
       <div className="modal">
         <div className="modalContent">
-          <span className="close" onClick={() => { this.props.onDecline(); }}>
+          <span className="close" onClick={decline}>
             &times;
           </span>
-          <p>{this.props.children}</p>
-          <button className="PopUpButton" onClick={accept}>Continue</button>
-          <button className="PopUpButton" onClick={decline}>Cancel</button>
+          <p className="modalText">{this.props.children}</p>
+          <div className="modalActions">
+            <button className="PopUpButton" onClick={accept}>Continue</button>
+            <button className="PopUpButton" onClick={decline}>Cancel</button>
+          </div>
         </div>
       </div>
     );
