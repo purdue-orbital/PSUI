@@ -19,26 +19,30 @@ class DataWindow extends React.Component {
       mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
       launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
       current_data: {
-        "Altitude": 0,
-        "Longitude": 0,
-        "Latitude": 0,
-        "Gyro X": 0,
-        "Gyro Y": 0,
-        "Gyro Z": 0,
-        "Temperature": 0,
-        "Acceleration X": 0,
-        "Acceleration Y": 0,
-        "Acceleration Z": 0,
+        Altitude: 0,
+        Longitude: 0,
+        Latitude: 0,
+        Gyro: {
+          X: 0,
+          Y: 0,
+          Z: 0,
+        },
+        Temperature: 0,
+        Acceleration: {
+          X: 0,
+          Y: 0,
+          Z: 0,
+        },
       },
-      current_indicators: {
-        packetsSent: { name: "Packets Sent", data: 0, },
-        packetsRecieved: { name: "Packets Recieved", data: 0, },
-        QDM: { name: "QDM", data: false, },
-        Ignition: { name: "Ignition", data: false, },
-        GSRadio: { name: "GS Radio", data: false, },
-        PlatformStability: { name: "Platform Stability", data: false, },
-        PlatformRadio: { name: "Platform Radio", data: false, },
-      },
+      current_indicators: [
+        { name: "Packets Sent", data: 0, },
+        { name: "Packets Recieved", data: 0, },
+        { name: "QDM", data: false, },
+        { name: "Ignition", data: false, },
+        { name: "GS Radio", data: false, },
+        { name: "Platform Stability", data: false, },
+        { name: "Platform Radio", data: false, },
+      ],
     }
   }
 
@@ -46,19 +50,22 @@ class DataWindow extends React.Component {
     this.interval = setInterval(() => {
       this.setState({
         current_data: {
-          "Altitude": (1000 - 1) * Math.random() + 1, // random from 1 to 1000
-          "Longitude": Math.random(),
-          "Latitude": Math.random(),
-          "Gyro X": Math.random(),
-          "Gyro Y": Math.random(),
-          "Gyro Z": Math.random(),
-          "Temperature": Math.random(),
-          "Acceleration X": Math.random(),
-          "Acceleration Y": Math.random(),
-          "Acceleration Z": Math.random(),
-        }
-      })
-
+          Altitude: Math.random(),
+          Longitude: Math.random(),
+          Latitude: Math.random(),
+          Gyro: {
+            X: Math.random(),
+            Y: Math.random(),
+            Z: Math.random(),
+          },
+          Temperature: Math.random(),
+          Acceleration: {
+            X: Math.random(),
+            Y: Math.random(),
+            Z: Math.random(),
+          }
+        },
+      });
     }, 1000);
   }
 
