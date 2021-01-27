@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './styles/ConfirmationPopUp.css'
+import './ConfirmationPopUp.css'
 
 class ConfirmationPopUp extends React.Component {
   static defaultProps = {

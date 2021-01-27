@@ -1,6 +1,7 @@
 import React from 'react';
 
-import './styles/GenericIndicator.css'; 
+import './GenericIndicator.css'; 
+
 class GenericIndicator extends React.Component {
   static defaultProps = {
     name: "Un-nammed Indicator",

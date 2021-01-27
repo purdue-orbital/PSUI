@@ -1,10 +1,12 @@
 import React from 'react';
 
-import Timer from './components/Timer';
-import DataTable from './components/DataTable';
-import IndicatorTable from './components/Indicators/IndicatorTable';
-import GraphSelector from './components/Graphs/GraphSelector';
-import CurrentStatus from './components/MissionStatus/CurrentStatus';
+import StatusEnum from './utils/StatusEnum.js'
+
+import Timer from './components/Timer/Timer.js';
+import DataTable from './components/DataTable/DataTable';
+import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTable.js';
+import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
+import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
 
 // import * as Comlink from 'comlink';
 // import Worker from './path/to/worker/file.worker.js';
@@ -43,7 +45,10 @@ class DataWindow extends React.Component {
         { name: "Platform Stability", data: false, },
         { name: "Platform Radio", data: false, },
       ],
-    }
+    };
+    // Currently reading mission status w/ a ref, but status 
+    // could be moved here for unidirectional downward flow of props
+    this.missionStatusControl = React.createRef();
   }
 
   componentDidMount() {
@@ -75,6 +80,7 @@ class DataWindow extends React.Component {
 
   render() {
     const data = this.state.current_data;
+
     return (
       <div id='container'>
         <div id='leftPannel'>
@@ -83,6 +89,7 @@ class DataWindow extends React.Component {
             <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
           </div>
           <CurrentStatus
+            ref={this.missionStatusControl}
             onMissionStart={() => {
               // Needs to be saved as a string, bool not recognized
               sessionStorage.setItem("DataWindowMissionStart", "true");
@@ -103,16 +110,23 @@ class DataWindow extends React.Component {
           />
 
           <div id="additionalControls">
-            <button className="additionalControlButton" onClick={() => {
-              if (this.state.mission_start === true && this.state.launch_start === false) {
-                // This is just for testing the timer, button starts timer if mission is started
-                // Does NOT check if verified or if mission is aborted
-                this.setState({ launch_start: true });
-              }
-            }}>Start Launch</button>
-            <button className="additionalControlButton" onClick={() => {
-              alert("¯\\_(ツ)_/¯");
-            }}>Stabilization</button>
+            <button
+              className="additionalControlButton"
+              onClick={() => {
+                if (this.state.mission_start === true &&
+                  this.state.launch_start === false &&
+                  this.missionStatusControl.current.getStatus() === StatusEnum.VERIFIED) {
+                  // Will change the mission status to LAUNCHED if mission started and verified
+                  this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
+                  this.setState({ launch_start: true });
+                }
+              }}>Manual Override</button>
+
+            <button
+              className="additionalControlButton"
+              onClick={() => {
+                alert("¯\\_(ツ)_/¯");
+              }}>Stabilization</button>
           </div>
 
           <div id="logoPannel">

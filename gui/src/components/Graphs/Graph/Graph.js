@@ -1,7 +1,7 @@
 import React from 'react';
 import Chart from 'chart.js';
 
-import './styles/Graph.css';
+import './Graph.css';
 
 class Graph extends React.Component {
   static defaultProps = {
