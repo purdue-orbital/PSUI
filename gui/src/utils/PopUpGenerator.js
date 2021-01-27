@@ -1,6 +1,7 @@
 import React from 'react';
 
-import ConfirmationPopUp from './UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js'
+import ConfirmationPopUp from './UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js';
+import MessagePopUp from './UtilComponents/MessagePopUp/MessagePopUp.js';
 
 class PopUpGenerator extends React.Component {
   static defaultProps = {};
@@ -27,17 +28,34 @@ class PopUpGenerator extends React.Component {
 
   nonblockingConfirmation(message, onAccept, onDecline) {
     this.popUpWindow = (
-      <ConfirmationPopUp onAccept={() => {
-        this.__runFunction(onAccept);
-        this.setState({ popUpWindowOpen: false });
-      }} onDecline={() => {
-        this.__runFunction(onDecline);
-        this.setState({ popUpWindowOpen: false });
-      }}>
+      <ConfirmationPopUp
+        onAccept={() => {
+          this.__runFunction(onAccept);
+          this.setState({ popUpWindowOpen: false });
+        }}
+        onDecline={() => {
+          this.__runFunction(onDecline);
+          this.setState({ popUpWindowOpen: false });
+        }}
+      >
         {message}
       </ConfirmationPopUp>
     );
     this.setState({ popUpWindowOpen: true });
+  }
+
+  nonblockingMessage(message, onClose) {
+    this.popUpWindow = (
+      <MessagePopUp
+        onClose={() => {
+          this.__runFunction(onClose);
+          this.setState({ popUpWindowOpen: false });
+        }}
+      >
+        {message}
+      </MessagePopUp>
+    );
+    this.setState({ popUpWindowOpen: true })
   }
 
   renderPopUp() {
