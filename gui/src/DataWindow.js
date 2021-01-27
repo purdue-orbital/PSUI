@@ -109,10 +109,11 @@ class DataWindow extends React.Component {
                 if (this.state.mission_start === true &&
                   this.state.launch_start === false &&
                   this.missionStatusControl.current.getStatus() === StatusEnum.VERIFIED) {
+                  // Will change the mission status to LAUNCHED if mission started and verified
                   this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
                   this.setState({ launch_start: true });
                 }
-              }}>Start Launch</button>
+              }}>Manual Override</button>
 
             <button
               className="additionalControlButton"
