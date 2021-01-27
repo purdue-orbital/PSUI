@@ -2,9 +2,9 @@ import React from 'react';
 
 import StatusEnum from '../../utils/StatusEnum.js'
 
-import ConfirmationPopUp from '../../utils/UtilComponents/ConfirmationPopUp.js';
+import ConfirmationPopUp from '../../utils/UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js';
 
-import './styles/CurrentStatus.css';
+import './CurrentStatus.css';
 
 class CurrentStatus extends React.Component {
   static defaultProps = {

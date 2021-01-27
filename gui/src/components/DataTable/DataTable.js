@@ -1,5 +1,6 @@
 import React from 'react';
-import './styles/DataTable.css';
+
+import './DataTable.css';
 
 class DataTable extends React.Component {
   static defaultProps = {

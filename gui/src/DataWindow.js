@@ -2,11 +2,11 @@ import React from 'react';
 
 import StatusEnum from './utils/StatusEnum.js'
 
-import Timer from './components/Timer';
-import DataTable from './components/DataTable';
-import IndicatorTable from './components/Indicators/IndicatorTable';
-import GraphSelector from './components/Graphs/GraphSelector';
-import CurrentStatus from './components/MissionStatus/CurrentStatus';
+import Timer from './components/Timer/Timer.js';
+import DataTable from './components/DataTable/DataTable';
+import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTable.js';
+import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
+import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
 
 // import * as Comlink from 'comlink';
 // import Worker from './path/to/worker/file.worker.js';
