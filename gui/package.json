@@ -49,14 +49,11 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.54",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
-    "comlink": "^4.3.0",
     "concurrently": "^5.3.0",
     "electron": "^10.1.5",
     "electron-is-dev": "^1.2.0",
-    "react-app-rewired": "^2.1.6",
     "rimraf": "^3.0.2",
-    "wait-on": "^5.2.1",
-    "worker-loader": "^3.0.5"
+    "wait-on": "^5.2.1"
   },
   "config": {
     "forge": {

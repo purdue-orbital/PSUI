@@ -9,9 +9,6 @@ import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTabl
 import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
 import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
 
-// import * as Comlink from 'comlink';
-// import Worker from './path/to/worker/file.worker.js';
-
 import './styles/DataWindow.css';
 import './styles/BasicElements.css';
 
