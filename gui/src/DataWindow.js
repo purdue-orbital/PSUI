@@ -131,7 +131,7 @@ class DataWindow extends PopUpGenerator {
           </div>
 
           <div id="logoPannel">
-            <img src={process.env.PUBLIC_URL + '/img/orbital-logo.gif'} alt="Purdue Orbital" />
+            <img src={process.env.PUBLIC_URL + '/img/orbital-logo.png'} alt="Purdue Orbital" />
           </div>
         </div>
 

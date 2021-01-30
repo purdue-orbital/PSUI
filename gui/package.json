@@ -58,15 +58,13 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "name": "purdue-orbital-psui",
+        "name": "PSUI",
         "executableName": "purdue-orbital-psui"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "PSUI"
-          }
+          "config": {}
         },
         {
           "name": "@electron-forge/maker-zip",
@@ -76,7 +74,15 @@
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "options": {
+              "productName": "PSUI",
+              "icon": "electron/orbit-icon.png",
+              "maintainer": "Matt Drozt",
+              "homepage": "https://github.com/purdue-orbital/PSUI",
+              "productDescription": "A current test mock up of how the Python Sucks User Interface my look and function"
+            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
