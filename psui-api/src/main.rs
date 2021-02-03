@@ -18,8 +18,8 @@ fn main() {
 
 */
 
-#[get("/time/getdata")]
-fn getdata() -> String
+#[get("/time/<time>/getdata")]
+fn getdata(time: u16) -> String
     println!("I have no data yet!");
 }
 
