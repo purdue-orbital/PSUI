@@ -4,6 +4,8 @@ import Graph from '../Graph/Graph.js';
 
 import './GraphSelector.css';
 
+const { ipcRenderer } = window.require("electron");
+
 class GraphSelector extends React.Component {
   static defaultProps = {
     data: { defaultData: 0 }
@@ -34,6 +36,12 @@ class GraphSelector extends React.Component {
     }
     
     this.__handleChange = this.__handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    ipcRenderer.on("ChangeGraph", (event, arg) => {
+      this.setState({currentGraph: arg.newGraph});
+    });
   }
 
   __flattenDataObj(obj, options) {
