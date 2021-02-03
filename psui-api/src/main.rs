@@ -2,6 +2,9 @@
 
 #[macro_use] extern crate rocket;
 
+
+/* Boilerplate
+
 #[get("/<name>/<age>")]
 fn hello(name: String, age: u8) -> String {
     format!("Hello, {} year old named {}!", age, name)
@@ -12,3 +15,21 @@ fn main() {
         .mount("/hello", routes![hello])
         .launch();
 }
+
+*/
+
+#[get("/time/getdata")]
+fn getdata() -> String
+    println!("I have no data yet!");
+}
+
+fn main() {
+    rocket::ignite()
+        .mount("/time", routes![getdata])
+        .launch();
+}
+
+
+
+
+
