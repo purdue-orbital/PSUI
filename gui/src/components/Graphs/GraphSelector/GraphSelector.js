@@ -19,7 +19,7 @@ class GraphSelector extends React.Component {
 
     const startingDataSet = this.props.data;
     this.prevData = this.__createDataHistory(startingDataSet);
-    
+
     this.graphChoices = {};
     for (const k in startingDataSet) {
       const subsetDataset = this.__flattenDataObj(startingDataSet[k]);
@@ -34,14 +34,16 @@ class GraphSelector extends React.Component {
         });
       }
     }
-    
-    this.__handleChange = this.__handleChange.bind(this);
   }
 
   componentDidMount() {
     ipcRenderer.on("ChangeGraph", (event, arg) => {
-      this.setState({currentGraph: arg.newGraph});
+      this.__changeCurentGraph(arg.newGraph);
     });
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners("ChangeGraph");
   }
 
   __flattenDataObj(obj, options) {
@@ -87,24 +89,15 @@ class GraphSelector extends React.Component {
     return historyCacheObj;
   }
 
-  __handleChange(e) {
-    this.setState({ currentGraph: e.target.value })
-  }
-
-  __createDataSelectOptions() {
-    const keys = Object.keys(this.graphChoices);
-    return keys.map((k, i) => {
-      return (
-        <option value={k} key={i}>{k}</option>
-      )
-    });
+  __changeCurentGraph(newGraph) {
+    const currentGraph = this.state.currentGraph;
+    if (newGraph !== currentGraph) {
+      this.setState({currentGraph: newGraph});
+    }
   }
 
   render() {
     const showGraph = this.state.currentGraph;
-
-    // Because we are pasing in entier datasets now it is completly possible to view many datasets at once
-    // Might be worth while changing dropdown list to a selection box
     const datasets = this.graphChoices[showGraph];
 
     return (
@@ -112,19 +105,8 @@ class GraphSelector extends React.Component {
         <div id="GraphContainer">
           <Graph datasets={datasets} />
         </div>
-        <div id="FormContainer">
-          <form>
-            <label>
-              Pick Graph to View:
-            <select value={showGraph} onChange={this.__handleChange}>
-                {this.__createDataSelectOptions()}
-              </select>
-            </label>
-          </form>
-        </div>
       </div>
     );
-
   }
 }
 
