@@ -41,9 +41,8 @@ class Timer extends React.Component {
     this.hours = Math.floor(this.minutes / 60);
     this.minutes = this.minutes % 60;
 
-    this.setState(state => ({
-      time: `${pad_zeros(this.hours)}:${pad_zeros(this.minutes)}:${pad_zeros(this.seconds)}:${this.milliseconds}`
-    }));
+    const time = `${pad_zeros(this.hours)}:${pad_zeros(this.minutes)}:${pad_zeros(this.seconds)}:${this.milliseconds}`;
+    this.setState({ time: time});
   }
 
   setStartTime() {
