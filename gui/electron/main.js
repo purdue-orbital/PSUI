@@ -18,6 +18,8 @@ function createWindow() {
 
   buildMenu(win);
 
+  if (isDev) { win.webContents.openDevTools({mode: 'detach'}); }
+  
   // and load the index.html of the app.
   win.loadURL(
     isDev ?
