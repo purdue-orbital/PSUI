@@ -52,30 +52,17 @@ class DataWindow extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current_data: {
-          Altitude: Math.random(),
-          Longitude: Math.random(),
-          Latitude: Math.random(),
-          Gyro: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          },
-          Temperature: Math.random(),
-          Acceleration: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }
-        },
-      });
+    this.updateDataInterval = setInterval(() => {
+      const url = new URL("http://localhost:8000/time/getdata");
+      fetch(url)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(e => console.error("ERROR: ", e));
     }, 1000);
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearInterval(this.updateDataInterval);
   }
 
   render() {
