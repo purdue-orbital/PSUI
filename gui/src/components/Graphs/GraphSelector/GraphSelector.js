@@ -65,14 +65,10 @@ class GraphSelector extends React.Component {
   }
 
   componentDidUpdate() {
-    const currData = this.__flattenDataObj(this.props.data);
-    const now = Date.now();
-    for (const k in this.prevData) {
-      if (isNaN(currData[k])) {
-        continue;
-      }
-      this.prevData[k].data.shift();
-      this.prevData[k].data.push({ "x": now, "y": currData[k] });
+    const updatedData = this.__dataDidUpdate();
+    if (updatedData !== null) {
+      // If there is a new data point, we need to update prev data
+      this.__updateDataBuffers(updatedData);
     }
   }
 
@@ -92,7 +88,33 @@ class GraphSelector extends React.Component {
   __changeCurentGraph(newGraph) {
     const currentGraph = this.state.currentGraph;
     if (newGraph !== currentGraph) {
-      this.setState({currentGraph: newGraph});
+      this.setState({ currentGraph: newGraph });
+    }
+  }
+
+  __dataDidUpdate() {
+    // Used to determine if new data point recieved or if the grah just changed
+    const incomingData = this.__flattenDataObj(this.props.data);
+    for (const k in this.prevData) {
+      const prevDataSet = this.prevData[k].data;
+      const prevData = prevDataSet[prevDataSet.length - 1].y;
+      const newDataPoint = incomingData[k]; 
+      if (prevData !== newDataPoint) {
+        // If these are two different numbers, then data updated, returned the flattend data obj
+        return incomingData;
+      }
+    }
+    // If all the numbers are the same as before, then no update in data object and nothing to return
+    return null;
+  }
+  __updateDataBuffers(newflattenedData) {
+    const now = Date.now();
+    for (const k in this.prevData) {
+      if (isNaN(newflattenedData[k])) {
+        continue;
+      }
+      this.prevData[k].data.shift();
+      this.prevData[k].data.push({ "x": now, "y": newflattenedData[k] });
     }
   }
 

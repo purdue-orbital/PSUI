@@ -13,9 +13,11 @@ function buildMenu(window) {
 }
 
 function makeChangeGraphMenu(window) {
-  return getDataKeys().map(graphName => {
+  return getDataKeys().map((graphName, i) => {
+    const hotkeynum = 1 + i;
     return {
       label: graphName,
+      accelerator: `CommandOrControl+Shift+${hotkeynum}`,
       click: () => { window.webContents.send("ChangeGraph", {newGraph: graphName})},
     };
   })
