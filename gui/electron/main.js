@@ -2,6 +2,8 @@ const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require("path");
 
+const { buildMenu } = require('./menu.js');
+
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
@@ -14,6 +16,10 @@ function createWindow() {
     },
   });
 
+  buildMenu(win);
+
+  if (isDev) { win.webContents.openDevTools({mode: 'detach'}); }
+  
   // and load the index.html of the app.
   win.loadURL(
     isDev ?
@@ -21,6 +27,7 @@ function createWindow() {
       `file://${path.join(__dirname, "../build/index.html")}`
   );
 }
+
 
 app.whenReady().then(createWindow);
 
