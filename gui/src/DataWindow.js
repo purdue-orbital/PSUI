@@ -56,7 +56,7 @@ class DataWindow extends React.Component {
       const url = new URL("http://localhost:8000/time/getdata");
       fetch(url)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => { this.setState({ current_data: data }); })
         .catch(e => console.error("ERROR: ", e));
     }, 1000);
   }
