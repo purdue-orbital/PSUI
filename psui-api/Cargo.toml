@@ -11,3 +11,4 @@ rocket = "0.4.5"
 rocket_codegen = "0.4.5"
 serde = {version = "*", features = ["derive"]}
 serde_json = "*"
+rand = "*"

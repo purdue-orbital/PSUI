@@ -5,6 +5,8 @@ extern crate serde_json;
 
 use serde::Serialize;
 use serde::Deserialize;
+use rand::Rng;
+use rand::thread_rng;
 
 #[macro_use] extern crate rocket;
 
@@ -42,24 +44,26 @@ struct Data {
 
 #[get("/time/getdata")]
 fn getdata() -> std::string::String {
+    let mut rng = thread_rng();   // This is a temporary random number generator
+
     let g = SpacialCoordinates {
-        x: 0,
-        y: 0,
-        z: 0
+        x: rng.gen_range(0..10),
+        y: rng.gen_range(0..10),
+        z: rng.gen_range(0..10)
     };
 
     let a = SpacialCoordinates {
-        x: 0,
-        y: 0,
-        z: 0
+        x: rng.gen_range(0..10),
+        y: rng.gen_range(0..10),
+        z: rng.gen_range(0..10)
     };
 
     let data = Data {
-        altitude: 0,
-        longitude: 0,
-        latitude: 0,
+        altitude: rng.gen_range(0..255),
+        longitude: rng.gen_range(0..255),
+        latitude: rng.gen_range(0..180),
         gyro: g,
-        temperature: 0,
+        temperature: rng.gen_range(0..100),
         acceleration: a
     };
 
