@@ -1,0 +1,65 @@
+#container {
+    position: fixed;
+    margin: 0;
+    padding: 0;
+
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #585858;
+}
+
+#leftPannel {
+    float: left;
+    width: 50%;
+    height: 65%;
+    /* background-color: bisque; */
+}
+
+#timerContainer {
+    height: 25%;
+}
+
+/* 
+ * Consider making additional Controls its own prop with 
+ * objects passed as props for buttons 
+ */
+.additionalControls {
+    width: 80%;
+    margin: auto;
+    margin-bottom: 5px;
+}
+
+.additionalControlButton {
+    border: none;
+    background-color: #ffbc12; /* logo color (if want an exact match) is #c28e0e */
+    width: 100%;
+}
+
+#rightPannel {
+    float: left;
+    width: 50%;
+    height: 65%;
+    /* background-color: aquamarine; */
+}
+
+#logoPannel {
+    position: relative;
+    width: 85%;
+    height: 50px;
+    margin: auto;
+}
+
+#logoPannel img {
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+#graphPannel {
+    float: left;
+    width: 100%;
+    height: 35%;
+    /* background-color: lightcoral; */
+}

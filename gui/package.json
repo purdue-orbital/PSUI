@@ -1,24 +1,33 @@
 {
-  "name": "gui",
+  "name": "purdue-orbital-psui",
   "version": "0.1.0",
+  "description": "Purdue Orbital Python Sucks User Interface",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "chart.js": "^2.9.4",
+    "electron-is-dev": "^1.2.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-scripts": "^3.4.4"
   },
-  "main": "main.js",
+  "main": "electron/main.js",
   "homepage": "./",
   "scripts": {
     "start": "BROWSER=none react-scripts start",
-    "dev": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev": "concurrently --kill-others \"npm start\" \"wait-on http://localhost:3000 && npm run electron\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "electron": "electron ."
+    "electron": "electron-forge start",
+    "ele": "npm run electron",
+    "package": "react-scripts build && electron-forge package",
+    "make": "react-scripts build && electron-forge make",
+    "clean": "rimraf ./build ./out"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,10 +45,50 @@
     ]
   },
   "devDependencies": {
-    "chart.js": "^2.9.4",
+    "@electron-forge/cli": "^6.0.0-beta.54",
+    "@electron-forge/maker-deb": "^6.0.0-beta.54",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.54",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
+    "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "concurrently": "^5.3.0",
-    "electron": "^10.1.4",
-    "electron-builder": "^22.9.1",
-    "wait-on": "^5.2.0"
+    "electron": "^10.1.5",
+    "rimraf": "^3.0.2",
+    "wait-on": "^5.2.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "name": "PSUI",
+        "executableName": "purdue-orbital-psui"
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {
+            "options": {
+              "productName": "PSUI",
+              "icon": "electron/orbit-icon.png",
+              "maintainer": "Matt Drozt",
+              "homepage": "https://github.com/purdue-orbital/PSUI",
+              "productDescription": "A current test mock up of how the Python Sucks User Interface my look and function"
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

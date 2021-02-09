@@ -1,68 +1,54 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Front-End Information and Stuff
+## What is this?
+This is the Purdue Orbital Ground Station Graphical User Interface Front-End. This is the window that the flight team will use to communicate with the Ground Station Back-End and ultimately the launch structure to send command as and receive data. It was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and served with [Electron](https://www.electronjs.org/).
 
-## Available Scripts
+## Sounds cool, how do I get set up for development?
+The first thing you're going to want to do is clone this repository:
+```sh
+git clone https://github.com/purdue-orbital/PSUI.git
+```
+Now you need to get up to date with the most recent changes made to the frontend. To do this simply checkout the frontend branch:
+```sh
+git checkout frontend
+```
 
-In the project directory, you can run:
+From there, simply move into `gui/` directory and install all necessary dependencies:
+```sh
+npm install
+```
+Congratulations you are now ready to begin development on the front-end!!
+
+## So what can this repo do?
+A list of available `npm` scripts with small descriptions has been provided bellow to answer that very question!
 
 ### `npm start`
+Sets up a development server on [https://localhost:3000](https://localhost:3000). This page will reload if edits are made and show linting errors that may be present. Generally just a nice way make changes and develop the front-end.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### `npm run test`
+Launches the test runner in the interactive watch mode.
 
 ### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the react app for production in the `build/` folder and prepares it for deployment.
 
 ### `npm run eject`
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**\
+This command will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. It is very unlikely you'll ever need to do this, but option is here should you deem it nesaccary (but make sure you have a good reason).
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### `npm run electron`
+Creates an electron window listening on [https://localhost:3000](https://localhost:3000). This window is exactly what it will look like for people using the ground station in the field, so it makes most since to devlop using this window rather than any old browser.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### `npm run ele`
+An alias for `npm run electron`. Do you seriously expect me to type out *electron* every time? Like holy cow its 8 letters, you must be mad.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### `npm run dev`
+Fully runs the app in development mode. Runs both `npm start` and `npm run electron` concurrently, and should either process end, the other is also forcefully quit. Useful for showing demonstrations without continually building and re-installing the app or running both commands separately.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### `npm run package`
+This command will build the react app for distribution and will use `Electron Forge` to package the electron application into a platform specific format and put the result in an `out/` folder. Please note that this does not make a distributable format!! To make proper distributables, use the `npm run make` script.
 
-## Learn More
+### `npm run make`
+This will fully make the app as a distributiable. The type of distributable is dependenent on the os and archetecure of oyu current machine. Currently it is able to build to an x64 `.deb` and `.rpm`. 
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### `npm run clean`
+Simply removes the `build/` and `out/` folders.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

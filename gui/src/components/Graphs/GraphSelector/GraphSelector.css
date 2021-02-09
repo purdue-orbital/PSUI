@@ -1,0 +1,21 @@
+#GraphSelectorDiv {
+  position: relative;
+  height: 100%;
+  width: 98%;
+  margin: auto;
+  border-radius: 5px;
+  background-color: #969696;
+  border: 1px solid black;
+}
+
+#GraphContainer {
+  position: relative;
+  height: 88%;
+}
+
+#FormContainer {
+  position: relative;
+  text-align: center;
+  height: auto;
+  width: auto;
+}

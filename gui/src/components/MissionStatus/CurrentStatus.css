@@ -1,0 +1,41 @@
+.CurrentStatusObj {
+  text-align: center;
+  padding: 5px;
+  width: 66%;
+  border-radius: 5px;
+  margin: auto;
+  margin-top: 15px;
+  background-color: #969696;
+  border: 1px solid black;
+}
+
+.CurrentStatusLabel {
+  font-size: 20px;
+  text-align: center;
+  text-decoration: underline;
+}
+
+.CurrentStatus {
+  font-size: 24px;
+}
+
+.StatusButton {
+  width: 75px;
+}
+
+.StartButton {
+  width: 150px;
+  background-color: #ffbc12;
+}
+
+.VerifyButton {
+  background-color: #09b000;
+}
+
+.UnverifyButton {
+  background-color: #ffbc12;
+}
+
+.AbortButton {
+  background-color: #e00000;
+}
