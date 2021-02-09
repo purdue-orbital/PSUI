@@ -15,9 +15,14 @@ function buildMenu(window) {
 function makeChangeGraphMenu(window) {
   return getDataKeys().map((graphName, i) => {
     const hotkeynum = 1 + i;
+    let accelerator = null;
+    if (hotkeynum <= 10) { accelerator = `CommandOrControl+Shift+${hotkeynum % 10}`; }
+    else if (hotkeynum <= 20) { accelerator = `CommandOrControl+Alt+${hotkeynum % 10}`; }
+    else if (hotkeynum <= 30) { accelerator = `CommandOrControl+${hotkeynum % 10}`; }
+    
     return {
       label: graphName,
-      accelerator: `CommandOrControl+Shift+${hotkeynum}`,
+      accelerator: accelerator,
       click: () => { window.webContents.send("ChangeGraph", {newGraph: graphName})},
     };
   })
