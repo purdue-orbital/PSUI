@@ -115,9 +115,10 @@ class DataWindow extends PopUpGenerator {
                 } else if (this.missionStatusControl.current.getStatus() !== StatusEnum.VERIFIED) {
                   this.nonblockingMessage("The mission must be verified before you attempt to launch");
                 } else if (this.state.launch_start === false) {
-                  // Will change the mission status to LAUNCHED if mission started and verified
+		  // Will change the mission status to LAUNCHED if mission started and verified, on user confirmation
+		  this.nonblockingConfirmation("Pressing 'Continue' will launch the rocket! [NOT REVERSIBLE]", () => {
                   this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
-                  this.setState({ launch_start: true });
+                  this.setState({ launch_start: true }); });
                 }
               }}>Manual Override</button>
 

@@ -7,7 +7,7 @@ class PopUpGenerator extends React.Component {
   static defaultProps = {};
 
   constructor(props, state) {
-    // Bare minnimum type checking
+    // Bare minimum type checking
     if (new.target === "PopUpGenerator") {
       throw new TypeError("PopUpGenerator should not be instanced directly!!");
     }
@@ -22,7 +22,7 @@ class PopUpGenerator extends React.Component {
 
   __runFunction(func) {
     if (typeof func === "function") {
-      func();
+      func()
     }
   }
 
