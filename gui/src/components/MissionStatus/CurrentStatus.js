@@ -76,7 +76,7 @@ class CurrentStatus extends PopUpGenerator {
     const newStatus = StatusEnum.ABORTED;
 
     if (currStatus !== newStatus) {
-      this.nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", () => {
+      this.nonblockingImportantConfirmation("You are about to abort the mission; This action is irreversable!", () => {
         // TODO: abort the launch
         this.__runIfAble(this.props.onAbort);
         this.changeStatus(newStatus);

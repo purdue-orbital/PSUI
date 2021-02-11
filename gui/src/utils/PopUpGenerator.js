@@ -1,5 +1,6 @@
 import React from 'react';
 
+import ImportantConfirmationPopUp from './UtilComponents/ImportantConfirmationPopUp/ImportantConfirmationPopUp.js';
 import ConfirmationPopUp from './UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js';
 import MessagePopUp from './UtilComponents/MessagePopUp/MessagePopUp.js';
 
@@ -24,6 +25,24 @@ class PopUpGenerator extends React.Component {
     if (typeof func === "function") {
       func()
     }
+  }
+
+  nonblockingImportantConfirmation(message, onAccept, onDecline) {
+    this.popUpWindow = (
+      <ImportantConfirmationPopUp
+	onAccept={() => {
+	  this.__runFunction(onAccept);
+	  this.setState({ popUpWindowOpen: false });
+	}}
+	onDecline={() => {
+	  this.__runFunction(onDecline);
+	  this.setState({ popUpWindowOpen: false });
+	}}
+      >
+	{message}
+      </ImportantConfirmationPopUp>
+    );
+    this.setState({ popUpWindowOpen: true });
   }
 
   nonblockingConfirmation(message, onAccept, onDecline) {
