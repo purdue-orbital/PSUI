@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ImportantConfirmationPopUp from './UtilComponents/ImportantConfirmationPopUp/ImportantConfirmationPopUp.js';
 import ConfirmationPopUp from './UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js';
 import MessagePopUp from './UtilComponents/MessagePopUp/MessagePopUp.js';
 
@@ -27,35 +26,23 @@ class PopUpGenerator extends React.Component {
     }
   }
 
-  nonblockingImportantConfirmation(message, onAccept, onDecline) {
-    this.popUpWindow = (
-      <ImportantConfirmationPopUp
-	onAccept={() => {
-	  this.__runFunction(onAccept);
-	  this.setState({ popUpWindowOpen: false });
-	}}
-	onDecline={() => {
-	  this.__runFunction(onDecline);
-	  this.setState({ popUpWindowOpen: false });
-	}}
-      >
-	{message}
-      </ImportantConfirmationPopUp>
-    );
-    this.setState({ popUpWindowOpen: true });
-  }
+  nonblockingConfirmation(message, options) {
+    if (options === null) { options = {}; }
+    if (options.onAccept == null) { options.onAccept = () => {}; }
+    if (options.onDecline == null) { options.onDecline = () => {}; }
+    if (options.isImportant == null) { options.isImportant = false; }
 
-  nonblockingConfirmation(message, onAccept, onDecline) {
     this.popUpWindow = (
       <ConfirmationPopUp
         onAccept={() => {
-          this.__runFunction(onAccept);
+          this.__runFunction(options.onAccept);
           this.setState({ popUpWindowOpen: false });
         }}
         onDecline={() => {
-          this.__runFunction(onDecline);
+          this.__runFunction(options.onDecline);
           this.setState({ popUpWindowOpen: false });
         }}
+        isImportant={options.isImportant}
       >
         {message}
       </ConfirmationPopUp>
