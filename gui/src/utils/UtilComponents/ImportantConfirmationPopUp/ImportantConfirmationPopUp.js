@@ -20,10 +20,10 @@ class ImportantConfirmationPopUp extends React.Component {
     return (
       <div className="modal">
         <div className="modalContent">
-	  <img src={process.env.PUBLIC_URL + '/img/warning_symbol_in_red.webp'} alt="WARNING!" class="popupImage"/>
           <span className="close" onClick={decline}>
             &times;
           </span>
+          <img src={process.env.PUBLIC_URL + '/img/warning_symbol_in_red.webp'} alt="WARNING!" className="popupImage"/>
           <p className="modalText">{this.props.children}</p>
           <div className="modalActions">
             <button className="PopUpButton" onClick={accept}>Continue</button>
