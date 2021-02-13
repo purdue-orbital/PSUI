@@ -47,8 +47,8 @@ class GraphSelector extends React.Component {
   }
 
   __flattenDataObj(obj, options) {
-    if (typeof options === "undefined") { options = {}; }
-    if (typeof options.featurePrefix === "undefined") { options.featurePrefix = ""; }
+    if (options === undefined) { options = {}; }
+    if (options.featurePrefix === undefined) { options.featurePrefix = ""; }
 
     let flatDataObj = {};
     for (const dictKey in obj) {

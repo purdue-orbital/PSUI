@@ -27,10 +27,10 @@ class PopUpGenerator extends React.Component {
   }
 
   nonblockingConfirmation(message, options) {
-    if (options === null) { options = {}; }
-    if (options.onAccept == null) { options.onAccept = () => {}; }
-    if (options.onDecline == null) { options.onDecline = () => {}; }
-    if (options.isImportant == null) { options.isImportant = false; }
+    if (options === undefined) { options = {}; }
+    if (options.onAccept === undefined) { options.onAccept = null; }
+    if (options.onDecline === undefined) { options.onDecline = null; }
+    if (options.isImportant === undefined) { options.isImportant = false; }
 
     this.popUpWindow = (
       <ConfirmationPopUp
@@ -50,11 +50,14 @@ class PopUpGenerator extends React.Component {
     this.setState({ popUpWindowOpen: true });
   }
 
-  nonblockingMessage(message, onClose) {
+  nonblockingMessage(message, options) {
+    if (options === undefined) { options = {}; }
+    if (options.onClose === undefined) { options.onClose = null; }
+
     this.popUpWindow = (
       <MessagePopUp
         onClose={() => {
-          this.__runFunction(onClose);
+          // this.__runFunction(options.onClose);
           this.setState({ popUpWindowOpen: false });
         }}
       >
@@ -65,6 +68,9 @@ class PopUpGenerator extends React.Component {
   }
 
   renderPopUp() {
+    // This method must be included in the render method of 
+    // the component extending the PopUpGenerator
+    
     const isOverlay = this.state.popUpWindowOpen;
     const overlay = this.popUpWindow;
     return isOverlay ? overlay : null;
