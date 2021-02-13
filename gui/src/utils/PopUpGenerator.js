@@ -57,7 +57,7 @@ class PopUpGenerator extends React.Component {
     this.popUpWindow = (
       <MessagePopUp
         onClose={() => {
-          // this.__runFunction(options.onClose);
+          this.__runFunction(options.onClose);
           this.setState({ popUpWindowOpen: false });
         }}
       >
@@ -70,7 +70,6 @@ class PopUpGenerator extends React.Component {
   renderPopUp() {
     // This method must be included in the render method of 
     // the component extending the PopUpGenerator
-    
     const isOverlay = this.state.popUpWindowOpen;
     const overlay = this.popUpWindow;
     return isOverlay ? overlay : null;
