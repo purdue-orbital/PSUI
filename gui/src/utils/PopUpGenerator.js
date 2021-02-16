@@ -53,6 +53,7 @@ class PopUpGenerator extends React.Component {
   nonblockingMessage(message, options) {
     if (options === undefined) { options = {}; }
     if (options.onClose === undefined) { options.onClose = null; }
+    if (options.isImportant === undefined) { options.isImportant = false; }
 
     this.popUpWindow = (
       <MessagePopUp
@@ -60,6 +61,7 @@ class PopUpGenerator extends React.Component {
           this.__runFunction(options.onClose);
           this.setState({ popUpWindowOpen: false });
         }}
+        isImportant={options.isImportant}
       >
         {message}
       </MessagePopUp>

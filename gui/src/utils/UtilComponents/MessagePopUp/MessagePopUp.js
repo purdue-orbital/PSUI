@@ -23,7 +23,7 @@ class MessagePopUp extends React.Component {
           <span className="close" onClick={onClose}>
             &times;
           </span>
-	  {isImportant ? <img src={process.env.PUBLIC_URL + '/img/warming_symbol_in_red.webp'} alt="WARNING!" className="popupImage"/> : null}
+          {isImportant ? <img src={process.env.PUBLIC_URL + '/img/warning_symbol_in_red.webp'} alt="WARNING!" className="popupImage" /> : null}
           <p className="modalText">{this.props.children}</p>
           <div className="modalActions">
             <button className="PopUpButton" onClick={onClose}>Close</button>

@@ -129,11 +129,10 @@ class DataWindow extends PopUpGenerator {
             <button
               className="additionalControlButton"
               onClick={() => {
-                this.nonblockingConfirmation("You are about to active stabilization", {
+                this.nonblockingConfirmation("You are about to activate stabilization", {
                   onAccept: () => {
                     alert("¯\\_(ツ)_/¯");
                   },
-		  isImportant: true,
                 });
               }}>Stabilization</button>
           </div>
