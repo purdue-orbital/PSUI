@@ -50,10 +50,12 @@ class CurrentStatus extends PopUpGenerator {
     const newStatus = StatusEnum.VERIFIED;
 
     if (currStatus !== newStatus) {
-      this.nonblockingConfirmation("You are about to verify the mission", () => {
-        // TODO: verify the launch
-        this.__runIfAble(this.props.onVerify);
-        this.changeStatus(StatusEnum.VERIFIED);
+      this.nonblockingConfirmation("You are about to verify the mission", {
+        onAccept: () => {
+          // TODO: verify the launch
+          this.__runIfAble(this.props.onVerify);
+          this.changeStatus(StatusEnum.VERIFIED);
+        },
       });
     }
   }
@@ -63,10 +65,12 @@ class CurrentStatus extends PopUpGenerator {
     const newStatus = StatusEnum.UNVERIFIED;
 
     if (currStatus !== newStatus) {
-      this.nonblockingConfirmation("You are about to unverify the mission", () => {
-        // TODO: unverify the launch
-        this.__runIfAble(this.props.onUnverify);
-        this.changeStatus(newStatus);
+      this.nonblockingConfirmation("You are about to unverify the mission", {
+        onAccept: () => {
+          // TODO: unverify the launch
+          this.__runIfAble(this.props.onUnverify);
+          this.changeStatus(newStatus);
+        },
       });
     }
   }
@@ -76,10 +80,13 @@ class CurrentStatus extends PopUpGenerator {
     const newStatus = StatusEnum.ABORTED;
 
     if (currStatus !== newStatus) {
-      this.nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", () => {
-        // TODO: abort the launch
-        this.__runIfAble(this.props.onAbort);
-        this.changeStatus(newStatus);
+      this.nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", {
+        isImportant: true,
+        onAccept: () => {
+          // TODO: abort the launch
+          this.__runIfAble(this.props.onAbort);
+          this.changeStatus(newStatus);
+        }
       });
     }
   }
