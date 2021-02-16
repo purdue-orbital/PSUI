@@ -18,10 +18,8 @@ class Timer extends React.Component {
   }
 
   __tick() {
-    const now_time = Date.now();
-    const time_diff = now_time - this.refTime;
-
-    const time = this.__millsToTime(time_diff);
+    const timeDiff = Date.now() - this.refTime;
+    const time = this.__millsToTime(timeDiff);
     this.setState({ time: time });
   }
 
@@ -45,7 +43,7 @@ class Timer extends React.Component {
     return `${this.__pad_zeros(hours)}:${this.__pad_zeros(minutes)}:${this.__pad_zeros(seconds)}:${milliseconds}`;
   }
 
-  __setStartTime() {
+  __setRefTime() {
     this.refTime = Date.now();
     sessionStorage.setItem(`${this.props.timerName}_ref`, this.refTime);
   }
@@ -53,7 +51,7 @@ class Timer extends React.Component {
   componentDidMount() {
     this.interval = setInterval(() => {
       if (this.refTime !== null || this.props.tick) {
-        if (this.refTime === null) { this.__setStartTime(); }
+        if (this.refTime === null) { this.__setRefTime(); }
         this.__tick();
       }
     }, 100);
@@ -82,4 +80,3 @@ class Timer extends React.Component {
 }
 
 export default Timer;
-
