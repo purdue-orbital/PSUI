@@ -24,11 +24,13 @@ class Timer extends React.Component {
   }
 
   __pad_zeros(number) {
-    number = number + "";
+    let retString = "";
     if (number < 10) {
-      number = "0" + number;
+      retString = "0" + number;
+    } else {
+      retString = number + "";
     }
-    return number;
+    return retString;
   }
 
   __millsToTime(milliseconds_diff) {
