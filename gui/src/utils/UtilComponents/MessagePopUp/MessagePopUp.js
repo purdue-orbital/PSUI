@@ -5,6 +5,7 @@ import './MessagePopUp.css'
 class MessagePopUp extends React.Component {
   static defaultProps = {
     onClose: () => { },
+    isImportant: false,
   }
 
   constructor(props) {
@@ -14,6 +15,7 @@ class MessagePopUp extends React.Component {
 
   render() {
     const onClose = this.props.onClose;
+    const isImportant = this.props.isImportant
 
     return (
       <div className="modal">
@@ -21,6 +23,7 @@ class MessagePopUp extends React.Component {
           <span className="close" onClick={onClose}>
             &times;
           </span>
+	  {isImportant ? <img src={process.env.PUBLIC_URL + '/img/warming_symbol_in_red.webp'} alt="WARNING!" className="popupImage"/> : null}
           <p className="modalText">{this.props.children}</p>
           <div className="modalActions">
             <button className="PopUpButton" onClick={onClose}>Close</button>
