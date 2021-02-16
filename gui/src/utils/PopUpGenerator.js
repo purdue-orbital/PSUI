@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ImportantConfirmationPopUp from './UtilComponents/ImportantConfirmationPopUp/ImportantConfirmationPopUp.js';
 import ConfirmationPopUp from './UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js';
 import MessagePopUp from './UtilComponents/MessagePopUp/MessagePopUp.js';
 
@@ -27,35 +26,23 @@ class PopUpGenerator extends React.Component {
     }
   }
 
-  nonblockingImportantConfirmation(message, onAccept, onDecline) {
-    this.popUpWindow = (
-      <ImportantConfirmationPopUp
-	onAccept={() => {
-	  this.__runFunction(onAccept);
-	  this.setState({ popUpWindowOpen: false });
-	}}
-	onDecline={() => {
-	  this.__runFunction(onDecline);
-	  this.setState({ popUpWindowOpen: false });
-	}}
-      >
-	{message}
-      </ImportantConfirmationPopUp>
-    );
-    this.setState({ popUpWindowOpen: true });
-  }
+  nonblockingConfirmation(message, options) {
+    if (options === undefined) { options = {}; }
+    if (options.onAccept === undefined) { options.onAccept = null; }
+    if (options.onDecline === undefined) { options.onDecline = null; }
+    if (options.isImportant === undefined) { options.isImportant = false; }
 
-  nonblockingConfirmation(message, onAccept, onDecline) {
     this.popUpWindow = (
       <ConfirmationPopUp
         onAccept={() => {
-          this.__runFunction(onAccept);
+          this.__runFunction(options.onAccept);
           this.setState({ popUpWindowOpen: false });
         }}
         onDecline={() => {
-          this.__runFunction(onDecline);
+          this.__runFunction(options.onDecline);
           this.setState({ popUpWindowOpen: false });
         }}
+        isImportant={options.isImportant}
       >
         {message}
       </ConfirmationPopUp>
@@ -63,11 +50,14 @@ class PopUpGenerator extends React.Component {
     this.setState({ popUpWindowOpen: true });
   }
 
-  nonblockingMessage(message, onClose) {
+  nonblockingMessage(message, options) {
+    if (options === undefined) { options = {}; }
+    if (options.onClose === undefined) { options.onClose = null; }
+
     this.popUpWindow = (
       <MessagePopUp
         onClose={() => {
-          this.__runFunction(onClose);
+          this.__runFunction(options.onClose);
           this.setState({ popUpWindowOpen: false });
         }}
       >
@@ -78,6 +68,8 @@ class PopUpGenerator extends React.Component {
   }
 
   renderPopUp() {
+    // This method must be included in the render method of 
+    // the component extending the PopUpGenerator
     const isOverlay = this.state.popUpWindowOpen;
     const overlay = this.popUpWindow;
     return isOverlay ? overlay : null;
