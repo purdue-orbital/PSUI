@@ -12,51 +12,51 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.start_time = sessionStorage.getItem(`${this.props.timer_name}_start`);
-    this.milliseconds = 0;
-    this.seconds = 0;
-    this.minutes = 0;
-    this.hours = 0;
     this.state = {
       time: "00:00:00:0"
     };
   }
 
-  tick() {
-    const pad_zeros = (number) => {
-      number = number + "";
-      if (number < 10) {
-        number = "0" + number;
-      }
-      return number
-    }
+  __tick() {
+    const now_time = Date.now();
+    const time_diff = now_time - this.start_time;
 
-    let now_time = Date.now();
-    let time_diff = now_time - this.start_time;
-
-    this.milliseconds = time_diff % 1000;
-    this.milliseconds = Math.floor(this.milliseconds / 100);
-    this.seconds = Math.floor(time_diff / 1000);
-    this.minutes = Math.floor(this.seconds / 60);
-    this.seconds = this.seconds % 60;
-    this.hours = Math.floor(this.minutes / 60);
-    this.minutes = this.minutes % 60;
-
-    const time = `${pad_zeros(this.hours)}:${pad_zeros(this.minutes)}:${pad_zeros(this.seconds)}:${this.milliseconds}`;
+    const time = this.__millsToTime(time_diff);
     this.setState({ time: time });
   }
 
-  setStartTime() {
+  __pad_zeros(number) {
+    number = number + "";
+    if (number < 10) {
+      number = "0" + number;
+    }
+    return number;
+  }
+
+  __millsToTime(milliseconds_diff) {
+    let milliseconds = milliseconds_diff % 1000;
+    milliseconds = Math.floor(milliseconds / 100);
+    let seconds = Math.floor(milliseconds_diff / 1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    return `${this.__pad_zeros(hours)}:${this.__pad_zeros(minutes)}:${this.__pad_zeros(seconds)}:${milliseconds}`;
+  }
+
+  __setStartTime() {
     this.start_time = Date.now();
     sessionStorage.setItem(`${this.props.timer_name}_start`, this.start_time);
   }
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      if (this.start_time != null || this.props.tick) {
-        if (this.start_time == null) { this.setStartTime(); }
-        this.tick();
+      if (this.start_time !== null || this.props.tick) {
+        if (this.start_time === null) { this.__setStartTime(); }
+        this.__tick();
       }
-    }, 10);
+    }, 100);
   }
 
   componentWillUnmount() {
@@ -72,7 +72,8 @@ class Timer extends React.Component {
           </div>
         </div>
         <div className="TimerClockContainer">
-          <div className="TimerClockElement">{this.state.time}
+          <div className="TimerClockElement">
+            {this.state.time}
           </div>
         </div>
       </div>
