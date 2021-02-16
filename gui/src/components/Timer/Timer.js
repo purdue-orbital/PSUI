@@ -5,13 +5,13 @@ import './Timer.css';
 class Timer extends React.Component {
 
   static defaultProps = {
-    timer_name: "Default Timer",
+    timerName: "Default Timer",
     tick: false,
   };
 
   constructor(props) {
     super(props);
-    this.start_time = sessionStorage.getItem(`${this.props.timer_name}_start`);
+    this.refTime = sessionStorage.getItem(`${this.props.timerName}_ref`);
     this.state = {
       time: "00:00:00:0"
     };
@@ -19,7 +19,7 @@ class Timer extends React.Component {
 
   __tick() {
     const now_time = Date.now();
-    const time_diff = now_time - this.start_time;
+    const time_diff = now_time - this.refTime;
 
     const time = this.__millsToTime(time_diff);
     this.setState({ time: time });
@@ -46,14 +46,14 @@ class Timer extends React.Component {
   }
 
   __setStartTime() {
-    this.start_time = Date.now();
-    sessionStorage.setItem(`${this.props.timer_name}_start`, this.start_time);
+    this.refTime = Date.now();
+    sessionStorage.setItem(`${this.props.timerName}_ref`, this.refTime);
   }
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      if (this.start_time !== null || this.props.tick) {
-        if (this.start_time === null) { this.__setStartTime(); }
+      if (this.refTime !== null || this.props.tick) {
+        if (this.refTime === null) { this.__setStartTime(); }
         this.__tick();
       }
     }, 100);
@@ -68,7 +68,7 @@ class Timer extends React.Component {
       <div className="TimerContainer">
         <div className="TimerLabelContainer" >
           <div className="TimerLabelElement">
-            {this.props.timer_name}:
+            {this.props.timerName}:
           </div>
         </div>
         <div className="TimerClockContainer">

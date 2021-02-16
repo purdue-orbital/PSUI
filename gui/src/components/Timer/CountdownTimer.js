@@ -2,12 +2,9 @@ import Timer from './Timer';
 
 class CountdownTimer extends Timer {
   static defaultProps = {
-    timer_name: "Countdown",
+    timerName: "Countdown",
+    tick: true,
   };
-
-  constructor(props) {
-    super(props);
-  }
 }
 
 export default CountdownTimer;

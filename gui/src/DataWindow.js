@@ -85,8 +85,8 @@ class DataWindow extends PopUpGenerator {
       <div id='container'>
         <div id='leftPannel'>
           <div id='timerContainer'>
-            <Timer timer_name="Mission Timer" tick={mission_start} />
-            {mission_start ? <Timer timer_name="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
+            <Timer timerName="Mission Timer" tick={mission_start} />
+            {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
           </div>
           <CurrentStatus
             ref={this.missionStatusControl}
