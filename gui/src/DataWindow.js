@@ -8,6 +8,7 @@ import DataTable from './components/DataTable/DataTable';
 import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTable.js';
 import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
 import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
+import CountdownTimer from './components/Timer/CountdownTimer.js';
 
 import './styles/DataWindow.css';
 import './styles/BasicElements.css';
@@ -77,13 +78,15 @@ class DataWindow extends PopUpGenerator {
 
   render() {
     const data = this.state.current_data;
+    const mission_start = this.state.mission_start;
+    const launch_start = this.state.launch_start;
 
     return (
       <div id='container'>
         <div id='leftPannel'>
           <div id='timerContainer'>
-            <Timer timer_name="Mission Timer" tick={this.state.mission_start} />
-            <Timer timer_name="Launch Timer" tick={this.state.launch_start} />
+            <Timer timerName="Mission Timer" tick={mission_start} />
+            {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
           </div>
           <CurrentStatus
             ref={this.missionStatusControl}
