@@ -1,4 +1,5 @@
 const { Menu } = require('electron');
+const { launchPopOutData } = require('./popOutData.js');
 
 function buildMenu(window) {
   const template = [
@@ -11,7 +12,7 @@ function buildMenu(window) {
       submenu: [
         {
           label: "Pop Out Data",
-          click: () => { console.log("FIXME!!"); },
+          click: () => { console.log(window); launchPopOutData(); },
         },
       ]
     }
