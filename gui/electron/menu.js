@@ -6,6 +6,15 @@ function buildMenu(window) {
       label: 'Graph',
       submenu: makeChangeGraphMenu(window),
     },
+    {
+      label: 'Data',
+      submenu: [
+        {
+          label: "Pop Out Data",
+          click: () => { console.log("FIXME!!"); },
+        },
+      ]
+    }
   ];
 
   const menu = Menu.buildFromTemplate(template);
