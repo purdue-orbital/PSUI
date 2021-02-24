@@ -4,6 +4,8 @@ import Graph from '../Graph/Graph.js';
 
 import './GraphSelector.css';
 
+const { ipcRenderer } = window.require("electron");
+
 class GraphSelector extends React.Component {
   static defaultProps = {
     data: { defaultData: 0 }
@@ -17,7 +19,7 @@ class GraphSelector extends React.Component {
 
     const startingDataSet = this.props.data;
     this.prevData = this.__createDataHistory(startingDataSet);
-    
+
     this.graphChoices = {};
     for (const k in startingDataSet) {
       const subsetDataset = this.__flattenDataObj(startingDataSet[k]);
@@ -32,13 +34,21 @@ class GraphSelector extends React.Component {
         });
       }
     }
-    
-    this.__handleChange = this.__handleChange.bind(this);
+  }
+
+  componentDidMount() {
+    ipcRenderer.on("ChangeGraph", (event, arg) => {
+      this.__changeCurentGraph(arg.newGraph);
+    });
+  }
+
+  componentWillUnmount() {
+    ipcRenderer.removeAllListeners("ChangeGraph");
   }
 
   __flattenDataObj(obj, options) {
-    if (typeof options === "undefined") { options = {}; }
-    if (typeof options.featurePrefix === "undefined") { options.featurePrefix = ""; }
+    if (options === undefined) { options = {}; }
+    if (options.featurePrefix === undefined) { options.featurePrefix = ""; }
 
     let flatDataObj = {};
     for (const dictKey in obj) {
@@ -55,14 +65,10 @@ class GraphSelector extends React.Component {
   }
 
   componentDidUpdate() {
-    const currData = this.__flattenDataObj(this.props.data);
-    const now = Date.now();
-    for (const k in this.prevData) {
-      if (isNaN(currData[k])) {
-        continue;
-      }
-      this.prevData[k].data.shift();
-      this.prevData[k].data.push({ "x": now, "y": currData[k] });
+    const updatedData = this.__getUpdatedData();
+    if (updatedData !== null) {
+      // If there is a new data point, we need to update prev data
+      this.__updateDataBuffers(updatedData);
     }
   }
 
@@ -79,24 +85,41 @@ class GraphSelector extends React.Component {
     return historyCacheObj;
   }
 
-  __handleChange(e) {
-    this.setState({ currentGraph: e.target.value })
+  __changeCurentGraph(newGraph) {
+    const currentGraph = this.state.currentGraph;
+    if (newGraph !== currentGraph) {
+      this.setState({ currentGraph: newGraph });
+    }
   }
 
-  __createDataSelectOptions() {
-    const keys = Object.keys(this.graphChoices);
-    return keys.map((k, i) => {
-      return (
-        <option value={k} key={i}>{k}</option>
-      )
-    });
+  __getUpdatedData() {
+    // Used to determine if new data point recieved or if the grah just changed
+    const incomingData = this.__flattenDataObj(this.props.data);
+    for (const k in this.prevData) {
+      const prevDataSet = this.prevData[k].data;
+      const prevData = prevDataSet[prevDataSet.length - 1].y;
+      const newDataPoint = incomingData[k]; 
+      if (prevData !== newDataPoint) {
+        // If these are two different numbers, then data updated, returned the flattend data obj
+        return incomingData;
+      }
+    }
+    // If all the numbers are the same as before, then no update in data object and nothing to return
+    return null;
+  }
+  __updateDataBuffers(newflattenedData) {
+    const now = Date.now();
+    for (const k in this.prevData) {
+      if (isNaN(newflattenedData[k])) {
+        continue;
+      }
+      this.prevData[k].data.shift();
+      this.prevData[k].data.push({ "x": now, "y": newflattenedData[k] });
+    }
   }
 
   render() {
     const showGraph = this.state.currentGraph;
-
-    // Because we are pasing in entier datasets now it is completly possible to view many datasets at once
-    // Might be worth while changing dropdown list to a selection box
     const datasets = this.graphChoices[showGraph];
 
     return (
@@ -104,19 +127,8 @@ class GraphSelector extends React.Component {
         <div id="GraphContainer">
           <Graph datasets={datasets} />
         </div>
-        <div id="FormContainer">
-          <form>
-            <label>
-              Pick Graph to View:
-            <select value={showGraph} onChange={this.__handleChange}>
-                {this.__createDataSelectOptions()}
-              </select>
-            </label>
-          </form>
-        </div>
       </div>
     );
-
   }
 }
 

@@ -5,59 +5,58 @@ import './Timer.css';
 class Timer extends React.Component {
 
   static defaultProps = {
-    timer_name: "Default Timer",
+    timerName: "Default Timer",
     tick: false,
   };
 
   constructor(props) {
     super(props);
-    this.start_time = sessionStorage.getItem(`${this.props.timer_name}_start`);
-    this.milliseconds = 0;
-    this.seconds = 0;
-    this.minutes = 0;
-    this.hours = 0;
+    this.refTime = sessionStorage.getItem(`${this.props.timerName}_ref`);
     this.state = {
       time: "00:00:00:0"
     };
   }
 
-  tick() {
-    const pad_zeros = (number) => {
-      number = number + "";
-      if (number < 10) {
-        number = "0" + number;
-      }
-      return number
-    }
-
-    let now_time = Date.now();
-    let time_diff = now_time - this.start_time;
-
-    this.milliseconds = time_diff % 1000;
-    this.milliseconds = Math.floor(this.milliseconds / 100);
-    this.seconds = Math.floor(time_diff / 1000);
-    this.minutes = Math.floor(this.seconds / 60);
-    this.seconds = this.seconds % 60;
-    this.hours = Math.floor(this.minutes / 60);
-    this.minutes = this.minutes % 60;
-
-    this.setState(state => ({
-      time: `${pad_zeros(this.hours)}:${pad_zeros(this.minutes)}:${pad_zeros(this.seconds)}:${this.milliseconds}`
-    }));
+  __tick() {
+    const timeDiff = Date.now() - this.refTime;
+    const time = this.__millsToTime(timeDiff);
+    this.setState({ time: time });
   }
 
-  setStartTime() {
-    this.start_time = Date.now();
-    sessionStorage.setItem(`${this.props.timer_name}_start`, this.start_time);
+  __pad_zeros(number) {
+    let retString = "";
+    if (number < 10) {
+      retString = "0" + number;
+    } else {
+      retString = number + "";
+    }
+    return retString;
+  }
+
+  __millsToTime(milliseconds_diff) {
+    let milliseconds = milliseconds_diff % 1000;
+    milliseconds = Math.floor(milliseconds / 100);
+    let seconds = Math.floor(milliseconds_diff / 1000);
+    let minutes = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    let hours = Math.floor(minutes / 60);
+    minutes = minutes % 60;
+
+    return `${this.__pad_zeros(hours)}:${this.__pad_zeros(minutes)}:${this.__pad_zeros(seconds)}:${milliseconds}`;
+  }
+
+  __setRefTime() {
+    this.refTime = Date.now();
+    sessionStorage.setItem(`${this.props.timerName}_ref`, this.refTime);
   }
 
   componentDidMount() {
     this.interval = setInterval(() => {
-      if (this.start_time != null || this.props.tick) {
-        if (this.start_time == null) { this.setStartTime(); }
-        this.tick();
+      if (this.refTime !== null || this.props.tick) {
+        if (this.refTime === null) { this.__setRefTime(); }
+        this.__tick();
       }
-    }, 10);
+    }, 100);
   }
 
   componentWillUnmount() {
@@ -69,11 +68,12 @@ class Timer extends React.Component {
       <div className="TimerContainer">
         <div className="TimerLabelContainer" >
           <div className="TimerLabelElement">
-            {this.props.timer_name}:
+            {this.props.timerName}:
           </div>
         </div>
         <div className="TimerClockContainer">
-          <div className="TimerClockElement">{this.state.time}
+          <div className="TimerClockElement">
+            {this.state.time}
           </div>
         </div>
       </div>
@@ -82,4 +82,3 @@ class Timer extends React.Component {
 }
 
 export default Timer;
-

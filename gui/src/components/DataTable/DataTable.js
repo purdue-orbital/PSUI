@@ -16,8 +16,8 @@ class DataTable extends React.Component {
     let numRowsRendered = 0;
 
     const makeTableRows = (dataObj, options) => {
-      if (typeof options === "undefined") { options = {}; }
-      if (typeof options.rowPrefix === "undefined") { options.rowPrefix = ""; }
+      if (options === undefined) { options = {}; }
+      if (options.rowPrefix === undefined) { options.rowPrefix = ""; }
       return (
         <>
           {

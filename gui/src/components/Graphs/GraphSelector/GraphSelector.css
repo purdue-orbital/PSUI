@@ -10,12 +10,5 @@
 
 #GraphContainer {
   position: relative;
-  height: 88%;
-}
-
-#FormContainer {
-  position: relative;
-  text-align: center;
-  height: auto;
-  width: auto;
+  height: 95%;
 }
