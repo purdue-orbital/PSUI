@@ -77,7 +77,7 @@
           "config": {
             "options": {
               "productName": "PSUI",
-              "icon": "electron/orbit-icon.png",
+              "icon": "electron/res/orbit-icon.png",
               "maintainer": "Matt Drozt",
               "homepage": "https://github.com/purdue-orbital/PSUI",
               "productDescription": "A current test mock up of how the Python Sucks User Interface my look and function"
