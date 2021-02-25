@@ -1,5 +1,5 @@
 const { Menu, BrowserWindow } = require('electron');
-const { launchPopOutData } = require('./popOutData.js');
+const { GraphWindowAPI } = require('../ChildWindows/GraphWindow.js');
 
 function buildMenu(windowId) {
   const template = [
@@ -12,7 +12,7 @@ function buildMenu(windowId) {
       submenu: [
         {
           label: "Pop Out Data",
-          click: () => { launchPopOutData(windowId); },
+          click: () => { GraphWindowAPI.openWindow(); },
         },
       ]
     }
