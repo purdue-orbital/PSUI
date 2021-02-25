@@ -1,19 +1,19 @@
 import React from 'react';
 
-import StatusEnum from './utils/StatusEnum.js'
-import PopUpGenerator from './utils/PopUpGenerator.js'
+import StatusEnum from '../../utils/StatusEnum.js'
+import PopUpGenerator from '../../utils/PopUpGenerator.js'
 
-import Timer from './components/Timer/Timer.js';
-import DataTable from './components/DataTable/DataTable';
-import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTable.js';
-import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
-import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
-import CountdownTimer from './components/Timer/CountdownTimer.js';
+import Timer from '../../components/Timer/Timer.js';
+import DataTable from '../../components/DataTable/DataTable';
+import IndicatorTable from '../../components/Indicators/IndicatorTable/IndicatorTable.js';
+import GraphSelector from '../../components/Graphs/GraphSelector/GraphSelector.js';
+import CurrentStatus from '../../components/MissionStatus/CurrentStatus.js';
+import CountdownTimer from '../../components/Timer/CountdownTimer.js';
 
-import './styles/DataWindow.css';
-import './styles/BasicElements.css';
+import './MainPage.css';
 
-class DataWindow extends PopUpGenerator {
+
+class MainPage extends PopUpGenerator {
   constructor(props) {
     super(props, {
       mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
@@ -154,4 +154,4 @@ class DataWindow extends PopUpGenerator {
   }
 }
 
-export default DataWindow;
+export default MainPage;
