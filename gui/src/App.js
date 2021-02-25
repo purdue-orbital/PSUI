@@ -1,6 +1,8 @@
 import React from 'react';
+import { HashRouter, Route } from 'react-router-dom';
 
-import MainWindow from './pages/MainPage/MainPage.js';
+import MainPage from './pages/MainPage/MainPage.js';
+import MultigraphPage from './pages/MultigraphPage/MultigraphPage.js'
 import './styles/BasicElements.css';
 
 class App extends React.Component {
@@ -10,7 +12,12 @@ class App extends React.Component {
   }
 
   render() {
-    return (<MainWindow />);
+    return (
+      <HashRouter>
+        <Route exact path="/" component={MainPage} />
+        <Route path="/multigraph" component={MultigraphPage} />
+      </HashRouter>
+    );
   }
 }
 

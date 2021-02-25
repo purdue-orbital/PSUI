@@ -1,4 +1,6 @@
 const { BrowserWindow } = require('electron');
+const isDev = require('electron-is-dev');
+const path = require("path");
 
 class GraphWindow {
   static instance = null
@@ -7,10 +9,18 @@ class GraphWindow {
   launch() {
     if (this.__window == null) {
       // Window not yet made -> Create and open
-      this.__window = new BrowserWindow();
+      this.__window = new BrowserWindow({
+        webPreferences: {
+          nodeIntegration: true,
+        },
+      });
       this.__window.removeMenu();
       this.__window.on('close', () => { this.__window = null; });
-      this.__window.loadURL("https://github.com/purdue-orbital/PSUI/");
+      this.__window.loadURL( isDev ?
+        "http://localhost:3000/#/multigraph" :
+        `file://${path.join(__dirname, "../../build/index.html#/multigraph")}`
+      );
+      console.log(`file://${path.join(__dirname, "../../build/index.html#/multigraph")}`); // TODO: Remove
     } else {
       // Window already opened, just bring to top
       this.__window.show();
