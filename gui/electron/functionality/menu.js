@@ -1,18 +1,18 @@
-const { Menu } = require('electron');
-const { launchPopOutData } = require('./popOutData.js');
+const { Menu, BrowserWindow } = require('electron');
+const { GraphWindowAPI } = require('../ChildWindows/GraphWindow.js');
 
-function buildMenu(window) {
+function buildMenu(windowId) {
   const template = [
     {
       label: 'Graph',
-      submenu: makeChangeGraphMenu(window),
+      submenu: makeChangeGraphMenu(windowId),
     },
     {
       label: 'Data',
       submenu: [
         {
-          label: "Pop Out Data",
-          click: () => { console.log(window); launchPopOutData(); },
+          label: "Graphs Window",
+          click: () => { GraphWindowAPI.openWindow(); },
         },
       ]
     }
@@ -22,7 +22,8 @@ function buildMenu(window) {
   Menu.setApplicationMenu(menu);
 }
 
-function makeChangeGraphMenu(window) {
+function makeChangeGraphMenu(windowId) {
+  const window = BrowserWindow.fromId(windowId);
   return getDataKeys().map((graphName, i) => {
     const hotkeynum = 1 + i;
     let accelerator = null;

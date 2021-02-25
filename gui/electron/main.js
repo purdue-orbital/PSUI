@@ -2,9 +2,10 @@ const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require("path");
 
-const { buildMenu } = require('./utils/menu.js');
+const { buildMenu } = require('./functionality/menu.js');
+const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
 
-function createWindow() {
+function createMainWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
     width: 800,
@@ -12,13 +13,17 @@ function createWindow() {
     minWidth: 692,
     minHeight: 590,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
     },
   });
 
-  buildMenu(win);
+  buildMenu(win.id);
 
   if (isDev) { win.webContents.openDevTools({mode: 'detach'}); }
+
+  win.on('close', () => {
+    GraphWindowAPI.closeWindow();
+  });
   
   // and load the index.html of the app.
   win.loadURL(
@@ -29,7 +34,7 @@ function createWindow() {
 }
 
 
-app.whenReady().then(createWindow);
+app.whenReady().then(createMainWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -39,6 +44,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
+    createMainWindow()
   }
 });
