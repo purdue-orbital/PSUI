@@ -16,7 +16,7 @@ function createWindow() {
     },
   });
 
-  buildMenu(win);
+  buildMenu(win.id);
 
   if (isDev) { win.webContents.openDevTools({mode: 'detach'}); }
   

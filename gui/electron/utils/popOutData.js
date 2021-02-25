@@ -5,48 +5,36 @@ const { app, BrowserWindow } = require('electron');
 class PopOutDataSingleton {
   static dataWindow = null;
 
-  static getWindow() {
+  static getWindow(winId) {
     if (PopOutDataSingleton.dataWindow == null) {
       PopOutDataSingleton.dataWindow = new PopOutData();
     }
-    PopOutDataSingleton.dataWindow.launchPopOutData();
+    PopOutDataSingleton.dataWindow.launchPopOutData(winId);
   }
 }
 
 class PopOutData {
 
   __isOpen = false;
+  __window = null;
 
-  createPopOutData() {
-    const win = new BrowserWindow({
-      width: 800,
-      height: 600,
-      minWidth: 692,
-      minHeight: 590,
-      webPreferences: {
-        nodeIntegration: true
-      },
-    });
+  launchPopOutData(winId) {
+    // Get the window
+    if (this.__window == null) {
+      this.__window = BrowserWindow.fromId(winId);
+    }
 
-    // and load the html for the popout window
-    win.loadURL("https://github.com/purdue-orbital/PSUI/");
-  }
-
-  launchPopOutData() {
+    // Actually do a thing
     if (this.__isOpen) {
       // TODO: Bring window to front
+      this.__isOpen = false;
+      console.log("CLOSED!!");
     } else {
       this.__isOpen = true;
-      app.whenReady().then(this.createPopOutData);
-      app.on('window-all-closed', () => { 
-        app.quit();
-      });
+      console.log("OPENED!!");
     }
   }
 }
-
-
-
 
 module.exports = {
   launchPopOutData: PopOutDataSingleton.getWindow,
