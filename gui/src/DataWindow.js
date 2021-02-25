@@ -83,7 +83,7 @@ class DataWindow extends PopUpGenerator {
 
     return (
       <div id='container'>
-        <div id='leftPannel'>
+        <div id='leftPanel'>
           <div id='timerContainer'>
             <Timer timerName="Mission Timer" tick={mission_start} />
             {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
@@ -103,7 +103,7 @@ class DataWindow extends PopUpGenerator {
           />
         </div>
 
-        <div id='rightPannel'>
+        <div id='rightPanel'>
           <DataTable
             title="BALLOON DATA"
             data={data}
@@ -140,12 +140,12 @@ class DataWindow extends PopUpGenerator {
               }}>Stabilization</button>
           </div>
 
-          <div id="logoPannel">
+          <div id="logoPanel">
             <img src={process.env.PUBLIC_URL + '/img/orbital-logo.png'} alt="Purdue Orbital" />
           </div>
         </div>
 
-        <div id='graphPannel'>
+        <div id='graphPanel'>
           <GraphSelector data={data} />
         </div>
         {this.renderPopUp()}
