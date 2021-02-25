@@ -11,7 +11,7 @@ function buildMenu(windowId) {
       label: 'Data',
       submenu: [
         {
-          label: "Pop Out Data",
+          label: "Graphs Window",
           click: () => { GraphWindowAPI.openWindow(); },
         },
       ]

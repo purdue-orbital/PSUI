@@ -8,11 +8,12 @@ class GraphWindow {
     if (this.__window == null) {
       // Window not yet made -> Create and open
       this.__window = new BrowserWindow();
+      this.__window.removeMenu();
       this.__window.on('close', () => { this.__window = null; });
       this.__window.loadURL("https://github.com/purdue-orbital/PSUI/");
     } else {
       // Window already opened, just bring to top
-      // TODO: Bring to top
+      this.__window.show();
     }
   }
 
