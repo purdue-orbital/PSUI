@@ -20,7 +20,6 @@ class GraphWindow {
         "http://localhost:3000/#/multigraph" :
         `file://${path.join(__dirname, "../../build/index.html#/multigraph")}`
       );
-      console.log(`file://${path.join(__dirname, "../../build/index.html#/multigraph")}`); // TODO: Remove
     } else {
       // Window already opened, just bring to top
       this.__window.show();
