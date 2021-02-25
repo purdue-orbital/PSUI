@@ -12,7 +12,7 @@ function buildMenu(window) {
       submenu: [
         {
           label: "Pop Out Data",
-          click: () => { console.log(window); launchPopOutData(); },
+          click: () => { launchPopOutData(); },
         },
       ]
     }
