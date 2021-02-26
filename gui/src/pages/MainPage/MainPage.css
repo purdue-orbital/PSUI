@@ -10,7 +10,7 @@
     background-color: #585858;
 }
 
-#leftPannel {
+#leftPanel {
     float: left;
     width: 50%;
     height: 65%;
@@ -37,27 +37,27 @@
     width: 100%;
 }
 
-#rightPannel {
+#rightPanel {
     float: left;
     width: 50%;
     height: 65%;
     /* background-color: aquamarine; */
 }
 
-#logoPannel {
+#logoPanel {
     position: relative;
     width: 85%;
     height: 50px;
     margin: auto;
 }
 
-#logoPannel img {
+#logoPanel img {
     height: 100%;
     width: 100%;
     object-fit: contain;
 }
 
-#graphPannel {
+#graphPanel {
     float: left;
     width: 100%;
     height: 35%;
