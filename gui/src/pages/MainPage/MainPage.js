@@ -14,26 +14,14 @@ import './MainPage.css';
 
 
 class MainPage extends PopUpGenerator {
+  static defaultProps = {
+    currentData: { Data: 0 },
+  };
+
   constructor(props) {
     super(props, {
       mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
       launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
-      current_data: {
-        Altitude: 0,
-        Longitude: 0,
-        Latitude: 0,
-        Gyro: {
-          X: 0,
-          Y: 0,
-          Z: 0,
-        },
-        Temperature: 0,
-        Acceleration: {
-          X: 0,
-          Y: 0,
-          Z: 0,
-        },
-      },
       current_indicators: [
         { name: "Packets Sent", data: 0, },
         { name: "Packets Recieved", data: 0, },
@@ -49,35 +37,8 @@ class MainPage extends PopUpGenerator {
     this.missionStatusControl = React.createRef();
   }
 
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current_data: {
-          Altitude: Math.random(),
-          Longitude: Math.random(),
-          Latitude: Math.random(),
-          Gyro: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          },
-          Temperature: Math.random(),
-          Acceleration: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }
-        },
-      });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   render() {
-    const data = this.state.current_data;
+    const data = this.props.currentData;
     const mission_start = this.state.mission_start;
     const launch_start = this.state.launch_start;
 
