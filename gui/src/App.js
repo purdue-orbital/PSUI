@@ -5,6 +5,7 @@ import MainPage from './pages/MainPage/MainPage.js';
 import MultigraphPage from './pages/MultigraphPage/MultigraphPage.js'
 import './styles/BasicElements.css';
 
+const { ipcRenderer } = window.require("electron");
 class App extends React.Component {
   loadDataInterval = null;
 
@@ -13,6 +14,7 @@ class App extends React.Component {
     // FIXME: This state will not be consistant across many instances (i.e. different windows, tabs, etc)
     // Consider migrating to sessionStorage or equivelent
     this.state = { // Begin state
+      isTestMode: false,
       currData: { // Begin currData
         Altitude: 0,
         Longitude: 0,
@@ -33,6 +35,10 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    ipcRenderer.on("ToggleTestMode", () => {
+      this.setState({isTestMode: !this.state.isTestMode});
+    });
+
     this.loadDataInterval = setInterval(() => {
       this.setState({
         currData: { // Begin currDatat
@@ -60,11 +66,12 @@ class App extends React.Component {
   }
 
   render() {
+    const isTestMode = this.state.isTestMode;
     const currData = this.state.currData;
     return (
       <HashRouter>
-        <Route exact path="/" render={props => <MainPage {...props} currentData={currData}/>} />
-        <Route path="/multigraph" render={props => <MultigraphPage {...props} currentData={currData}/>} />
+        <Route exact path="/" render={props => <MainPage {...props} currentData={currData} testMode={isTestMode} />} />
+        <Route path="/multigraph" render={props => <MultigraphPage {...props} currentData={currData} />} />
       </HashRouter>
     );
   }

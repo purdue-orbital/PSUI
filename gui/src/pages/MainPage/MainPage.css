@@ -10,6 +10,13 @@
     background-color: #585858;
 }
 
+.testModeWarning {
+    background-color: red;
+    text-align: center;
+    font-weight: 700;
+    height: 5%;
+}
+
 #leftPanel {
     float: left;
     width: 50%;

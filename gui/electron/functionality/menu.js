@@ -2,6 +2,7 @@ const { Menu, BrowserWindow } = require('electron');
 const { GraphWindowAPI } = require('../ChildWindows/GraphWindow.js');
 
 function buildMenu(windowId) {
+  const window = BrowserWindow.fromId(windowId);
   const template = [
     {
       label: 'Graph',
@@ -10,6 +11,10 @@ function buildMenu(windowId) {
     {
       label: 'Data',
       submenu: [
+        {
+          label: "Toggle Test Mode",
+          click: () => { window.webContents.send("ToggleTestMode"); },
+        },
         {
           label: "Graphs Window",
           click: () => { GraphWindowAPI.openWindow(); },

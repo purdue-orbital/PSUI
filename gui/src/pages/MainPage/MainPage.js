@@ -16,6 +16,7 @@ import './MainPage.css';
 class MainPage extends PopUpGenerator {
   static defaultProps = {
     currentData: { Data: 0 },
+    testMode: false,
   };
 
   constructor(props) {
@@ -39,11 +40,13 @@ class MainPage extends PopUpGenerator {
 
   render() {
     const data = this.props.currentData;
+    const is_test_mode = this.props.testMode;
     const mission_start = this.state.mission_start;
     const launch_start = this.state.launch_start;
 
     return (
       <div id='container'>
+        {is_test_mode ? <div className="testModeWarning">WARNING: TEST MODE</div> : null}
         <div id='leftPanel'>
           <div id='timerContainer'>
             <Timer timerName="Mission Timer" tick={mission_start} />
