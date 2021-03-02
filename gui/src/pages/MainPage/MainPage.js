@@ -109,7 +109,7 @@ class MainPage extends PopUpGenerator {
           </div>
         </div>
 
-        <div id='graphPanel'>
+        <div id='graphPanel' className={is_test_mode ? "graphPanelTest" : "graphPanelNormal"}>
           <GraphSelector data={data} />
         </div>
         {this.renderPopUp()}

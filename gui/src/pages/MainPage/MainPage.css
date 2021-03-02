@@ -67,6 +67,14 @@
 #graphPanel {
     float: left;
     width: 100%;
-    height: 35%;
     /* background-color: lightcoral; */
 }
+
+.graphPanelNormal {
+    height: 35%;
+}
+
+.graphPanelTest {
+    height: 30%;
+}
+
