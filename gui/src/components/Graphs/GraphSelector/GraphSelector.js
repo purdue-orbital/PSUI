@@ -8,13 +8,14 @@ const { ipcRenderer } = window.require("electron");
 
 class GraphSelector extends React.Component {
   static defaultProps = {
-    data: { defaultData: 0 }
+    data: { defaultData: 0 },
+    defaultStartGraph: null
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: Object.keys(this.props.data)[0],
+      currentGraph: this.props.defaultGraph || Object.keys(this.props.data)[0],
     };
 
     const startingDataSet = this.props.data;
