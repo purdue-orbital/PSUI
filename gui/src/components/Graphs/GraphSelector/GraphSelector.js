@@ -15,7 +15,7 @@ class GraphSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: this.props.defaultGraph || Object.keys(this.props.data)[0],
+      currentGraph: this.props.defaultStartGraph || Object.keys(this.props.data)[0],
     };
 
     const startingDataSet = this.props.data;

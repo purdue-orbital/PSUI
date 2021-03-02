@@ -8,13 +8,13 @@ class MultigraphPage extends React.Component {
     return (
       <div id="container">
         <div id="graphPanel">
-          <GraphSelector data={data} />
+          <GraphSelector data={data} defaultStartGraph="Altitude"/>
         </div>
         <div id="graphPanel">
-          <GraphSelector data={data} />
+          <GraphSelector data={data} defaultStartGraph="Gyro"/>
         </div>
         <div id="graphPanel">
-          <GraphSelector data={data} />
+          <GraphSelector data={data} defaultStartGraph="Acceleration"/>
         </div>
       </div>
     );
