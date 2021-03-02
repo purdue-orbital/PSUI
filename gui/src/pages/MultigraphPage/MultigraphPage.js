@@ -1,8 +1,23 @@
 import React from 'react';
+import GraphSelector from '../../components/Graphs/GraphSelector/GraphSelector';
 
 class MultigraphPage extends React.Component {
   render() {
-    return (<h1>PUT THINGS FOR MULTIGRAPH HERE</h1>);
+    const data = this.props.currentData;
+
+    return (
+      <div id="container">
+        <div id="graphPanel">
+          <GraphSelector data={data} />
+        </div>
+        <div id="graphPanel">
+          <GraphSelector data={data} />
+        </div>
+        <div id="graphPanel">
+          <GraphSelector data={data} />
+        </div>
+      </div>
+    );
   }
 }
 
