@@ -15,7 +15,7 @@ class GraphSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: this.props.defaultStartGraph || Object.keys(this.props.data)[0],
+      currentGraph: this.defaultStartGraph,
     };
 
     const startingDataSet = this.props.data;
@@ -117,6 +117,14 @@ class GraphSelector extends React.Component {
       this.prevData[k].data.shift();
       this.prevData[k].data.push({ "x": now, "y": newflattenedData[k] });
     }
+  }
+
+  get defaultStartGraph() {
+    const defualtStart = this.props.defaultStartGraph;
+    if (defualtStart !== null && Object.keys(this.props.data).includes(defualtStart)) {
+      return defualtStart
+    }
+    return Object.keys(this.props.data)[0];
   }
 
   render() {
