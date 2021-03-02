@@ -1,39 +1,27 @@
 import React from 'react';
 
-import StatusEnum from './utils/StatusEnum.js'
-import PopUpGenerator from './utils/PopUpGenerator.js'
+import StatusEnum from '../../utils/StatusEnum.js'
+import PopUpGenerator from '../../utils/PopUpGenerator.js'
 
-import Timer from './components/Timer/Timer.js';
-import DataTable from './components/DataTable/DataTable';
-import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTable.js';
-import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
-import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
-import CountdownTimer from './components/Timer/CountdownTimer.js';
+import Timer from '../../components/Timer/Timer.js';
+import DataTable from '../../components/DataTable/DataTable';
+import IndicatorTable from '../../components/Indicators/IndicatorTable/IndicatorTable.js';
+import GraphSelector from '../../components/Graphs/GraphSelector/GraphSelector.js';
+import CurrentStatus from '../../components/MissionStatus/CurrentStatus.js';
+import CountdownTimer from '../../components/Timer/CountdownTimer.js';
 
-import './styles/DataWindow.css';
-import './styles/BasicElements.css';
+import './MainPage.css';
 
-class DataWindow extends PopUpGenerator {
+
+class MainPage extends PopUpGenerator {
+  static defaultProps = {
+    currentData: { Data: 0 },
+  };
+
   constructor(props) {
     super(props, {
       mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
       launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
-      current_data: {
-        Altitude: 0,
-        Longitude: 0,
-        Latitude: 0,
-        Gyro: {
-          X: 0,
-          Y: 0,
-          Z: 0,
-        },
-        Temperature: 0,
-        Acceleration: {
-          X: 0,
-          Y: 0,
-          Z: 0,
-        },
-      },
       current_indicators: [
         { name: "Packets Sent", data: 0, },
         { name: "Packets Recieved", data: 0, },
@@ -49,41 +37,14 @@ class DataWindow extends PopUpGenerator {
     this.missionStatusControl = React.createRef();
   }
 
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current_data: {
-          Altitude: Math.random(),
-          Longitude: Math.random(),
-          Latitude: Math.random(),
-          Gyro: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          },
-          Temperature: Math.random(),
-          Acceleration: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }
-        },
-      });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
   render() {
-    const data = this.state.current_data;
+    const data = this.props.currentData;
     const mission_start = this.state.mission_start;
     const launch_start = this.state.launch_start;
 
     return (
       <div id='container'>
-        <div id='leftPannel'>
+        <div id='leftPanel'>
           <div id='timerContainer'>
             <Timer timerName="Mission Timer" tick={mission_start} />
             {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
@@ -103,7 +64,7 @@ class DataWindow extends PopUpGenerator {
           />
         </div>
 
-        <div id='rightPannel'>
+        <div id='rightPanel'>
           <DataTable
             title="BALLOON DATA"
             data={data}
@@ -140,12 +101,12 @@ class DataWindow extends PopUpGenerator {
               }}>Stabilization</button>
           </div>
 
-          <div id="logoPannel">
+          <div id="logoPanel">
             <img src={process.env.PUBLIC_URL + '/img/orbital-logo.png'} alt="Purdue Orbital" />
           </div>
         </div>
 
-        <div id='graphPannel'>
+        <div id='graphPanel'>
           <GraphSelector data={data} />
         </div>
         {this.renderPopUp()}
@@ -154,4 +115,4 @@ class DataWindow extends PopUpGenerator {
   }
 }
 
-export default DataWindow;
+export default MainPage;
