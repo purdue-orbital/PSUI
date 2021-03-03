@@ -22,12 +22,15 @@ class CountdownTimer extends Timer {
   // @override
   __tick() {
     const timeDiff = this.refTime - Date.now();
+    
     if (timeDiff < 0) {
       // FIXME: Right now this identifies when time is out and simply stops the imer from ticking
       // Ideally should start counting up and perhaps change the timer/text color
       // Check Parent class timer for more deatils
-      clearInterval(this.interval);
-      this.setState({time: "Out of Time"});
+      /*clearInterval(this.interval);
+      this.setState({time: "Out of Time"});*/
+      const time = this.__millsToTime(-1 * timeDiff);
+      this.setState({time: time});
       return
     }
     const time = this.__millsToTime(timeDiff);
