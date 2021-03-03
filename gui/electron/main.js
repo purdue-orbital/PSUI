@@ -5,36 +5,42 @@ const path = require("path");
 const { buildMenu } = require('./functionality/menu.js');
 const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
 
-function createMainWindow() {
-  // Create the browser window.
-  const win = new BrowserWindow({
-    width: 800,
-    height: 600,
-    minWidth: 692,
-    minHeight: 590,
-    webPreferences: {
-      nodeIntegration: true,
-    },
-  });
+class MainWindow {
 
-  buildMenu(win.id);
+  createMainWindow() {
+    // Create the browser window.
+    const win = new BrowserWindow({
+      width: 800,
+      height: 600,
+      minWidth: 692,
+      minHeight: 590,
+      webPreferences: {
+        nodeIntegration: true,
+      },
+    });
 
-  if (isDev) { win.webContents.openDevTools({mode: 'detach'}); }
+    buildMenu(win.id);
 
-  win.on('close', () => {
-    GraphWindowAPI.closeWindow();
-  });
+    if (isDev) { win.webContents.openDevTools({ mode: 'detach' }); }
+
+    // Window actions
+    win.on('close', () => {
+      GraphWindowAPI.closeWindow();
+    });
+
+    // and load the index.html of the app.
+    win.loadURL(
+      isDev ?
+        'http://localhost:3000' :
+        `file://${path.join(__dirname, "../build/index.html")}`
+    );
+  }
+
   
-  // and load the index.html of the app.
-  win.loadURL(
-    isDev ?
-      'http://localhost:3000' :
-      `file://${path.join(__dirname, "../build/index.html")}`
-  );
 }
 
 
-app.whenReady().then(createMainWindow);
+app.whenReady().then(MainWindow.createMainWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
