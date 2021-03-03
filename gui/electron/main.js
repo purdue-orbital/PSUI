@@ -7,7 +7,7 @@ const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
 
 class MainWindow {
 
-  createMainWindow() {
+  static createMainWindow() {
     // Create the browser window.
     const win = new BrowserWindow({
       width: 800,
@@ -36,7 +36,7 @@ class MainWindow {
     );
   }
 
-  
+
 }
 
 
