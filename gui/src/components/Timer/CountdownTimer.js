@@ -14,16 +14,23 @@ class CountdownTimer extends Timer {
     this.refTime = Date.parse(this.props.endTime);
     if (Number.isNaN(this.refTime)) {
       // If the parsed string is bad, just set the timer for one hour in the future
-      this.refTime = Date.now() + (60 * 60 * 1000);
+      // FIXME: Lowering this to 30 seconds for dev purposes, put back when done
+      this.refTime = Date.now() + (30 * 1000);
     }
   }
 
   // @override
   __tick() {
     const timeDiff = this.refTime - Date.now();
+    
     if (timeDiff < 0) {
-      clearInterval(this.interval);
-      this.setState({time: "Out of Time"});
+      // FIXME: Right now this identifies when time is out and simply stops the imer from ticking
+      // Ideally should start counting up and perhaps change the timer/text color
+      // Check Parent class timer for more deatils
+      /*clearInterval(this.interval);
+      this.setState({time: "Out of Time"});*/
+      const time = this.__millsToTime(-1 * timeDiff);
+      this.setState({time: time});
       return
     }
     const time = this.__millsToTime(timeDiff);
