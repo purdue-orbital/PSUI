@@ -35,12 +35,12 @@ class MainWindow {
         `file://${path.join(__dirname, "../build/index.html")}`
     );
   }
-
-
 }
 
-
-app.whenReady().then(MainWindow.createMainWindow);
+app
+  .whenReady()
+  .then(/* STart making data */)
+  .then(MainWindow.createMainWindow);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

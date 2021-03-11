@@ -11,54 +11,15 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    // FIXME: This state will not be consistant across many instances (i.e. different windows, tabs, etc)
-    // Consider migrating to sessionStorage or equivelent
-    this.state = { // Begin state
+    this.state = {
       isTestMode: false,
-      currData: { // Begin currData
-        Altitude: 0,
-        Longitude: 0,
-        Latitude: 0,
-        Gyro: { // Begin Gyro
-          X: 0,
-          Y: 0,
-          Z: 0,
-        }, // End Gyro
-        Temperature: 0,
-        Acceleration: { // Begin Acceleration
-          X: 0,
-          Y: 0,
-          Z: 0,
-        }, // End Acceleration
-      }, // End currData
-    }; // End state
+    };
   }
 
   componentDidMount() {
     ipcRenderer.on("ToggleTestMode", () => {
       this.setState({isTestMode: !this.state.isTestMode});
     });
-
-    this.loadDataInterval = setInterval(() => {
-      this.setState({
-        currData: { // Begin currDatat
-          Altitude: Math.random(),
-          Longitude: Math.random(),
-          Latitude: Math.random(),
-          Gyro: { // Begin Gyro
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }, // End Gyro
-          Temperature: Math.random(),
-          Acceleration: { // Begin Acceleration
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }, // End Acceleration
-        }, // End currData
-      });
-    }, 1000);
   }
 
   componentWillUnmount() {
