@@ -44,6 +44,8 @@ class GraphSelector extends React.Component {
   }
 
   componentWillUnmount() {
+    // Not sure that this should be removing all? Maybe just the on created on mount?
+    // TODO: Needs research!!
     ipcRenderer.removeAllListeners("ChangeGraph");
   }
 

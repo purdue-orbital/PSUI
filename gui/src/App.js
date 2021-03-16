@@ -28,6 +28,7 @@ class App extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.loadDataInterval);
+    // TODO: need to clean up ipcRender events here
   }
 
   render() {
