@@ -13,7 +13,7 @@ class App extends React.Component {
     super(props);
     this.state = { // Begin state
       isTestMode: false,
-      currData: null
+      currData: undefined,
     };
   }
 
