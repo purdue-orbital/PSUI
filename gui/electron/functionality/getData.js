@@ -1,4 +1,5 @@
 class getData {
+    static instance = null
     currData = {};
 
     constructor(props) {
@@ -52,6 +53,14 @@ class getData {
 
     clearData() {
         clearInterval(this.loadDataInterval);
+    }
+
+    static getInstance() {
+        if (this.instance == null) {
+            getData.instance = new getData();
+        } else {
+            return getData.instance;
+        }
     }
 }
 
