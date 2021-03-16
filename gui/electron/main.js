@@ -4,9 +4,9 @@ const path = require("path");
 
 const { buildMenu } = require('./functionality/menu.js');
 const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
+const getData = require('./functionality/getData.js');
 
 class MainWindow {
-
   static createMainWindow() {
     // Create the browser window.
     const win = new BrowserWindow({
@@ -39,7 +39,7 @@ class MainWindow {
 
 app
   .whenReady()
-  .then(/* STart making data */)
+  .then(getData.getInstance().startRandomData())
   .then(MainWindow.createMainWindow);
 
 app.on('window-all-closed', () => {

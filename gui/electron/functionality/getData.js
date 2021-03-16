@@ -2,8 +2,8 @@ class getData {
     static instance = null
     currData = {};
 
-    constructor(props) {
-        super(props);
+    constructor(/*props*/) {
+        // super(props);
         this.state = { // Begin state
             isTestMode: false,
             currData: { // Begin currData
@@ -44,6 +44,8 @@ class getData {
                     Z: Math.random(),
                 }, // End Acceleration
             };
+
+            console.log("type your favorite debugging message");
         }, 1000);
     }
 
@@ -56,12 +58,13 @@ class getData {
     }
 
     static getInstance() {
-        if (this.instance == null) {
+        if (getData.instance == null) {
             getData.instance = new getData();
-        } else {
-            return getData.instance;
         }
+        
+        return getData.instance;
     }
 }
 
-export default getData;
+module.exports = getData;
+
