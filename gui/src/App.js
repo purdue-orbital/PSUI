@@ -11,14 +11,18 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { // Begin state
       isTestMode: false,
+      currData: null
     };
   }
 
   componentDidMount() {
     ipcRenderer.on("ToggleTestMode", () => {
       this.setState({isTestMode: !this.state.isTestMode});
+    });
+    ipcRenderer.on("RequestData", (newCurrData) => {
+      this.setState({currData: newCurrData});
     });
   }
 
