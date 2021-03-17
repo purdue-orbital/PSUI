@@ -44,8 +44,6 @@ class getData {
                     Z: Math.random(),
                 }, // End Acceleration
             };
-
-            console.log("type your favorite debugging message");
         }, 1000);
     }
 

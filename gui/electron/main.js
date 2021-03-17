@@ -28,6 +28,10 @@ class MainWindow {
       GraphWindowAPI.closeWindow();
     });
 
+    setInterval(() => {
+      win.webContents.send("RequestData", getData.getInstance().getRandomData());
+    }, 1000);
+
     // and load the index.html of the app.
     win.loadURL(
       isDev ?
@@ -50,6 +54,6 @@ app.on('window-all-closed', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createMainWindow()
+    MainWindow.createMainWindow()
   }
 });
