@@ -7,6 +7,8 @@ const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
 const getData = require('./functionality/getData.js');
 
 class MainWindow {
+  static randDataInt = null;
+
   static createMainWindow() {
     // Create the browser window.
     const win = new BrowserWindow({
@@ -28,7 +30,7 @@ class MainWindow {
       GraphWindowAPI.closeWindow();
     });
 
-    setInterval(() => {
+    MainWindow.randDataInt = setInterval(() => {
       win.webContents.send("RequestData", getData.getInstance().getRandomData());
     }, 1000);
 
@@ -48,6 +50,7 @@ app
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
+    clearInterval(MainWindow.randDataInt);
     app.quit()
   }
 });

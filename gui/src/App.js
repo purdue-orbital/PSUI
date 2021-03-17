@@ -22,7 +22,6 @@ class App extends React.Component {
       this.setState({isTestMode: !this.state.isTestMode});
     });
     ipcRenderer.on("RequestData", (sender, newCurrData) => {
-      console.log(newCurrData);
       this.setState({currData: newCurrData});
     });
   }
