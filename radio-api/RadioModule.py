@@ -36,23 +36,23 @@ class ModuleSingleton:
             context = zmq.Context()
 
             # create socket
-            sock = context.socket(zmq.PUSH)
-            sock.bind("tcp://127.0.0.1:5000")
+            self.sock = context.socket(zmq.PUSH)
+            self.sock.bind("tcp://127.0.0.1:5000")
         except Exception as e:
             print(e)
 
     def send(self, data):
-        if not isinstance(data, str):
-            raise TypeError('Invalid type: data must be a str, not %r' % type(data))
+        #if not isinstance(data, str):
+            #raise TypeError('Invalid type: data must be a str, not %r' % type(data))
 
 
         try:
-            message = str.encode(data)
-            sock.send (pmt.serialize_str(pmt.to_pmt(message)))
+            #message = str.encode(str(data))
+            self.sock.send (pmt.serialize_str(pmt.to_pmt(data)))
             print(OK + "Sent")
         except KeyboardInterrupt:
             print ("interrupt received. shutting down.")
             # clean up
-            sock.close()
+            self.sock.close()
             context.term()
             exit()
