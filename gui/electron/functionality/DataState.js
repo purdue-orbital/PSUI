@@ -1,4 +1,4 @@
-class GetData {
+class DataState {
     static instance = null
     currData = {};
 
@@ -56,12 +56,12 @@ class GetData {
     }
 
     static getInstance() {
-        if (GetData.instance == null) {
-            GetData.instance = new GetData();
+        if (DataState.instance == null) {
+            DataState.instance = new DataState();
         }
-        return GetData.instance;
+        return DataState.instance;
     }
 }
 
-module.exports = GetData;
+module.exports = DataState;
 

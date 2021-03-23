@@ -4,7 +4,7 @@ const path = require("path");
 
 const { buildMenu } = require('./functionality/menu.js');
 const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
-const getData = require('./functionality/getData.js');
+const DataState = require('./functionality/DataState.js');
 
 class MainWindow {
   static randDataInt = null;
@@ -31,7 +31,7 @@ class MainWindow {
     });
 
     MainWindow.randDataInt = setInterval(() => {
-      win.webContents.send("RequestData", getData.getInstance().getRandomData());
+      win.webContents.send("RequestData", DataState.getInstance().getRandomData());
     }, 1000);
 
     // and load the index.html of the app.
@@ -45,7 +45,7 @@ class MainWindow {
 
 app
   .whenReady()
-  .then(getData.getInstance().startRandomData())
+  .then(DataState.getInstance().startRandomData())
   .then(MainWindow.createMainWindow);
 
 app.on('window-all-closed', () => {
