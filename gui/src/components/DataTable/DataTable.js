@@ -10,6 +10,13 @@ class DataTable extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.dscabt = null
+  }
+
+  componentDidMount() {
+    // read json file
+    // instance var for comparison in 
+    this.dscabt = null;// whatever was read
   }
 
   __renderTableRows(dataObj) {
@@ -30,8 +37,11 @@ class DataTable extends React.Component {
               } else if (typeof data === "number") {
                 const rowName = `${options.rowPrefix}${key}`
                 const val = parseFloat(data).toFixed(4);
+                // check value
+                // outside range
+                let isRed = true
                 return (
-                  <tr className={numRowsRendered++ % 2 === 0 ? "AltRow" : ""} key={`DataTableRow-${rowName}`}>
+                  <tr className={numRowsRendered++ % 2 === 0 ? "AltRow" : ""} key={`DataTableRow-${rowName}`} /* style={isRed ? "" : "Red"} */>
                     <td className="LabelCol">{rowName}</td>
                     <td className="ValueCol">{val}</td>
                   </tr>
