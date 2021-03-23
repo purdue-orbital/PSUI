@@ -30,7 +30,7 @@ class MainWindow {
 
     setInterval(() => {
       win.webContents.send("RequestData", getData.getInstance().getRandomData());
-    }, 1000);
+    }, 10);
 
     // and load the index.html of the app.
     win.loadURL(

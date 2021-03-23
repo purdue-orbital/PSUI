@@ -67,10 +67,14 @@ class GraphSelector extends React.Component {
     return flatDataObj;
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const updatedData = this.__getUpdatedData();
-    if (updatedData !== null) {
-      // If there is a new data point, we need to update prev data
+    console.log(updatedData);
+    console.log(prevProps.data)
+    if (updatedData.length !== prevProps.data.length) {
+      // If the size of the dataset changes, create new structure for the data
+      console.log("data size change detected!");
+      this.__createDataHistory(updatedData);
       this.__updateDataBuffers(updatedData);
     }
   }
