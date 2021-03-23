@@ -14,7 +14,10 @@ function buildMenu(windowId) {
       submenu: [
         {
           label: "Toggle Test Mode",
-          click: () => { window.webContents.send("ToggleTestMode"); },
+          click: () => {
+            DataState.getInstance().toggleTestMode();
+            window.webContents.send("ToggleTestMode");
+          },
         },
         {
           label: "Graphs Window",

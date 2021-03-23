@@ -1,6 +1,7 @@
 class DataState {
     static instance = null
     currData = {};
+    isTestData = false;
 
     constructor() {
         this.currData = { // Begin currData
@@ -19,6 +20,13 @@ class DataState {
                 Z: 0,
             }, // End Acceleration
         }; // End currData
+    }
+
+    startReadingData() {
+        this.loadDataInterval = setInterval(() => {
+            // TODO: Make api calls
+            console.log("Reading data from sensors");
+        }, 1000);
     }
 
     startRandomData() {
@@ -53,6 +61,20 @@ class DataState {
 
     getDataFields() {
         return Object.keys(this.currData);
+    }
+
+    setTestMode(to = true) {
+        this.isTestData = to;
+        clearInterval(this.loadDataInterval);
+        if (to) {
+            this.startRandomData();
+        } else {
+            this.startReadingData();
+        }
+    }
+
+    toggleTestMode() {
+        this.setTestMode(!this.isTestData);
     }
 
     static getInstance() {

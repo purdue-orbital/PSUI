@@ -45,7 +45,7 @@ class MainWindow {
 
 app
   .whenReady()
-  .then(DataState.getInstance().startRandomData())
+  .then(DataState.getInstance().setTestMode(false))
   .then(MainWindow.createMainWindow);
 
 app.on('window-all-closed', () => {
