@@ -1,28 +1,24 @@
-class getData {
+class GetData {
     static instance = null
     currData = {};
 
-    constructor(/*props*/) {
-        // super(props);
-        this.state = { // Begin state
-            isTestMode: false,
-            currData: { // Begin currData
-                Altitude: 0,
-                Longitude: 0,
-                Latitude: 0,
-                Gyro: { // Begin Gyro
-                    X: 0,
-                    Y: 0,
-                    Z: 0,
-                }, // End Gyro
-                Temperature: 0,
-                Acceleration: { // Begin Acceleration
-                    X: 0,
-                    Y: 0,
-                    Z: 0,
-                }, // End Acceleration
-            }, // End currData
-        }; // End state
+    constructor() {
+        this.currData = { // Begin currData
+            Altitude: 0,
+            Longitude: 0,
+            Latitude: 0,
+            Gyro: { // Begin Gyro
+                X: 0,
+                Y: 0,
+                Z: 0,
+            }, // End Gyro
+            Temperature: 0,
+            Acceleration: { // Begin Acceleration
+                X: 0,
+                Y: 0,
+                Z: 0,
+            }, // End Acceleration
+        }; // End currData
     }
 
     startRandomData() {
@@ -55,14 +51,17 @@ class getData {
         clearInterval(this.loadDataInterval);
     }
 
+    getDataFields() {
+        return Object.keys(this.currData);
+    }
+
     static getInstance() {
-        if (getData.instance == null) {
-            getData.instance = new getData();
+        if (GetData.instance == null) {
+            GetData.instance = new GetData();
         }
-        
-        return getData.instance;
+        return GetData.instance;
     }
 }
 
-module.exports = getData;
+module.exports = GetData;
 
