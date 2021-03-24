@@ -1,13 +1,18 @@
 const { BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require("path");
+const Window = require('./Window.js');
 const DataState = require("../functionality/DataState.js");
 
-class GraphWindow {
+class GraphWindow extends Window {
   static instance = null
   __window = null
   __data = DataState.getInstance();
   __dataInterval = null;
+
+  constructor() {
+    super();
+  }
 
   launch() {
     if (this.__window == null) {

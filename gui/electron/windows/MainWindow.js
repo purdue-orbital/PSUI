@@ -4,13 +4,18 @@ const path = require("path");
 
 const { buildMenu } = require('../functionality/Menu.js');
 const GraphWindowAPI = require('./GraphWindow.js');
+const Window = require('./Window.js');
 const DataState = require('../functionality/DataState.js');
 
 
-class MainWindow {
+class MainWindow extends Window {
   static instance = null;
   __window = null;
   __dataInterval = null;
+
+  constructor() {
+    super();
+  }
 
   launch() {
     // Create the browser window.
