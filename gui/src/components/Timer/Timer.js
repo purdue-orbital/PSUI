@@ -72,7 +72,7 @@ class Timer extends React.Component {
           </div>
         </div>
         <div className="TimerClockContainer">
-          <div className="TimerClockElement">
+          <div className={(Date.now() - this.refTime > 0) ? "TimerColorNormal" : "TimerColorPast"}>
             {this.state.time}
           </div>
         </div>
