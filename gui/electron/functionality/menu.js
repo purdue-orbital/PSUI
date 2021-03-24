@@ -1,4 +1,5 @@
 const { Menu, BrowserWindow } = require('electron');
+const getData = require('./getData.js');
 const { GraphWindowAPI } = require('../ChildWindows/GraphWindow.js');
 
 function buildMenu(windowId) {
@@ -46,7 +47,10 @@ function makeChangeGraphMenu(windowId) {
 
 function getDataKeys() {
   // TODO: This needs to read data object and return keys so we do not have to update manually
-  return ["Altitude", "Longitude", "Latitude", "Gyro", "Temperature", "Acceleration"];
+  curr = getData.getInstance().getRandomData();
+  return Object.keys(curr);
+  //return [curr.Altitude, curr.Longitude, curr.Latitude, curr.Gyro, curr.Temperature, curr.Acceleration];
+  //return ["Altitude","Longitude","Latitude","Gyro","Temperature","Acceleration"];
 }
 
 module.exports = {
