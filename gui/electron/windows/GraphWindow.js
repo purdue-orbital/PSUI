@@ -50,7 +50,7 @@ class GraphWindow {
   close() {
     // Close the window if it exists
     // NOTE: This method is called only when the API - close method is invoked
-    if (this.__window != null) {
+    if (this.__window !== null) {
       this.__window.close();
     }
   }
