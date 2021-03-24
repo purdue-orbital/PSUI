@@ -4,15 +4,22 @@ const path = require("path");
 
 const { buildMenu } = require('../functionality/Menu.js');
 const GraphWindowAPI = require('./GraphWindow.js');
+const Window = require('./Window.js');
 const DataState = require('../functionality/DataState.js');
 
 
-class MainWindow {
-  static randDataInt = null;
+class MainWindow extends Window {
+  static instance = null;
+  __window = null;
+  __dataInterval = null;
 
-  static createMainWindow() {
+  constructor() {
+    super();
+  }
+
+  launch() {
     // Create the browser window.
-    const win = new BrowserWindow({
+    this.__window = new BrowserWindow({
       width: 800,
       height: 600,
       minWidth: 692,
@@ -23,28 +30,59 @@ class MainWindow {
     });
 
     // Constructs custom toolbar for main window
-    buildMenu(win.id);
+    buildMenu(this.__window.id);
 
     // If dev mode bring up dev tools
-    if (isDev) { win.webContents.openDevTools({ mode: 'detach' }); }
+    if (isDev) { this.__window.webContents.openDevTools({ mode: 'detach' }); }
 
     // Set an interval to fetch data and send to rendering proccess
-    MainWindow.randDataInt = setInterval(() => {
-      win.webContents.send("RequestData", DataState.getInstance().getCurrData());
+    this.__dataInterval = setInterval(() => {
+      this.__window.webContents.send("RequestData", DataState.getInstance().getCurrData());
     }, 1000);
     
     // Window actions
-    win.on('close', () => {
+    this.__window.on('close', () => {
       GraphWindowAPI.closeWindow();
+      clearInterval(this.__dataInterval);
+      this.__dataInterval = null;
+      this.__window = null;
     });
 
     // and load the index.html of the app.
-    win.loadURL(
+    this.__window.loadURL(
       isDev ?
         'http://localhost:3000' :
         `file://${path.join(__dirname, "../build/index.html")}`
     );
   }
+
+  close() {
+    // Close the window if exists
+    // Only called if called by api
+    if (this.__window !== null) {
+      this.__window.close();
+    }
+  }
+
+  static getInstance() {
+    if (MainWindow.instance === null) {
+      MainWindow.instance = new MainWindow();
+    }
+    return MainWindow.instance;
+  }
+
+  static launchWindow() {
+    MainWindow.getInstance().launch();
+  }
+
+  static closeWindow() {
+    MainWindow.getInstance.close();
+  }
 }
 
-module.exports = MainWindow;
+const MainWindowAPI = {
+  openWindow: MainWindow.launchWindow,
+  closeWinow: MainWindow.closeWindow,
+}
+
+module.exports = MainWindowAPI;

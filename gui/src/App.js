@@ -13,10 +13,9 @@ class App extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { // Begin state
-      isTestMode: false,
-      currData: undefined,
-    };
+
+    const currState = ipcRenderer.sendSync("SetUpReq");
+    this.state = currState;
   }
 
   componentDidMount() {

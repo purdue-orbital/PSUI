@@ -60,7 +60,7 @@ class DataState {
     clearData() {
         clearInterval(this.loadDataInterval);
     }
-
+    
     getDataFields() {
         return Object.keys(this.currData);
     }
