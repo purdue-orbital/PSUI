@@ -5,6 +5,7 @@ import './DataTable.css';
 class DataTable extends React.Component {
   static defaultProps = {
     title: "DATA",
+    data: {}
   };
 
   constructor(props) {

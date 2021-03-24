@@ -15,8 +15,9 @@ function buildMenu(windowId) {
         {
           label: "Toggle Test Mode",
           click: () => {
-            DataState.getInstance().toggleTestMode();
-            window.webContents.send("ToggleTestMode");
+            const data = DataState.getInstance();
+            data.toggleTestMode();
+            window.webContents.send("SetTestMode", data.isTestMode());
           },
         },
         {

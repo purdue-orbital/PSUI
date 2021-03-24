@@ -6,6 +6,8 @@ import MultigraphPage from './pages/MultigraphPage/MultigraphPage.js'
 import './styles/BasicElements.css';
 
 const { ipcRenderer } = window.require("electron");
+
+
 class App extends React.Component {
   loadDataInterval = null;
 
@@ -18,11 +20,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    ipcRenderer.on("ToggleTestMode", () => {
-      this.setState({isTestMode: !this.state.isTestMode});
+    ipcRenderer.on("SetTestMode", (_event, isTestMode) => {
+      this.setState({ isTestMode: isTestMode });
     });
-    ipcRenderer.on("RequestData", (sender, newCurrData) => {
-      this.setState({currData: newCurrData});
+    ipcRenderer.on("RequestData", (_event, newCurrData) => {
+      this.setState({ currData: newCurrData });
     });
   }
 
