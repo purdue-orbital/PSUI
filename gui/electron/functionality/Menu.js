@@ -50,7 +50,7 @@ function makeChangeGraphMenu(windowId) {
 }
 
 function getDataKeys() {
-  const curr = DataState.getInstance().getRandomData();
+  const curr = DataState.getInstance().getCurrData();
   return Object.keys(curr);
 }
 
