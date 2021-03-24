@@ -1,6 +1,11 @@
-from RadioModule import Module
+from Radio import Radio 
+import json
 
-module = Module()
-radio = module.get_instance()
+jsonData = {}
+jsonData['QDM'] = False
+jsonData['Launch'] = False
+jsonData['Abort'] = False
 
-radio.send("Hello World")
+radio = Radio(True)
+radio.send(json.dumps(jsonData), True)
+

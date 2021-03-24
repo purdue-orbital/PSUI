@@ -1,8 +1,9 @@
 import zmq
 import pmt
-import thread
+import _thread as thread
 import os
 import json
+import logging
 
 OK = "\u001b[32m"
 WARN = "\u001b[33m"
@@ -33,8 +34,8 @@ class Radio:
                     state['QDM'] = False
                     state['ABORT'] = False
 
-                    with open('data.json', 'w+', encoding='utf-8') as f:
-                        json.dump(data, f, ensure_ascii=False, indent=4)
+                    with open('state.json', 'w+', encoding='utf-8') as f:
+                        json.dump(state, f, ensure_ascii=False, indent=4)
 
             logging.basicConfig(level=(logging.INFO, logging.DEBUG)[DEBUG], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -56,10 +57,10 @@ class Radio:
                         log.warning("State mismatch, resending state")
                         self.sendState()
 
-                    if(self.queue is not None)
+                    if self.queue is not None:
                         self.queue.put(message)
 
-            thread.start_new_thread(receive)
+            thread.start_new_thread(receive, ())
 
             # create socket
             self.sock = self.context.socket(zmq.PUSH)
@@ -68,14 +69,18 @@ class Radio:
             print(e)
             logging.error(e)
 
-    def send(self, data):
+    def send(self, data, isGroundStation=False):
+        print(data)
         try:
             jsonData = json.loads(data)
 
             # Oneway communication, Ground Station controls state.
-            self.launch = jsonData['LAUNCH']
-            self.qdm = jsonData['QDM']
-            self.abort = jsonData['ABORT']
+            if isGroundStation:
+                self.launch = jsonData['Launch']
+                self.qdm = jsonData['QDM']
+                self.abort = jsonData['Abort']
+            else:
+                print("Append state")
         except Exception as e:
             print(e)
             logging.error(e)
@@ -83,8 +88,7 @@ class Radio:
 
         try:
             logging.info(data)
-            message = str.encode(data)
-            self.sock.send(pmt.serialize_str(pmt.to_pmt(message)))
+            self.sock.send(pmt.serialize_str(pmt.to_pmt(data)))
             logging.debug("Message sent")
             return 1
         except KeyboardInterrupt:
