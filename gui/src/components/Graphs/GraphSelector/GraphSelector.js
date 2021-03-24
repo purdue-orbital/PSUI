@@ -98,7 +98,7 @@ class GraphSelector extends React.Component {
   }
 
   __getUpdatedData() {
-    // Used to determine if new data point recieved or if the grah just changed
+    // Used to determine if new data point recieved or if the graph just changed
     const incomingData = this.__flattenDataObj(this.props.data);
     for (const k in this.prevData) {
       const prevDataSet = this.prevData[k].data;
