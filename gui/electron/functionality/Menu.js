@@ -1,5 +1,5 @@
 const { Menu, BrowserWindow } = require('electron');
-const { GraphWindowAPI } = require('../ChildWindows/GraphWindow.js');
+const GraphWindowAPI = require('../ChildWindows/GraphWindow.js');
 const DataState = require('./DataState.js');
 
 function buildMenu(windowId) {

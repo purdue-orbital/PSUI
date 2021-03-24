@@ -132,7 +132,6 @@ class GraphSelector extends React.Component {
   render() {
     const showGraph = this.state.currentGraph;
     const datasets = this.graphChoices[showGraph];
-    console.log(datasets);
     return (
       <div id="GraphSelectorDiv">
         <div id="GraphContainer">

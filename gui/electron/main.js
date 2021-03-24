@@ -2,8 +2,8 @@ const { app, BrowserWindow } = require('electron');
 const isDev = require('electron-is-dev');
 const path = require("path");
 
-const { buildMenu } = require('./functionality/menu.js');
-const { GraphWindowAPI } = require('./ChildWindows/GraphWindow.js');
+const { buildMenu } = require('./functionality/Menu.js');
+const GraphWindowAPI = require('./ChildWindows/GraphWindow.js');
 const DataState = require('./functionality/DataState.js');
 
 class MainWindow {
@@ -21,18 +21,21 @@ class MainWindow {
       },
     });
 
+    // Constructs custom toolbar for main window
     buildMenu(win.id);
 
+    // If dev mode bring up dev tools
     if (isDev) { win.webContents.openDevTools({ mode: 'detach' }); }
 
+    // Set an interval to fetch data and send to rendering proccess
+    MainWindow.randDataInt = setInterval(() => {
+      win.webContents.send("RequestData", DataState.getInstance().getCurrData());
+    }, 1000);
+    
     // Window actions
     win.on('close', () => {
       GraphWindowAPI.closeWindow();
     });
-
-    MainWindow.randDataInt = setInterval(() => {
-      win.webContents.send("RequestData", DataState.getInstance().getRandomData());
-    }, 1000);
 
     // and load the index.html of the app.
     win.loadURL(

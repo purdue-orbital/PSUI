@@ -51,7 +51,7 @@ class DataState {
         }, 1000);
     }
 
-    getRandomData() {
+    getCurrData() {
         return this.currData;
     }
 
