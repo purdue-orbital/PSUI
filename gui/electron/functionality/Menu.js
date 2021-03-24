@@ -50,9 +50,8 @@ function makeChangeGraphMenu(windowId) {
 }
 
 function getDataKeys() {
-  // TODO: This needs to read data object and return keys so we do not have to update manually
-  // return ["Altitude", "Longitude", "Latitude", "Gyro", "Temperature", "Acceleration"];
-  return DataState.getInstance().getDataFields();
+  const curr = DataState.getInstance().getRandomData();
+  return Object.keys(curr);
 }
 
 module.exports = {
