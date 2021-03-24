@@ -69,10 +69,10 @@ class GraphSelector extends React.Component {
 
   componentDidUpdate(prevProps) {
     const updatedData = this.__getUpdatedData();
-    if (Object.keys(updatedData).length !== Object.keys(this.__flattenDataObj(prevProps.data)).length) {  // The __flattenDataObj call is a quick fix that Matt wants to change later
+    if ((updatedData !== null) && (updatedData !== undefined) && (Object.keys(updatedData).length !== Object.keys(this.__flattenDataObj(prevProps.data)).length)) {  // The __flattenDataObj call is a quick fix that Matt wants to change later
       // If the size of the dataset changes, create new structure for the data
       console.log("data size change detected!");
-      this.__createDataHistory(updatedData);
+      this.prevData = this.__createDataHistory(updatedData);
       this.__updateDataBuffers(updatedData);
     }
   }
