@@ -20,11 +20,15 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    // Set up chanels after sync message is resolved and compenent is brought up to date
     ipcRenderer.on("SetTestMode", (_event, isTestMode) => {
       this.setState({ isTestMode: isTestMode });
     });
     ipcRenderer.on("RequestData", (_event, newCurrData) => {
-      this.setState({ currData: newCurrData });
+      // Check that recieved data is not null, and then update
+      if (newCurrData) {
+        this.setState({ currData: newCurrData });
+      }
     });
   }
 
