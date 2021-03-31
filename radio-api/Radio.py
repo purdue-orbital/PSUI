@@ -45,20 +45,21 @@ class Radio:
 
             def receive():
                 recv_sock = self.context.socket(zmq.PULL)
-                recv_sock.connect("tcp://127.0.0.1:5000")
+                # BIND CHECK
+                recv_sock.bind("tcp://127.0.0.1:5000")
 
                 while True:
-                    message = recv_sock.recv()
-                    log.info(message)
+                    message = pmt.to_python(pmt.deserialize_str(recv_sock.recv()))
+                    logging.info("Received: " + str(message))
 
                     jsonData = json.loads(message)
 
-                    if launch != jsonData['LAUNCH'] or qdm != jsonData['QDM'] or abort != jsonData['ABORT']:
+                    if self.launch != jsonData['Launch'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['Abort']:
                         log.warning("State mismatch, resending state")
                         self.sendState()
 
                     if self.queue is not None:
-                        self.queue.put(message)
+                        self.queue.append(message)
 
             thread.start_new_thread(receive, ())
 
@@ -87,9 +88,9 @@ class Radio:
             return 0
 
         try:
-            logging.info(data)
+            logging.info("Sent: " + data)
             self.sock.send(pmt.serialize_str(pmt.to_pmt(data)))
-            logging.debug("Message sent")
+            print("Sent");
             return 1
         except KeyboardInterrupt:
             print ("interrupt received. shutting down.")

@@ -1,6 +1,19 @@
-2021-03-24 18:06:38,836 ERROR:'LAUNCH'
-2021-03-24 18:07:35,143 ERROR:'LaunchH'
-2021-03-24 18:07:50,160 INFO:{"QDM": false, "Launch": false, "Abort": false}
-2021-03-24 18:07:50,160 ERROR:can't convert <class 'bytes'> type to pmt (b'{"QDM": false, "Launch": false, "Abort": false}')
-2021-03-24 18:09:30,252 INFO:{"QDM": false, "Launch": false, "Abort": false}
-2021-03-24 18:09:30,252 DEBUG:Message sent
+2021-03-24 18:48:05,399 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 18:49:05,367 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 18:50:05,335 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 18:50:36,173 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 18:50:36,174 INFO:Received: b'\x02\x00/{"QDM": false, "Launch": false, "Abort": false}'
+2021-03-24 18:57:21,075 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 18:57:21,076 INFO:Received: b'\x02\x00/{"QDM": false, "Launch": false, "Abort": false}'
+2021-03-24 18:57:53,518 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 18:57:53,519 INFO:Received: b'\x02\x00/{"QDM": false, "Launch": false, "Abort": false}'
+2021-03-24 19:00:13,978 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:00:13,979 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:00:27,003 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:00:27,004 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:01:25,262 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:01:25,263 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:01:51,289 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:01:51,290 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:02:26,636 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-03-24 19:02:26,637 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
