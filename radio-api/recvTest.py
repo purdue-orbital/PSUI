@@ -9,7 +9,7 @@ radio = Radio(True)
 def recv():
     queue = []
 
-    radio.bind_queue(queue)
+    radio.bindQueue(queue)
 
     while True: 
         try:
