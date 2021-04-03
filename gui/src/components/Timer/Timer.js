@@ -12,8 +12,10 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.refTime = sessionStorage.getItem(`${this.props.timerName}_ref`);
+    this.interval = null;
     this.state = {
-      time: "00:00:00:0"
+      time: "00:00:00:0",
+      timerContainerStyle: "TimerClockContainer"
     };
   }
 
@@ -71,8 +73,8 @@ class Timer extends React.Component {
             {this.props.timerName}:
           </div>
         </div>
-        <div className="TimerClockContainer">
-          <div className={(Date.now() - this.refTime > 0) ? "TimerColorNormal" : "TimerColorPast"}>
+        <div className={this.state.timerContainerStyle}>
+          <div className="TimerClockElement">
             {this.state.time}
           </div>
         </div>

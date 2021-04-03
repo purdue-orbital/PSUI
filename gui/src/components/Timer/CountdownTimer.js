@@ -13,9 +13,12 @@ class CountdownTimer extends Timer {
     super(props);
     this.refTime = Date.parse(this.props.endTime);
     if (Number.isNaN(this.refTime)) {
-      // If the parsed string is bad, just set the timer for one hour in the future
-      // FIXME: Lowering this to 30 seconds for dev purposes, put back when done
+      // If the parsed string is bad, just set the timer for 30 secs in the future
       this.refTime = Date.now() + (30 * 1000);
+    }
+    this.state = {
+      ...this.state,
+      timerContainerStyle: "TimerClockContainer TimerClockContainerWithinTime"
     }
   }
 
@@ -24,15 +27,15 @@ class CountdownTimer extends Timer {
     const timeDiff = this.refTime - Date.now();
     
     if (timeDiff < 0) {
-      // FIXME: Right now this identifies when time is out and simply stops the imer from ticking
-      // Ideally should start counting up and perhaps change the timer/text color
-      // Check Parent class timer for more deatils
-      /*clearInterval(this.interval);
-      this.setState({time: "Out of Time"});*/
+      // Time is past the refTime -> Counting up
       const time = this.__millsToTime(-1 * timeDiff);
-      this.setState({time: time});
+      this.setState({
+        time: time,
+        timerContainerStyle: "TimerClockContainer TimerClockContainerPastTime"
+      });
       return
     }
+    // Timer is within refTime -> Counting down
     const time = this.__millsToTime(timeDiff);
     this.setState({time: time});
   }
