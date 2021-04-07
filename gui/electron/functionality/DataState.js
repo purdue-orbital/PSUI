@@ -4,20 +4,18 @@ class DataState {
     isTestData = false;
 
     static defualtData = { // Begin currData
-        Altitude: 0,
-        Longitude: 0,
-        Latitude: 0,
-        Gyro: { // Begin Gyro
-            X: 0,
-            Y: 0,
-            Z: 0,
-        }, // End Gyro
-        Temperature: 0,
         Acceleration: { // Begin Acceleration
             X: 0,
             Y: 0,
             Z: 0,
         }, // End Acceleration
+        Gyro: { // Begin Gyro
+            X: 0,
+            Y: 0,
+            Z: 0,
+        }, // End Gyro
+        Distance: 0,
+        Altitude: 0,
     }; // End currData
 
     constructor() {
@@ -35,20 +33,18 @@ class DataState {
         // Currently gets random data. Probably shouldn't send this to production...
         this.loadDataInterval = setInterval(() => {
             this.currData = {
-                Altitude: Math.random(),
-                Longitude: Math.random(),
-                Latitude: Math.random(),
-                Gyro: { // Begin Gyro
-                    X: Math.random(),
-                    Y: Math.random(),
-                    Z: Math.random(),
-                }, // End Gyro
-                Temperature: Math.random(),
                 Acceleration: { // Begin Acceleration
                     X: Math.random(),
                     Y: Math.random(),
                     Z: Math.random(),
                 }, // End Acceleration
+                Gyro: { // Begin Gyro
+                    X: Math.random(),
+                    Y: Math.random(),
+                    Z: Math.random(),
+                }, // End Gyro
+                Distance: Math.random(),
+                Altitude: Math.random(),
             };
         }, 1000);
     }

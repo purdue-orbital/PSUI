@@ -1,5 +1,6 @@
 import React from 'react';
 import GraphSelector from '../../components/Graphs/GraphSelector/GraphSelector';
+import './MultigraphPage.css';
 
 class MultigraphPage extends React.Component {
   render() {
@@ -8,22 +9,16 @@ class MultigraphPage extends React.Component {
     return (
       <div id="container">
         <div id="graphPanelMini">
-          <GraphSelector data={data} defaultStartGraph="Altitude" />
-        </div>
-        <div id="graphPanelMini">
-          <GraphSelector data={data} defaultStartGraph="Longitude" />
-        </div>
-        <div id="graphPanelMini">
-          <GraphSelector data={data} defaultStartGraph="Latitude" />
+          <GraphSelector data={data} defaultStartGraph="Acceleration" />
         </div>
         <div id="graphPanelMini">
           <GraphSelector data={data} defaultStartGraph="Gyro" />
         </div>
         <div id="graphPanelMini">
-          <GraphSelector data={data} defaultStartGraph="Temperature" />
+          <GraphSelector data={data} defaultStartGraph="Distance" />
         </div>
         <div id="graphPanelMini">
-          <GraphSelector data={data} defaultStartGraph="Acceleration" />
+          <GraphSelector data={data} defaultStartGraph="Altitude" />
         </div>
       </div>
     );
