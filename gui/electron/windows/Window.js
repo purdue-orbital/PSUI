@@ -6,7 +6,7 @@ class Window {
     ipcMain.on("SetUpReq", (event) => {
       const data = DataState.getInstance();
       event.returnValue = {
-        currData: DataState.defualtData,
+        currData: DataState.defaultData,
         isTestMode: data.isTestMode()
       };
     });

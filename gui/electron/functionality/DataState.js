@@ -3,7 +3,7 @@ class DataState {
     currData = {};
     isTestData = false;
 
-    static defualtData = { // Begin currData
+    static defaultData = { // Begin currData
         Acceleration: { // Begin Acceleration
             X: 0,
             Y: 0,
@@ -19,7 +19,7 @@ class DataState {
     }; // End currData
 
     constructor() {
-        this.currData = DataState.defualtData;
+        this.currData = DataState.defaultData;
     }
 
     __startReadingData() {
@@ -63,7 +63,7 @@ class DataState {
 
     setTestMode(to = true) {
         this.isTestData = to;
-        this.currData = DataState.defualtData;
+        this.currData = DataState.defaultData;
         clearInterval(this.loadDataInterval);
         if (to) {
             this.__startRandomData();
