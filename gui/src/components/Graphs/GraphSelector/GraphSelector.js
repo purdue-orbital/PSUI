@@ -29,6 +29,11 @@ class GraphSelector extends React.Component {
     });
   }
 
+  reset() {
+    this.__createEmptyGraphs(this.props.data);
+    console.log("Oi");
+  }
+
   componentWillUnmount() {
     // Not sure that this should be removing all? Maybe just the on created on mount?
     ipcRenderer.removeAllListeners("ChangeGraph");

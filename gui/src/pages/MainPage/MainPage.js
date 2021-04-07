@@ -35,7 +35,12 @@ class MainPage extends PopUpGenerator {
     });
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
-    this.missionStatusControl = React.createRef();
+    this.missionStatusControlRef = React.createRef();
+    this.graphSelectorRef = React.createRef();
+  }
+
+  reset() {
+    this.graphSelectorRef.current.reset();
   }
 
   render() {
@@ -53,7 +58,7 @@ class MainPage extends PopUpGenerator {
             {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
           </div>
           <CurrentStatus
-            ref={this.missionStatusControl}
+            ref={this.missionStatusControlRef}
             onMissionStart={() => {
               // Needs to be saved as a string, bool not recognized
               sessionStorage.setItem("DataWindowMissionStart", "true");
@@ -79,14 +84,14 @@ class MainPage extends PopUpGenerator {
               onClick={() => {
                 if (this.state.mission_start !== true) {
                   this.nonblockingMessage("The mission must be started before you attempt to launch");
-                } else if (this.missionStatusControl.current.getStatus() !== StatusEnum.VERIFIED) {
+                } else if (this.missionStatusControlRef.current.getStatus() !== StatusEnum.VERIFIED) {
                   this.nonblockingMessage("The mission must be verified before you attempt to launch");
                 } else if (this.state.launch_start === false) {
                   // Will change the mission status to LAUNCHED if mission started and verified, on user confirmation
                   this.nonblockingConfirmation("Pressing 'Continue' will launch the rocket! [NOT REVERSIBLE]", {
                     isImportant: true,
                     onAccept: () => {
-                      this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
+                      this.missionStatusControlRef.current.changeStatus(StatusEnum.LAUNCHED);
                       this.setState({ launch_start: true });
                     },
                   });
@@ -110,7 +115,7 @@ class MainPage extends PopUpGenerator {
         </div>
 
         <div id='graphPanel' className={is_test_mode ? "graphPanelTest" : "graphPanelNormal"}>
-          <GraphSelector data={data} />
+          <GraphSelector ref={this.graphSelectorRef} data={data} />
         </div>
         {this.renderPopUp()}
       </div >
