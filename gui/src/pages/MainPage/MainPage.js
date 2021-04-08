@@ -59,7 +59,11 @@ class MainPage extends PopUpGenerator {
         <div id='leftPanel'>
           <div id='timerContainer'>
             <Timer timerName="Mission Timer" tick={mission_start} />
-            {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
+            {
+              mission_start ?
+                <Timer timerName="Launch Timer" tick={launch_start} /> :
+                <CountdownTimer />
+            }
           </div>
           <CurrentStatus
             ref={this.missionStatusControlRef}

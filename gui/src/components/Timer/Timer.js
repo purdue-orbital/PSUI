@@ -19,6 +19,19 @@ class Timer extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.componentDidUpdate();
+  }
+
+  componentDidUpdate() {
+    if (this.interval === null && this.props.tick) { this.__createTickInterval(); }
+    else if (this.interval !== null && !this.props.tick) { this.__endTickInterval(); }
+  }
+
+  componentWillUnmount() {
+    this.__endTickInterval(false);
+  }
+
   __tick() {
     const timeDiff = Date.now() - this.refTime;
     const time = this.__millsToTime(timeDiff);
@@ -62,19 +75,6 @@ class Timer extends React.Component {
     clearInterval(this.interval);
     if (resetTime) { this.setState({ time: "00:00:00:0" }); }
     this.interval = null;
-  }
-
-  componentDidMount() {
-    this.componentDidUpdate();
-  }
-
-  componentDidUpdate() {
-    if (this.interval === null && this.props.tick) { this.__createTickInterval(); }
-    else if (this.interval !== null && !this.props.tick) { this.__endTickInterval(); }
-  }
-
-  componentWillUnmount() {
-    this.__endTickInterval(false);
   }
 
   render() {
