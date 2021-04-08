@@ -4,6 +4,7 @@ class CountdownTimer extends Timer {
   static defaultProps = {
     timerName: "Countdown",
     tick: true,
+    testCountDown: false,
     // endTime must be a parsable string. Check this link for how to format this prop: 
     // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/parse
     endTime: null,
@@ -17,14 +18,14 @@ class CountdownTimer extends Timer {
     }
   }
 
-  // @override
-  componentDidMount() {
-    this.refTime = Date.parse(this.props.endTime);
-    if (Number.isNaN(this.refTime)) {
-      // If the parsed string is bad, just set the timer for 30 secs in the future
-      this.refTime = Date.now() + (30 * 1000);
+  componentDidUpdate(prevProps) {
+    if (prevProps) {
+      if (this.props.testCountDown !== prevProps.testCountDown) {
+        // Test mode changed state, need to re-create ref time
+        this.__setRefTime();
+      }
     }
-    super.componentDidMount(); // Call super to set up timer interval
+    super.componentDidUpdate();
   }
 
   // @override
@@ -35,20 +36,35 @@ class CountdownTimer extends Timer {
       // Time is past the refTime -> Counting up
       const time = this.__millsToTime(-1 * timeDiff);
       this.setState({
-        time: time,
+        time,
         timerContainerStyle: "TimerClockContainer TimerClockContainerPastTime"
       });
       return
     }
     // Timer is within refTime -> Counting down
     const time = this.__millsToTime(timeDiff);
-    this.setState({ time: time });
+    this.setState({ 
+      time,
+      timerContainerStyle: "TimerClockContainer TimerClockContainerWithinTime"
+    });
   }
 
   // @override
-  __setRefTime(_time) {
-    // This timer's reference time is set in the constructor
-    // It shouldn't change on update of the interval
+  __setRefTime(time) {
+    if (time) {
+      // Time was supplied, set to that
+      this.refTime = time;
+      return;
+    }
+    // No time supplied, use the defaults
+    const isTest = this.props.testCountDown;
+    this.refTime = Date.parse(this.props.endTime);
+    if (Number.isNaN(this.refTime)) {
+      // If the parsed string is bad
+      // set the timer for 10 secs in the future if test mode
+      // set an hour in the future if normal
+      this.refTime = isTest ? Date.now() + (10 * 1000) : Date.now() + (60 * 60 * 1000);
+    }
   }
 }
 

@@ -35,7 +35,7 @@ class Timer extends React.Component {
   __tick() {
     const timeDiff = Date.now() - this.refTime;
     const time = this.__millsToTime(timeDiff);
-    this.setState({ time: time });
+    this.setState({ time });
   }
 
   __pad_zeros(number) {

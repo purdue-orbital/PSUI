@@ -62,7 +62,7 @@ class MainPage extends PopUpGenerator {
             {
               mission_start ?
                 <Timer timerName="Launch Timer" tick={launch_start} /> :
-                <CountdownTimer />
+                <CountdownTimer testCountDown={is_test_mode}/>
             }
           </div>
           <CurrentStatus
