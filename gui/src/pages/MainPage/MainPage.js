@@ -102,6 +102,17 @@ class MainPage extends PopUpGenerator {
                   },
                 });
               }}>Stabilization</button>
+
+            <button
+              className="additionalControlButton"
+              onClick={() => {
+                this.nonblockingConfirmation("Pressing 'Continue' will activate the QDM!! [NOT REVERSIBLE]", {
+                  isImportant: true,
+                  onAccept: () => {
+                    this.missionStatusControl.current.changeStatus(StatusEnum.QDM);
+                  },
+                });
+              }}>Activate QDM</button>
           </div>
 
           <div id="logoPanel">
