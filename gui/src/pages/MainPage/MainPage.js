@@ -21,8 +21,8 @@ class MainPage extends PopUpGenerator {
 
   constructor(props) {
     super(props, {
-      mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
-      launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
+      mission_start: false,
+      launch_start: false,
       current_indicators: [
         { name: "Packets Sent", data: 0, },
         { name: "Packets Recieved", data: 0, },
@@ -40,6 +40,10 @@ class MainPage extends PopUpGenerator {
   }
 
   reset() {
+    this.setState({
+      mission_start: false,
+      launch_start: false
+    });
     this.graphSelectorRef.current.reset();
   }
 
@@ -59,11 +63,7 @@ class MainPage extends PopUpGenerator {
           </div>
           <CurrentStatus
             ref={this.missionStatusControlRef}
-            onMissionStart={() => {
-              // Needs to be saved as a string, bool not recognized
-              sessionStorage.setItem("DataWindowMissionStart", "true");
-              this.setState({ mission_start: true });
-            }}
+            onMissionStart={() => this.setState({ mission_start: true })}
           />
 
           <IndicatorTable

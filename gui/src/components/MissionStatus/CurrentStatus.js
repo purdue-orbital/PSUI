@@ -17,7 +17,7 @@ class CurrentStatus extends PopUpGenerator {
 
   constructor(props) {
     super(props, {
-      status: sessionStorage.getItem("CurrentStatusStorage") || StatusEnum.STARTMISSION,
+      status: StatusEnum.STARTMISSION,
     });
   }
 
@@ -29,7 +29,6 @@ class CurrentStatus extends PopUpGenerator {
     if (newStatus === this.state.status) {
       return;
     }
-    sessionStorage.setItem("CurrentStatusStorage", newStatus);
     this.setState({ status: newStatus });
   }
 

@@ -39,6 +39,12 @@ class CountdownTimer extends Timer {
     const time = this.__millsToTime(timeDiff);
     this.setState({time: time});
   }
+
+  // @override
+  __setRefTime() {
+    // This timer's reference time is set in the constructor
+    // It shouldn't change on update
+  }
 }
 
 export default CountdownTimer;

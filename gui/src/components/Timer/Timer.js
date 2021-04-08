@@ -11,7 +11,7 @@ class Timer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.refTime = sessionStorage.getItem(`${this.props.timerName}_ref`);
+    this.refTime = null;
     this.interval = null;
     this.state = {
       time: "00:00:00:0",
@@ -47,22 +47,34 @@ class Timer extends React.Component {
     return `${this.__pad_zeros(hours)}:${this.__pad_zeros(minutes)}:${this.__pad_zeros(seconds)}:${milliseconds}`;
   }
 
-  __setRefTime() {
-    this.refTime = Date.now();
-    sessionStorage.setItem(`${this.props.timerName}_ref`, this.refTime);
+  __setRefTime(time = Date.now()) {
+    this.refTime = time;
+  }
+
+  __createTickInterval(intervalLen = 100) {
+    this.__setRefTime()
+    this.interval = setInterval(() => {
+      this.__tick();
+    }, intervalLen);
+  }
+
+  __endTickInterval(resetTime = true) {
+    clearInterval(this.interval);
+    if (resetTime) { this.setState({ time: "00:00:00:0" }); }
+    this.interval = null;
   }
 
   componentDidMount() {
-    this.interval = setInterval(() => {
-      if (this.refTime !== null || this.props.tick) {
-        if (this.refTime === null) { this.__setRefTime(); }
-        this.__tick();
-      }
-    }, 100);
+    this.componentDidUpdate();
+  }
+
+  componentDidUpdate() {
+    if (this.interval === null && this.props.tick) { this.__createTickInterval(); }
+    else if (this.interval !== null && !this.props.tick) { this.__endTickInterval(); }
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    this.__endTickInterval(false);
   }
 
   render() {
