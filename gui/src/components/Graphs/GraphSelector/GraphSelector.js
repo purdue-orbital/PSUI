@@ -31,7 +31,6 @@ class GraphSelector extends React.Component {
 
   reset() {
     this.__createEmptyGraphs(this.props.data);
-    console.log("Oi");
   }
 
   componentWillUnmount() {
@@ -42,7 +41,7 @@ class GraphSelector extends React.Component {
 
   __createEmptyGraphs(startingDataSet) {
     // Build (or rebuild) the arrays of data sets being displayed on the graphs
-    
+
     this.prevData = this.__createDataHistory(startingDataSet);
 
     this.graphChoices = {};

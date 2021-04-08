@@ -32,6 +32,10 @@ class CurrentStatus extends PopUpGenerator {
     this.setState({ status: newStatus });
   }
 
+  reset() {
+    this.changeStatus(StatusEnum.STARTMISSION);
+  }
+
   __runIfAble(func) {
     if (typeof func === "function") {
       func();

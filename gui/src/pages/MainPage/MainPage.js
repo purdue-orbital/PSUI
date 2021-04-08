@@ -45,6 +45,7 @@ class MainPage extends PopUpGenerator {
       launch_start: false
     });
     this.graphSelectorRef.current.reset();
+    this.missionStatusControlRef.current.reset();
   }
 
   render() {
