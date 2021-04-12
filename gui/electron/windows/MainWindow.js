@@ -76,13 +76,13 @@ class MainWindow extends Window {
   }
 
   static closeWindow() {
-    MainWindow.getInstance.close();
+    MainWindow.getInstance().close();
   }
 }
 
 const MainWindowAPI = {
   openWindow: MainWindow.launchWindow,
-  closeWinow: MainWindow.closeWindow,
+  closeWindow: MainWindow.closeWindow,
 }
 
 module.exports = MainWindowAPI;
