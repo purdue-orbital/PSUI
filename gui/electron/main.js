@@ -10,7 +10,7 @@ app
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    clearInterval(MainWindowAPI.closeWindow);
+    MainWindowAPI.closeWindow();
     app.quit()
   }
 });
