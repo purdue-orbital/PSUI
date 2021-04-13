@@ -77,11 +77,3 @@
 .graphPanelTest {
     height: 30%;
 }
-
-#graphPanelMini {
-    float: left;
-    margin-bottom: 1%;
-    width: 100%;
-    height: 15%;
-    /* background-color: lightcoral; */
-}

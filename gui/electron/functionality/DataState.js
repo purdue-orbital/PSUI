@@ -3,25 +3,26 @@ class DataState {
     currData = {};
     isTestData = false;
 
-    static defualtData = { // Begin currData
-        Altitude: 0,
-        Longitude: 0,
-        Latitude: 0,
-        Gyro: { // Begin Gyro
-            X: 0,
-            Y: 0,
-            Z: 0,
-        }, // End Gyro
-        Temperature: 0,
+    static defaultData = { // Begin currData
         Acceleration: { // Begin Acceleration
             X: 0,
             Y: 0,
             Z: 0,
         }, // End Acceleration
+        Gyro: { // Begin Gyro
+            X: 0,
+            Y: 0,
+            Z: 0,
+        }, // End Gyro
+        Distance: 0,
+        Altitude: 0,
+        Temperature: 0,
+        Latitude: 0,
+        Longitude: 0,
     }; // End currData
 
     constructor() {
-        this.currData = DataState.defualtData;
+        this.currData = DataState.defaultData;
     }
 
     __startReadingData() {
@@ -35,20 +36,21 @@ class DataState {
         // Currently gets random data. Probably shouldn't send this to production...
         this.loadDataInterval = setInterval(() => {
             this.currData = {
-                Altitude: Math.random(),
-                Longitude: Math.random(),
-                Latitude: Math.random(),
-                Gyro: { // Begin Gyro
-                    X: Math.random(),
-                    Y: Math.random(),
-                    Z: Math.random(),
-                }, // End Gyro
-                Temperature: Math.random(),
                 Acceleration: { // Begin Acceleration
                     X: Math.random(),
                     Y: Math.random(),
                     Z: Math.random(),
                 }, // End Acceleration
+                Gyro: { // Begin Gyro
+                    X: Math.random(),
+                    Y: Math.random(),
+                    Z: Math.random(),
+                }, // End Gyro
+                Distance: Math.random(),
+                Altitude: Math.random(),
+                Temperature: Math.random(),
+                Latitude: Math.random(),
+                Longitude: Math.random(),
             };
         }, 1000);
     }
@@ -67,7 +69,7 @@ class DataState {
 
     setTestMode(to = true) {
         this.isTestData = to;
-        this.currData = DataState.defualtData;
+        this.currData = DataState.defaultData;
         clearInterval(this.loadDataInterval);
         if (to) {
             this.__startRandomData();
