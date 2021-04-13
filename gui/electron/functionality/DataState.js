@@ -16,6 +16,9 @@ class DataState {
         }, // End Gyro
         Distance: 0,
         Altitude: 0,
+        Temperature: 0,
+        Latitude: 0,
+        Longitude: 0,
     }; // End currData
 
     constructor() {
@@ -45,6 +48,9 @@ class DataState {
                 }, // End Gyro
                 Distance: Math.random(),
                 Altitude: Math.random(),
+                Temperature: Math.random(),
+                Latitude: Math.random(),
+                Longitude: Math.random(),
             };
         }, 1000);
     }
