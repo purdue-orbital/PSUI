@@ -26,7 +26,7 @@ class GraphWindow extends Window {
       // No menu on this window please
       this.__window.removeMenu();
 
-      // Dev tools are luanched in dev mode
+      // Dev tools are launched in dev mode
       if (isDev) { this.__window.webContents.openDevTools({ mode: 'detach' }); }
       
       // Fetch random data every second and send to render proccess

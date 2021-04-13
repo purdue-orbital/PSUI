@@ -142,9 +142,9 @@ class GraphSelector extends React.Component {
   }
 
   get defaultStartGraph() {
-    const defualtStart = this.props.defaultStartGraph;
-    if (defualtStart !== null && Object.keys(this.props.data).includes(defualtStart)) {
-      return defualtStart
+    const defaultStart = this.props.defaultStartGraph;
+    if (defaultStart !== null && Object.keys(this.props.data).includes(defaultStart)) {
+      return defaultStart
     }
     return Object.keys(this.props.data)[0];
   }
