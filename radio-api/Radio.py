@@ -1,5 +1,5 @@
 import zmq
-import pmt
+# import pmt
 import _thread as thread
 import os
 import json
@@ -10,6 +10,12 @@ WARN = "\u001b[33m"
 ERR = "\u001b[31m"
 NORM = "\u001b[0m"
 
+"""
+IMPORTANT VERSION NOTE: Due to trouble importing pmt on flight computer, as well as radio inoperability at the current time,
+this version does not include the library and as such will not work with GNU Radio.
+
+This can be resolved in the future by uncommenting the lines referencing pmt and commenting out the extraneous send commands.
+"""
 
 class Radio:
     """ Radio API for transmission and reception
@@ -60,7 +66,9 @@ class Radio:
 
                 while True:
                     try:
-                        message = pmt.to_python(pmt.deserialize_str(recv_sock.recv()))
+                        # message is transmitted as binary and needs to be decoded
+                        message = recv_sock.recv().decode("utf-8")
+                        # message = pmt.to_python(pmt.deserialize_str(recv_sock.recv()))
                         logging.info("Received: " + str(message))
 
                         jsonData = json.loads(message)
@@ -109,7 +117,7 @@ class Radio:
                     self.launch = jsonData['Launch']
                     self.qdm = jsonData['QDM']
                     self.abort = jsonData['Abort']
-                else:
+                except Exception as e:
                     print("Ground Station did not append state attributes to data")
                     logging.error("Ground Station did not append state attributes to data")
 
@@ -126,7 +134,8 @@ class Radio:
 
         try:
             logging.info("Sent: " + data)
-            self.sock.send(pmt.serialize_str(pmt.to_pmt(data)))
+            self.sock.send_string(data)
+            # self.sock.send(pmt.serialize_str(pmt.to_pmt(data)))
             print("Sent");
             return 1
         except KeyboardInterrupt:
@@ -148,7 +157,8 @@ class Radio:
         try:
             logging.info(state)
             message = str.encode(state)
-            self.sock.send(pmt.serialize_str(pmt.to_pmt(message)))
+            # self.sock.send(pmt.serialize_str(pmt.to_pmt(message)))
+            self.sock.send_string(message)
             logging.debug("State sent")
             return 1
 

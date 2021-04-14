@@ -3,7 +3,7 @@ import _thread as thread
 import json
 import time
 
-radio = Radio(True)
+radio = Radio(2)
 
 
 def recv():
