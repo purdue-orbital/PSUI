@@ -102,6 +102,14 @@ class MainPage extends PopUpGenerator {
                   },
                 });
               }}>Stabilization</button>
+
+            <button
+              className="additionalControlButton"
+              onClick={() => {
+                this.timerEditor(null, {
+
+                });
+              }}>Timer Test Button</button>
           </div>
 
           <div id="logoPanel">

@@ -2,6 +2,7 @@ import React from 'react';
 
 import ConfirmationPopUp from './UtilComponents/ConfirmationPopUp/ConfirmationPopUp.js';
 import MessagePopUp from './UtilComponents/MessagePopUp/MessagePopUp.js';
+import TimerEditPopUp from './UtilComponents/TimerEditPopUp/TimerEditPopUp.js';
 
 class PopUpGenerator extends React.Component {
   static defaultProps = {};
@@ -65,6 +66,31 @@ class PopUpGenerator extends React.Component {
       >
         {message}
       </MessagePopUp>
+    );
+    this.setState({ popUpWindowOpen: true })
+  }
+
+  timerEditor(message) {     // This should probably be made a LOT more generic in the future
+    this.popUpWindow = (
+      <TimerEditPopUp
+        onClose = {() => {
+          this.setState({ popUpWindowOpen: false });
+        }}
+
+        onAdd = {() => {
+          console.log("Add!");
+        }}
+
+        onSub = {() => {
+          console.log("Sub!");
+        }}
+
+        onSet = {() => {
+          console.log("Set!");
+        }}
+      >
+        {message}
+      </TimerEditPopUp>
     );
     this.setState({ popUpWindowOpen: true })
   }
