@@ -38,6 +38,7 @@ class Radio:
             self.launch = False
             self.qdm = False
             self.abort = False
+            self.stab = False
 
             if DEBUG == 0:
                 if os.path.exists("state.json"):
@@ -47,6 +48,7 @@ class Radio:
                         self.launch = state['LAUNCH']
                         self.qdm = state['QDM']
                         self.abort = state['ABORT']
+                        self.stab = state['STAB']
 
                         stateFile.close()
                 
@@ -73,7 +75,7 @@ class Radio:
 
                         jsonData = json.loads(message)
 
-                        if self.launch != jsonData['Launch'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['Abort']:
+                        if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                             log.warning("State mismatch, resending state")
                             self.sendState()
 
@@ -114,9 +116,10 @@ class Radio:
             # Oneway communication, Ground Station controls state.
             if isGroundStation:
                 try:
-                    self.launch = jsonData['Launch']
+                    self.launch = jsonData['LAUNCH']
                     self.qdm = jsonData['QDM']
-                    self.abort = jsonData['Abort']
+                    self.abort = jsonData['ABORT']
+                    self.stab = jsonData['STAB']
                 except Exception as e:
                     print("Ground Station did not append state attributes to data")
                     logging.error("Ground Station did not append state attributes to data")
@@ -126,6 +129,7 @@ class Radio:
                 jsonData['LAUNCH'] = self.launch
                 jsonData['QDM'] = self.qdm
                 jsonData['ABORT'] = self.abort
+                jsonData['STAB'] = self.stav
 
         except Exception as e:
             print(e)
@@ -153,6 +157,7 @@ class Radio:
         state['LAUNCH'] = self.launch
         state['QDM'] = self.qdm
         state['ABORT'] = self.abort
+        state['STAB'] = self.stab
 
         try:
             logging.info(state)
@@ -181,6 +186,9 @@ class Radio:
     def getAbortFlag(self):
         return self.abort
 
+    def getStabFlag(self):
+        return self.stab
+
 
     def bindQueue(self, queue):
         """
@@ -193,6 +201,7 @@ class Radio:
         state['LAUNCH'] = self.launch
         state['QDM'] = self.qdm
         state['ABORT'] = self.abort
+        state['STAB'] = self.stab
 
         with open('state.json', 'w+', encoding='utf-8') as f:
             json.dump(state, f, ensure_ascii=False, indent=4)
