@@ -1,5 +1,6 @@
 # Ignore everything in this directory
 psui-api/target/
 psui-api/Cargo.lock
+radio-api/radio_api/
 # Except this file
 !.gitignore
