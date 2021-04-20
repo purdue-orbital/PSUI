@@ -32,6 +32,7 @@ class MainPage extends PopUpGenerator {
         { name: "Platform Stability", data: false, },
         { name: "Platform Radio", data: false, },
       ],
+      referenceTime: "",
     });
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
@@ -63,17 +64,18 @@ class MainPage extends PopUpGenerator {
             {
               mission_start ?
                 <Timer timerName="Launch Timer" tick={launch_start} /> :
-                <CountdownTimer testCountDown={is_test_mode}/>
+                <CountdownTimer refTime={this.state.referenceTime} testCountDown={is_test_mode}/>
             }
           </div>
           <br></br>
           <button
               className="additionalControlButton"
               onClick={() => {
-                this.timerEditor(null, {
-
-                });
-              }}>Timer Test Button</button>
+                this.timerEditor(null,
+                  () => console.log("Add!"),
+                  () => console.log("Sub!"),
+                  () => console.log("Set!"));
+              }}>Edit Countdown Timer</button>
           <CurrentStatus
             ref={this.missionStatusControlRef}
             onMissionStart={() => this.setState({ mission_start: true })}

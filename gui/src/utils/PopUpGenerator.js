@@ -70,24 +70,16 @@ class PopUpGenerator extends React.Component {
     this.setState({ popUpWindowOpen: true })
   }
 
-  timerEditor(message) {     // This should probably be made a LOT more generic in the future
+  timerEditor(message, onAdd, onSub, onSet) {     // This should probably be made a LOT more generic in the future
     this.popUpWindow = (
       <TimerEditPopUp
         onClose = {() => {
           this.setState({ popUpWindowOpen: false });
         }}
 
-        onAdd = {() => {
-          console.log("Add!");
-        }}
-
-        onSub = {() => {
-          console.log("Sub!");
-        }}
-
-        onSet = {() => {
-          console.log("Set!");
-        }}
+        onAdd = {onAdd}
+        onSub = {onSub}
+        onSet = {onSet}
       >
         {message}
       </TimerEditPopUp>
