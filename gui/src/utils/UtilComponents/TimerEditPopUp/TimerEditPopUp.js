@@ -4,6 +4,7 @@ import './TimerEditPopUp.css'
 
 class TimerEditPopUp extends React.Component {
   static defaultProps = {
+    // TODO: maybe figure out events?
     onClose: () => { },
     onAdd: () => { },
     onSub: () => { },
@@ -40,6 +41,8 @@ class TimerEditPopUp extends React.Component {
     const sub = this.props.onSub;
     const set = this.props.onSet;
 
+    // TODO: styling!
+
     return (
       <div className="modal">
         <div className="modalContent">
@@ -47,7 +50,7 @@ class TimerEditPopUp extends React.Component {
             &times;
           </span>
           <p className="modalText">{this.props.children}</p>
-          <form>          // TODO: styling!
+          <form>
             <input
               type="number"
               onChange = {this.changeHours}

@@ -52,6 +52,14 @@ class MainPage extends PopUpGenerator {
             <Timer timerName="Mission Timer" tick={mission_start} />
             {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
           </div>
+          <br></br>
+          <button
+              className="additionalControlButton"
+              onClick={() => {
+                this.timerEditor(null, {
+
+                });
+              }}>Timer Test Button</button>
           <CurrentStatus
             ref={this.missionStatusControl}
             onMissionStart={() => {
@@ -102,14 +110,6 @@ class MainPage extends PopUpGenerator {
                   },
                 });
               }}>Stabilization</button>
-
-            <button
-              className="additionalControlButton"
-              onClick={() => {
-                this.timerEditor(null, {
-
-                });
-              }}>Timer Test Button</button>
           </div>
 
           <div id="logoPanel">
