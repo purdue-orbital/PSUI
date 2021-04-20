@@ -16,12 +16,14 @@ class App extends React.Component {
 
     const currState = ipcRenderer.sendSync("SetUpReq");
     this.state = currState;
+    this.pageRef = React.createRef();
   }
 
   componentDidMount() {
     // Set up chanels after sync message is resolved and compenent is brought up to date
     ipcRenderer.on("SetTestMode", (_event, isTestMode) => {
-      this.setState({ isTestMode: isTestMode });
+      this.setState({ isTestMode });
+      this.reset();
     });
     ipcRenderer.on("RequestData", (_event, newCurrData) => {
       // Check that recieved data is not null, and then update
@@ -29,6 +31,10 @@ class App extends React.Component {
         this.setState({ currData: newCurrData });
       }
     });
+  }
+
+  reset() {
+    this.pageRef.current.reset();
   }
 
   componentWillUnmount() {
@@ -41,8 +47,8 @@ class App extends React.Component {
     const currData = this.state.currData;
     return (
       <HashRouter>
-        <Route exact path="/" render={props => <MainPage {...props} currentData={currData} testMode={isTestMode} />} />
-        <Route path="/multigraph" render={props => <MultigraphPage {...props} currentData={currData} />} />
+        <Route exact path="/" render={props => <MainPage {...props} ref={this.pageRef} currentData={currData} testMode={isTestMode} />} />
+        <Route path="/multigraph" render={props => <MultigraphPage {...props} ref={this.pageRef} currentData={currData} />} />
       </HashRouter>
     );
   }

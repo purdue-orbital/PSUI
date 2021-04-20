@@ -21,8 +21,8 @@ class MainPage extends PopUpGenerator {
 
   constructor(props) {
     super(props, {
-      mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
-      launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
+      mission_start: false,
+      launch_start: false,
       current_indicators: [
         { name: "Packets Sent", data: 0, },
         { name: "Packets Recieved", data: 0, },
@@ -35,7 +35,17 @@ class MainPage extends PopUpGenerator {
     });
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
-    this.missionStatusControl = React.createRef();
+    this.missionStatusControlRef = React.createRef();
+    this.graphSelectorRef = React.createRef();
+  }
+
+  reset() {
+    this.setState({
+      mission_start: false,
+      launch_start: false
+    });
+    this.graphSelectorRef.current.reset();
+    this.missionStatusControlRef.current.reset();
   }
 
   render() {
@@ -50,7 +60,11 @@ class MainPage extends PopUpGenerator {
         <div id='leftPanel'>
           <div id='timerContainer'>
             <Timer timerName="Mission Timer" tick={mission_start} />
-            {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
+            {
+              mission_start ?
+                <Timer timerName="Launch Timer" tick={launch_start} /> :
+                <CountdownTimer testCountDown={is_test_mode}/>
+            }
           </div>
           <br></br>
           <button
@@ -61,12 +75,8 @@ class MainPage extends PopUpGenerator {
                 });
               }}>Timer Test Button</button>
           <CurrentStatus
-            ref={this.missionStatusControl}
-            onMissionStart={() => {
-              // Needs to be saved as a string, bool not recognized
-              sessionStorage.setItem("DataWindowMissionStart", "true");
-              this.setState({ mission_start: true });
-            }}
+            ref={this.missionStatusControlRef}
+            onMissionStart={() => this.setState({ mission_start: true })}
           />
 
           <IndicatorTable
@@ -87,14 +97,14 @@ class MainPage extends PopUpGenerator {
               onClick={() => {
                 if (this.state.mission_start !== true) {
                   this.nonblockingMessage("The mission must be started before you attempt to launch");
-                } else if (this.missionStatusControl.current.getStatus() !== StatusEnum.VERIFIED) {
+                } else if (this.missionStatusControlRef.current.getStatus() !== StatusEnum.VERIFIED) {
                   this.nonblockingMessage("The mission must be verified before you attempt to launch");
                 } else if (this.state.launch_start === false) {
                   // Will change the mission status to LAUNCHED if mission started and verified, on user confirmation
                   this.nonblockingConfirmation("Pressing 'Continue' will launch the rocket! [NOT REVERSIBLE]", {
                     isImportant: true,
                     onAccept: () => {
-                      this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
+                      this.missionStatusControlRef.current.changeStatus(StatusEnum.LAUNCHED);
                       this.setState({ launch_start: true });
                     },
                   });
@@ -110,6 +120,17 @@ class MainPage extends PopUpGenerator {
                   },
                 });
               }}>Stabilization</button>
+
+            <button
+              className="additionalControlButton"
+              onClick={() => {
+                this.nonblockingConfirmation("Pressing 'Continue' will activate the QDM!! [NOT REVERSIBLE]", {
+                  isImportant: true,
+                  onAccept: () => {
+                    this.missionStatusControl.current.changeStatus(StatusEnum.QDM);
+                  },
+                });
+              }}>Activate QDM</button>
           </div>
 
           <div id="logoPanel">
@@ -118,7 +139,7 @@ class MainPage extends PopUpGenerator {
         </div>
 
         <div id='graphPanel' className={is_test_mode ? "graphPanelTest" : "graphPanelNormal"}>
-          <GraphSelector data={data} />
+          <GraphSelector ref={this.graphSelectorRef} data={data} />
         </div>
         {this.renderPopUp()}
       </div >

@@ -61,6 +61,13 @@ class GraphWindow extends Window {
   }
 
   // Static Methods for controlling the window
+  static getInstance() {
+    if (GraphWindow.instance == null) {
+      GraphWindow.instance = new GraphWindow();
+    }
+    return GraphWindow.instance;
+  }
+
   static launchWindow() {
     GraphWindow.getInstance().launch();
   }
@@ -69,16 +76,17 @@ class GraphWindow extends Window {
     GraphWindow.getInstance().close();
   }
 
-  static getInstance() {
-    if (GraphWindow.instance == null) {
-      GraphWindow.instance = new GraphWindow();
+  static sendIPC(reqName, ...args) {
+    const window = GraphWindow.getInstance();
+    if (window.__window) {
+      window.__window.webContents.send(reqName, ...args);
     }
-    return GraphWindow.instance;
   }
 }
 
 const GraphWindowAPI = {
   openWindow: GraphWindow.launchWindow,
+  sendIPC: GraphWindow.sendIPC,
   closeWindow: GraphWindow.closeWindow,
 };
 

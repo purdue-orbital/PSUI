@@ -17,7 +17,12 @@ function buildMenu(windowId) {
           click: () => {
             const data = DataState.getInstance();
             data.toggleTestMode();
+
+            // FIXME: This command is being sent to the two possible windows individaully
+            // It would probably be better to create and maintain a set of all open windows
+            // Potentially done through /gui/electron/windows/Window.js ???
             window.webContents.send("SetTestMode", data.isTestMode());
+            GraphWindowAPI.sendIPC("SetTestMode", data.isTestMode());
           },
         },
         {
