@@ -72,9 +72,9 @@ class MainPage extends PopUpGenerator {
               className="additionalControlButton"
               onClick={() => {
                 this.timerEditor(null,
-                  () => console.log("Add!"),
-                  () => console.log("Sub!"),
-                  () => console.log("Set!"));
+                  (addTime) => { this.setState({referenceTime : this.state.referenceTime + addTime}); console.log(`Added ${addTime}`); },
+                  (subTime) => { this.setState({referenceTime : this.state.referenceTime - subTime}); console.log(`Subtracted ${subTime}`) },
+                  (setTime) => { this.setState({referenceTime : setTime}); console.log(`Set to ${setTime}`) });
               }}>Edit Countdown Timer</button>
           <CurrentStatus
             ref={this.missionStatusControlRef}

@@ -21,18 +21,18 @@ class TimerEditPopUp extends React.Component {
   }
 
   changeHours = (event) => {
-    this.setState({dHours: event.target.value});
-    console.log("Changed dHours to " + event.target.value);
+    (event.target.value !== "") ? this.setState({dHours: event.target.value}) : this.setState({dHours: 0});
+    console.log(`Changed dHours to ${this.state.dHours}`);  // Log is one update behind somehow...
   }
 
   changeMinutes = (event) => {
-    this.setState({dMinutes: event.target.value});
-    console.log("Changed dMinutes to " + event.target.value);
+    (event.target.value !== "") ? this.setState({dMinutes: event.target.value}) : this.setState({dMinutes: 0});
+    console.log(`Changed dMinutes to ${this.state.dMinutes}`);  // Log is one update behind somehow...
   }
 
   changeSeconds = (event) => {
-    this.setState({dSeconds: event.target.value});
-    console.log("Changed dSeconds to " + event.target.value);
+    (event.target.value !== "") ? this.setState({dSeconds: event.target.value}) : this.setState({dSeconds: 0});
+    console.log(`Changed dSeconds to ${this.state.dSeconds}`);  // Log is one update behind somehow...
   }
 
   render() {
@@ -67,9 +67,15 @@ class TimerEditPopUp extends React.Component {
             />
           </form>
           <div className="modalActions">
-            <button className="PopUpButton" onClick={add}>Add</button>
-            <button className="PopUpButton" onClick={sub}>Sub</button>
-            <button className="PopUpButton" onClick={set}>Set</button>
+            <button className="PopUpButton" onClick= {
+              () => add(1000 * (3600 * parseInt(this.state.dHours) + 60 * parseInt(this.state.dMinutes) + parseInt(this.state.dSeconds)))
+            }>Add</button>
+            <button className="PopUpButton" onClick={
+              () => sub(1000 * (3600 * parseInt(this.state.dHours) + 60 * parseInt(this.state.dMinutes) + parseInt(this.state.dSeconds)))
+            }>Sub</button>
+            <button className="PopUpButton" onClick={
+              () => set(1000 * (3600 * parseInt(this.state.dHours) + 60 * parseInt(this.state.dMinutes) + parseInt(this.state.dSeconds)))
+            }>Set</button>
           </div>
         </div>
       </div>

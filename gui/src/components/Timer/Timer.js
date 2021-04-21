@@ -7,6 +7,7 @@ class Timer extends React.Component {
   static defaultProps = {
     timerName: "Default Timer",
     tick: false,
+    refTime: undefined
   };
 
   constructor(props) {

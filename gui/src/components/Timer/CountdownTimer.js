@@ -24,6 +24,10 @@ class CountdownTimer extends Timer {
         // Test mode changed state, need to re-create ref time
         this.__setRefTime();
       }
+
+      if (this.props.refTime !== prevProps.refTime) {
+        this.__setRefTime(this.props.refTime);
+      }
     }
     super.componentDidUpdate();
   }
