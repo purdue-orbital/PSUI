@@ -76,14 +76,14 @@ class Radio:
                         jsonData = json.loads(message)
 
                         if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
-                            log.warning("State mismatch, resending state")
+                            logging.warning("State mismatch, resending state")
                             self.sendState()
 
                         if self.queue is not None:
                             self.queue.append(message)
                         else:
                             print("Queue unbound")
-                            logging.error("Queue unbound")    
+                            logging.error("Queue unbound")
                     except Exception as e:
                         print("Invalid message received")
                         logging.error(e)
@@ -145,7 +145,7 @@ class Radio:
         except KeyboardInterrupt:
             print ("interrupt received. shutting down.")
             self.sock.close()
-            context.term()
+            self.context.term()
             exit()
         except Exception as e:
             print(e)
@@ -170,7 +170,7 @@ class Radio:
         except KeyboardInterrupt:
             print ("interrupt received. shutting down.")
             self.sock.close()
-            context.term()
+            self.context.term()
             exit()
         except Exception as e:
             print(e)

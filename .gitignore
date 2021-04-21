@@ -2,5 +2,6 @@
 psui-api/target/
 psui-api/Cargo.lock
 radio-api/radio_api/
+radio-api/venv-radio/
 # Except this file
 !.gitignore

@@ -11366,3 +11366,46 @@
 2021-04-14 18:01:43,680 INFO:{"QDM": false, "Launch": false, "Abort": false}
 2021-04-14 18:01:43,681 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
 2021-04-14 18:01:43,681 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:10:36,002 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:10:36,003 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:10:36,005 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:10:36,005 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:10:36,006 ERROR:'LAUNCH'
+2021-04-19 20:15:24,373 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:15:24,373 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:15:24,374 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:15:24,375 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:15:24,375 ERROR:'LAUNCH'
+2021-04-19 20:18:56,856 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:18:56,857 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:18:56,857 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:18:56,858 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:18:56,858 ERROR:'LAUNCH'
+2021-04-19 20:20:13,244 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:20:13,245 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:20:13,245 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:20:13,246 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:20:13,246 ERROR:'LAUNCH'
+2021-04-19 20:56:50,889 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:56:50,890 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:56:50,892 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:56:52,724 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:56:52,725 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:56:52,727 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:56:52,728 INFO:Received: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:56:52,729 ERROR:'LAUNCH'
+2021-04-19 20:57:02,282 INFO:{"QDM": false, "Launch": false, "Abort": false}
+2021-04-19 20:57:02,283 ERROR:Ground Station did not append state attributes to data
+2021-04-19 20:57:02,284 INFO:Sent: {"QDM": false, "Launch": false, "Abort": false}
+2021-04-21 18:54:30,279 INFO:b'{\n    "LAUNCH": 0,\n    "QDM": 1,\n    "ABORT": 1,\n    "STAB": 0\n}'
+2021-04-21 18:54:30,280 ERROR:'Radio' object has no attribute 'stav'
+2021-04-21 18:54:30,280 INFO:127.0.0.1 - - [21/Apr/2021 18:54:30] "[37mPOST /send HTTP/1.1[0m" 200 -
+2021-04-21 18:55:13,860 INFO:b'{\n    "LAUNCH": 0,\n    "QDM": 1,\n    "ABORT": 1,\n    "STAB": 0\n}'
+2021-04-21 18:55:13,861 ERROR:can only concatenate str (not "bytes") to str
+2021-04-21 18:55:13,861 INFO:127.0.0.1 - - [21/Apr/2021 18:55:13] "[37mPOST /send HTTP/1.1[0m" 200 -
+2021-04-21 18:57:03,751 INFO:b'{\n    "LAUNCH": 0,\n    "QDM": 1,\n    "ABORT": 1,\n    "STAB": 0\n}'
+2021-04-21 18:57:03,753 ERROR:Expecting value: line 1 column 1 (char 0)
+2021-04-21 18:57:03,754 INFO:127.0.0.1 - - [21/Apr/2021 18:57:03] "[37mPOST /send HTTP/1.1[0m" 200 -
+2021-04-21 18:57:43,744 INFO:b'{\n    "LAUNCH": 0,\n    "QDM": 1,\n    "ABORT": 1,\n    "STAB": 0\n}'
+2021-04-21 18:57:43,744 ERROR:Expecting value: line 1 column 1 (char 0)
+2021-04-21 18:57:43,745 INFO:127.0.0.1 - - [21/Apr/2021 18:57:43] "[37mPOST /send HTTP/1.1[0m" 200 -
