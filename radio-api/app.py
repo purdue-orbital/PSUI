@@ -1,36 +1,63 @@
-from flask import Flask, request
+from flask import Flask, request, Response, jsonify
+from flask.json import jsonify
+from flask_cors import CORS
 import sys
+import json
 
 from Radio import Radio
 
 
-class RadioSingleton(object):
-    instance: Radio = None;
-    queue: list = []
+class RadioWrapper(object):
+    instance: Radio = None
+    queue: 'list[dict]' = []
+    lastDataPoint: dict = None
 
     def __init__(self) -> None:
-        raise Exception("RadioSingleton Class should not be instanced directly")
+        raise Exception("RadioWrapper Class should not be instanced directly")
 
     @staticmethod
-    def get_instance():
-        if (RadioSingleton.instance == None):
-            RadioSingleton.instance = Radio(2)
-            RadioSingleton.instance.bindQueue(RadioSingleton.queue)
-        return RadioSingleton.instance
-            
+    def get_instance() -> Radio:
+        if (RadioWrapper.instance == None):
+            RadioWrapper.instance = Radio(2)
+            RadioWrapper.instance.bindQueue(RadioWrapper.queue)
+        return RadioWrapper.instance
 
-app = Flask(__name__, static_url_path='/')
+    @staticmethod
+    def get_data():
+        if len(RadioWrapper.queue > 0):
+            RadioWrapper.lastDataPoint = RadioWrapper.queue.pop(0)
+        return RadioWrapper.lastDataPoint
+
+
+app = Flask(__name__,
+            static_url_path='/')
+CORS(app)
+
 
 @app.route('/rec', methods=['GET'])
-def rec_data():
-    return "Rec"
-
-@app.route('/send', methods=['GET', 'POST'])
-def send_data():
+def rec_data() -> Response:
+    res: Response = None
     try:
-        dataStr = str(request.data)
-        print(dataStr, file=sys.stderr) # TODO: Remove
-        # RadioSingleton.get_instance().send(dataStr, isGroundStation=True)
+        res = jsonify(RadioWrapper.get_data())
     except Exception as e:
         print(e, file=sys.stderr)
-    return ""
+        res = Response(status=500)
+    return res
+
+
+@app.route('/send', methods=['POST'])
+def send_data() -> Response:
+    res: Response = None
+    try:
+        dataStr = json.dumps(request.json)
+        print(dataStr, file=sys.stderr)  # TODO: Remove
+        # RadioWrapper.get_instance().send(dataStr, isGroundStation=True)
+        res = Response(response="", status=204)
+    except Exception as e:
+        print(e, file=sys.stderr)
+        res = Response(status=500)
+    return res
+
+
+if __name__ == "__main__":
+    app.run(port=5002)

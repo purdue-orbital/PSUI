@@ -48,6 +48,31 @@ class MainPage extends PopUpGenerator {
     this.missionStatusControlRef.current.reset();
   }
 
+  async sendStateToRadio() {
+    try {
+      const res = await fetch("http://localhost:5002/send", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          TIME: Date.now(), // Added this, may or may not be useful
+          LAUNCH: 1,
+          QDM: 1,
+          ABORT: 1,
+          STAB: 1
+        })
+      });
+      if (res.status === 500) {
+        console.error("Trouble Updating status")
+        // Should it be called again??
+      }
+    } catch (e) {
+      console.error(e)
+      console.log("Are you sure the API is running?")
+    }
+  }
+
   render() {
     const data = this.props.currentData;
     const is_test_mode = this.props.testMode;
@@ -63,7 +88,7 @@ class MainPage extends PopUpGenerator {
             {
               mission_start ?
                 <Timer timerName="Launch Timer" tick={launch_start} /> :
-                <CountdownTimer testCountDown={is_test_mode}/>
+                <CountdownTimer testCountDown={is_test_mode} />
             }
           </div>
           <CurrentStatus
@@ -107,9 +132,7 @@ class MainPage extends PopUpGenerator {
               className="additionalControlButton"
               onClick={() => {
                 this.nonblockingConfirmation("You are about to activate stabilization", {
-                  onAccept: () => {
-                    alert("¯\\_(ツ)_/¯");
-                  },
+                  onAccept: () => this.sendStateToRadio(),
                 });
               }}>Stabilization</button>
 
