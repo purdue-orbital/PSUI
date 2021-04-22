@@ -23,15 +23,15 @@ class MainPage extends PopUpGenerator {
     super(props, {
       mission_start: false,
       launch_start: false,
-      current_indicators: [
-        { name: "Packets Sent", data: 0, },
-        { name: "Packets Recieved", data: 0, },
-        { name: "QDM", data: false, },
-        { name: "Ignition", data: false, },
-        { name: "GS Radio", data: false, },
-        { name: "Platform Stability", data: false, },
-        { name: "Platform Radio", data: false, },
-      ],
+      current_indicators: {
+        pktsSent: { name: "Packets Sent", data: 0, },
+        pktsRecv: { name: "Packets Recieved", data: 0, },
+        qdm: { name: "QDM", data: false, },
+        ignition: { name: "Ignition", data: false, },
+        gsRad: { name: "GS Radio", data: false, },
+        platStab: { name: "Platform Stability", data: false, },
+        platRad: { name: "Platform Radio", data: false, },
+      },
     });
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
