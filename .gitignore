@@ -3,5 +3,7 @@ psui-api/target/
 psui-api/Cargo.lock
 radio-api/radio_api/
 radio-api/venv-radio/
+radio-api/__pycache__/
+.vscode/
 # Except this file
 !.gitignore
