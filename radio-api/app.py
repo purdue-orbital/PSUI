@@ -10,7 +10,22 @@ from Radio import Radio
 class RadioWrapper(object):
     instance: Radio = None
     queue: 'list[dict]' = []
-    lastDataPoint: dict = None
+    lastDataPoint: dict = {
+        'Acceleration': {
+            'X': 0,
+            'Y': 0,
+            'Z': 0
+        },
+        'Gyro': {
+            'X': 0,
+            'Y': 0,
+            'Z': 0
+        },
+        'Altitude': 0,
+        'Temperature': 0,
+        'Latitude': 0,
+        'Longitude': 0
+    }
 
     def __init__(self) -> None:
         raise Exception("RadioWrapper Class should not be instanced directly")
@@ -24,7 +39,7 @@ class RadioWrapper(object):
 
     @staticmethod
     def get_data():
-        if len(RadioWrapper.queue > 0):
+        if len(RadioWrapper.queue) > 0:
             RadioWrapper.lastDataPoint = RadioWrapper.queue.pop(0)
         return RadioWrapper.lastDataPoint
 

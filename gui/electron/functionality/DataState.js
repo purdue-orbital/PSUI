@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 class DataState {
     static instance = null
     currData = {};
@@ -27,8 +29,17 @@ class DataState {
 
     __startReadingData() {
         this.loadDataInterval = setInterval(() => {
-            // TODO: Make api calls
-            console.log("Reading data from sensors");
+            fetch("http://localhost:5002/rec")
+                .then(res => res.json())
+                .then(data => {
+                    // TODO: Make sure shape of data is same as expected
+                    this.currData = {
+                        ...this.currData,
+                        ...data
+                    }
+                    console.log(this.currData);
+                })
+                .catch(e => console.error(e));
         }, 1000);
     }
 
