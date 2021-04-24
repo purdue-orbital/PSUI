@@ -4,6 +4,7 @@ const StatusEnum = Object.freeze({
   VERIFIED: "Verified",
   LAUNCHED: "Launched",
   ABORTED: "Aborted",
+  QDM: "QDM Activated",
 });
 
 export default StatusEnum;

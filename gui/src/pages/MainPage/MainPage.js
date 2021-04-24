@@ -1,39 +1,28 @@
 import React from 'react';
 
-import StatusEnum from './utils/StatusEnum.js'
-import PopUpGenerator from './utils/PopUpGenerator.js'
+import StatusEnum from '../../utils/StatusEnum.js'
+import PopUpGenerator from '../../utils/PopUpGenerator.js'
 
-import Timer from './components/Timer/Timer.js';
-import DataTable from './components/DataTable/DataTable';
-import IndicatorTable from './components/Indicators/IndicatorTable/IndicatorTable.js';
-import GraphSelector from './components/Graphs/GraphSelector/GraphSelector.js';
-import CurrentStatus from './components/MissionStatus/CurrentStatus.js';
-import CountdownTimer from './components/Timer/CountdownTimer.js';
+import Timer from '../../components/Timer/Timer.js';
+import DataTable from '../../components/DataTable/DataTable';
+import IndicatorTable from '../../components/Indicators/IndicatorTable/IndicatorTable.js';
+import GraphSelector from '../../components/Graphs/GraphSelector/GraphSelector.js';
+import CurrentStatus from '../../components/MissionStatus/CurrentStatus.js';
+import CountdownTimer from '../../components/Timer/CountdownTimer.js';
 
-import './styles/DataWindow.css';
-import './styles/BasicElements.css';
+import './MainPage.css';
 
-class DataWindow extends PopUpGenerator {
+
+class MainPage extends PopUpGenerator {
+  static defaultProps = {
+    currentData: { Data: 0 },
+    testMode: false,
+  };
+
   constructor(props) {
     super(props, {
-      mission_start: sessionStorage.getItem("DataWindowMissionStart") === "true",
-      launch_start: sessionStorage.getItem("DataWindowLaunchStart") === "true",
-      current_data: {
-        Altitude: 0,
-        Longitude: 0,
-        Latitude: 0,
-        Gyro: {
-          X: 0,
-          Y: 0,
-          Z: 0,
-        },
-        Temperature: 0,
-        Acceleration: {
-          X: 0,
-          Y: 0,
-          Z: 0,
-        },
-      },
+      mission_start: false,
+      launch_start: false,
       current_indicators: [
         { name: "Packets Sent", data: 0, },
         { name: "Packets Recieved", data: 0, },
@@ -46,55 +35,40 @@ class DataWindow extends PopUpGenerator {
     });
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
-    this.missionStatusControl = React.createRef();
+    this.missionStatusControlRef = React.createRef();
+    this.graphSelectorRef = React.createRef();
   }
 
-  componentDidMount() {
-    this.interval = setInterval(() => {
-      this.setState({
-        current_data: {
-          Altitude: Math.random(),
-          Longitude: Math.random(),
-          Latitude: Math.random(),
-          Gyro: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          },
-          Temperature: Math.random(),
-          Acceleration: {
-            X: Math.random(),
-            Y: Math.random(),
-            Z: Math.random(),
-          }
-        },
-      });
-    }, 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
+  reset() {
+    this.setState({
+      mission_start: false,
+      launch_start: false
+    });
+    this.graphSelectorRef.current.reset();
+    this.missionStatusControlRef.current.reset();
   }
 
   render() {
-    const data = this.state.current_data;
+    const data = this.props.currentData;
+    const is_test_mode = this.props.testMode;
     const mission_start = this.state.mission_start;
     const launch_start = this.state.launch_start;
 
     return (
       <div id='container'>
-        <div id='leftPannel'>
+        {is_test_mode ? <div className="testModeWarning">WARNING: TEST MODE</div> : null}
+        <div id='leftPanel'>
           <div id='timerContainer'>
             <Timer timerName="Mission Timer" tick={mission_start} />
-            {mission_start ? <Timer timerName="Launch Timer" tick={launch_start} /> : <CountdownTimer />}
+            {
+              mission_start ?
+                <Timer timerName="Launch Timer" tick={launch_start} /> :
+                <CountdownTimer testCountDown={is_test_mode}/>
+            }
           </div>
           <CurrentStatus
-            ref={this.missionStatusControl}
-            onMissionStart={() => {
-              // Needs to be saved as a string, bool not recognized
-              sessionStorage.setItem("DataWindowMissionStart", "true");
-              this.setState({ mission_start: true });
-            }}
+            ref={this.missionStatusControlRef}
+            onMissionStart={() => this.setState({ mission_start: true })}
           />
 
           <IndicatorTable
@@ -103,7 +77,7 @@ class DataWindow extends PopUpGenerator {
           />
         </div>
 
-        <div id='rightPannel'>
+        <div id='rightPanel'>
           <DataTable
             title="BALLOON DATA"
             data={data}
@@ -115,14 +89,14 @@ class DataWindow extends PopUpGenerator {
               onClick={() => {
                 if (this.state.mission_start !== true) {
                   this.nonblockingMessage("The mission must be started before you attempt to launch");
-                } else if (this.missionStatusControl.current.getStatus() !== StatusEnum.VERIFIED) {
+                } else if (this.missionStatusControlRef.current.getStatus() !== StatusEnum.VERIFIED) {
                   this.nonblockingMessage("The mission must be verified before you attempt to launch");
                 } else if (this.state.launch_start === false) {
                   // Will change the mission status to LAUNCHED if mission started and verified, on user confirmation
                   this.nonblockingConfirmation("Pressing 'Continue' will launch the rocket! [NOT REVERSIBLE]", {
                     isImportant: true,
                     onAccept: () => {
-                      this.missionStatusControl.current.changeStatus(StatusEnum.LAUNCHED);
+                      this.missionStatusControlRef.current.changeStatus(StatusEnum.LAUNCHED);
                       this.setState({ launch_start: true });
                     },
                   });
@@ -138,15 +112,26 @@ class DataWindow extends PopUpGenerator {
                   },
                 });
               }}>Stabilization</button>
+
+            <button
+              className="additionalControlButton"
+              onClick={() => {
+                this.nonblockingConfirmation("Pressing 'Continue' will activate the QDM!! [NOT REVERSIBLE]", {
+                  isImportant: true,
+                  onAccept: () => {
+                    this.missionStatusControlRef.current.changeStatus(StatusEnum.QDM);
+                  },
+                });
+              }}>Activate QDM</button>
           </div>
 
-          <div id="logoPannel">
+          <div id="logoPanel">
             <img src={process.env.PUBLIC_URL + '/img/orbital-logo.png'} alt="Purdue Orbital" />
           </div>
         </div>
 
-        <div id='graphPannel'>
-          <GraphSelector data={data} />
+        <div id='graphPanel' className={is_test_mode ? "graphPanelTest" : "graphPanelNormal"}>
+          <GraphSelector ref={this.graphSelectorRef} data={data} />
         </div>
         {this.renderPopUp()}
       </div >
@@ -154,4 +139,4 @@ class DataWindow extends PopUpGenerator {
   }
 }
 
-export default DataWindow;
+export default MainPage;

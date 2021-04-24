@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import DataWindow from './DataWindow';
+import App from './App.js';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <DataWindow />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

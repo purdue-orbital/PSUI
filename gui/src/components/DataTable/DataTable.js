@@ -5,6 +5,7 @@ import './DataTable.css';
 class DataTable extends React.Component {
   static defaultProps = {
     title: "DATA",
+    data: {}
   };
 
   constructor(props) {
@@ -70,4 +71,4 @@ class DataTable extends React.Component {
   }
 }
 
-export default DataTable
+export default DataTable;
