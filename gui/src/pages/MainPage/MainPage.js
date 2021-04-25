@@ -63,7 +63,7 @@ class MainPage extends PopUpGenerator {
           STAB: 1
         })
       });
-      if (res.status === 500) {
+      if (!res.ok) {
         console.error("Trouble Updating status")
         // Should it be called again??
       }
