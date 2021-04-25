@@ -142,7 +142,7 @@ class MainPage extends PopUpGenerator {
                 this.nonblockingConfirmation("Pressing 'Continue' will activate the QDM!! [NOT REVERSIBLE]", {
                   isImportant: true,
                   onAccept: () => {
-                    this.missionStatusControl.current.changeStatus(StatusEnum.QDM);
+                    this.missionStatusControlRef.current.changeStatus(StatusEnum.QDM);
                   },
                 });
               }}>Activate QDM</button>
