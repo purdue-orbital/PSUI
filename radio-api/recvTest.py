@@ -3,13 +3,14 @@ import _thread as thread
 import json
 import time
 
-radio = Radio(2)
+gsradio = Radio(3, True)
+lsradio = Radio(3)
 
 
 def recv():
     queue = []
 
-    radio.bindQueue(queue)
+    lsradio.bindQueue(queue)
 
     while True: 
         try:
@@ -32,8 +33,9 @@ time.sleep(3)
 
 jsonData = {}
 jsonData['QDM'] = False
-jsonData['Launch'] = False
-jsonData['Abort'] = False
-radio.send(json.dumps(jsonData), True)
+jsonData['LAUNCH'] = True
+jsonData['ABORT'] = False
+jsonData['STAB'] = False
+gsradio.send(json.dumps(jsonData))
 
 time.sleep(3)

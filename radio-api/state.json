@@ -1,5 +1,6 @@
 {
-    "LAUNCH": false,
+    "LAUNCH": true,
     "QDM": false,
-    "ABORT": false
+    "ABORT": false,
+    "STAB": false
 }
