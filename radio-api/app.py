@@ -4,7 +4,7 @@ from flask_cors import CORS
 import sys
 import json
 
-from Radio import Radio
+from RadioBeta import Radio
 
 
 class RadioWrapper(object):
@@ -66,7 +66,7 @@ def send_data() -> Response:
     try:
         dataStr = json.dumps(request.json)
         print(dataStr, file=sys.stderr)  # TODO: Remove
-        # RadioWrapper.get_instance().send(dataStr, isGroundStation=True)
+        RadioWrapper.get_instance().send(dataStr, isGroundStation=True)
         res = Response(response="", status=204)
     except Exception as e:
         print(e, file=sys.stderr)
