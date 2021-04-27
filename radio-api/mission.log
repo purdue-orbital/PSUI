@@ -1,59 +1,8 @@
-2021-04-21 18:51:58,545 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:51:58,546 ERROR:Ground Station did not append state attributes to data
-2021-04-21 18:51:58,556 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:51:58,556 ERROR:'Radio' object has no attribute 'sock'
-2021-04-21 18:52:54,772 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:52:54,772 ERROR:Ground Station did not append state attributes to data
-2021-04-21 18:52:54,774 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:52:54,774 ERROR:a bytes-like object is required, not 'str'
-2021-04-21 18:53:42,994 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:53:42,995 ERROR:Ground Station did not append state attributes to data
-2021-04-21 18:53:43,000 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:53:43,000 ERROR:a bytes-like object is required, not 'str'
-2021-04-21 18:56:20,633 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:56:20,633 ERROR:Ground Station did not append state attributes to data
-2021-04-21 18:56:20,635 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:56:20,636 ERROR:a bytes-like object is required, not 'str'
-2021-04-21 18:57:33,307 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:57:33,307 ERROR:Ground Station did not append state attributes to data
-2021-04-21 18:57:33,309 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false}
-2021-04-21 18:57:33,310 ERROR:a bytes-like object is required, not 'str'
-2021-04-21 18:58:12,213 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 18:58:12,215 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 18:58:12,215 ERROR:a bytes-like object is required, not 'str'
-2021-04-21 19:00:31,414 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:00:31,415 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:00:31,416 INFO:Received: b'{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}'
-2021-04-21 19:00:31,416 WARNING:State mismatch, resending state
-2021-04-21 19:00:31,416 INFO:{'LAUNCH': False, 'QDM': False, 'ABORT': False, 'STAB': False}
-2021-04-21 19:00:31,416 ERROR:descriptor 'encode' requires a 'str' object but received a 'dict'
-2021-04-21 19:01:09,515 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:01:09,516 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:01:09,516 INFO:Received: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:01:09,517 WARNING:State mismatch, resending state
-2021-04-21 19:01:09,517 INFO:{'LAUNCH': False, 'QDM': False, 'ABORT': False, 'STAB': False}
-2021-04-21 19:01:09,517 ERROR:descriptor 'encode' requires a 'str' object but received a 'dict'
-2021-04-21 19:05:03,026 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:05:03,028 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:05:03,028 INFO:Received: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:05:03,028 WARNING:State mismatch, resending state
-2021-04-21 19:05:03,028 INFO:{'LAUNCH': False, 'QDM': False, 'ABORT': False, 'STAB': False}
-2021-04-21 19:05:03,029 ERROR:descriptor 'encode' requires a 'str' object but received a 'dict'
-2021-04-21 19:05:44,254 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:05:44,256 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:05:44,256 INFO:Received: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:05:44,256 WARNING:State mismatch, resending state
-2021-04-21 19:05:44,256 INFO:{'LAUNCH': False, 'QDM': False, 'ABORT': False, 'STAB': False}
-2021-04-21 19:05:44,257 ERROR:descriptor 'encode' requires a 'str' object but received a 'dict'
-2021-04-21 19:06:07,207 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:06:07,209 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:06:07,209 INFO:Received: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:06:07,209 WARNING:State mismatch, resending state
-2021-04-21 19:06:07,209 INFO:{'LAUNCH': False, 'QDM': False, 'ABORT': False, 'STAB': False}
-2021-04-21 19:06:07,210 ERROR:descriptor 'encode' requires a 'str' object but received a 'dict'
-2021-04-21 19:08:13,800 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:08:13,803 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:08:13,804 INFO:Received: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
-2021-04-21 19:08:13,804 WARNING:State mismatch, resending state
-2021-04-21 19:08:13,804 INFO:{'LAUNCH': False, 'QDM': False, 'ABORT': False, 'STAB': False}
-2021-04-21 19:08:13,805 ERROR:descriptor 'encode' requires a 'str' object but received a 'dict'
+2021-04-26 20:18:42,757 INFO:{"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
+2021-04-26 20:18:42,758 INFO:Sent: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
+2021-04-26 20:18:42,758 INFO:Received: {"QDM": false, "LAUNCH": true, "ABORT": false, "STAB": false}
+2021-04-26 20:18:42,758 INFO:State Updated:
+Launch True
+QDM False
+Abort False
+Stability False
