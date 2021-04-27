@@ -33,6 +33,13 @@ class MainPage extends PopUpGenerator {
         platRad: { name: "Platform Radio", data: false, },
       },
     });
+
+    // State for radio
+    this.radLaunch = false;
+    this.radAbort = false;
+    this.radStability = false;
+    this.radQDM = false;
+
     // Currently reading mission status w/ a ref, but status 
     // could be moved here for unidirectional downward flow of props
     this.missionStatusControlRef = React.createRef();
@@ -49,6 +56,7 @@ class MainPage extends PopUpGenerator {
   }
 
   async sendStateToRadio() {
+    const currStatus = this.missionStatusControlRef.current.getStatus()
     try {
       const res = await fetch("http://localhost:5002/send", {
         method: "POST",
@@ -57,10 +65,10 @@ class MainPage extends PopUpGenerator {
         },
         body: JSON.stringify({
           TIME: Date.now(), // Added this, may or may not be useful
-          LAUNCH: 1,
-          QDM: 1,
-          ABORT: 1,
-          STAB: 1
+          LAUNCH: this.radLaunch,
+          QDM: this.radQDM,
+          ABORT: this.radAbort,
+          STAB: this.radStability
         })
       });
       if (!res.ok) {
@@ -94,8 +102,11 @@ class MainPage extends PopUpGenerator {
           <CurrentStatus
             ref={this.missionStatusControlRef}
             onMissionStart={() => this.setState({ mission_start: true })}
+            onAbort={() => {
+              this.radAbort = true;
+              this.sendStateToRadio();
+            }}
           />
-
           <IndicatorTable
             indicators={this.state.current_indicators}
             cols={4}
@@ -121,6 +132,8 @@ class MainPage extends PopUpGenerator {
                   this.nonblockingConfirmation("Pressing 'Continue' will launch the rocket! [NOT REVERSIBLE]", {
                     isImportant: true,
                     onAccept: () => {
+                      this.radLaunch = true;
+                      this.sendStateToRadio();
                       this.missionStatusControlRef.current.changeStatus(StatusEnum.LAUNCHED);
                       this.setState({ launch_start: true });
                     },
@@ -131,8 +144,11 @@ class MainPage extends PopUpGenerator {
             <button
               className="additionalControlButton"
               onClick={() => {
-                this.nonblockingConfirmation("You are about to activate stabilization", {
-                  onAccept: () => this.sendStateToRadio(),
+                this.nonblockingConfirmation(`You are about to ${this.radStability ? "DEACTIVATE" : "ACTIVATE"} stabilization`, {
+                  onAccept: () => {
+                    this.radStability = !this.radStability;
+                    this.sendStateToRadio()
+                  },
                 });
               }}>Stabilization</button>
 
@@ -142,6 +158,8 @@ class MainPage extends PopUpGenerator {
                 this.nonblockingConfirmation("Pressing 'Continue' will activate the QDM!! [NOT REVERSIBLE]", {
                   isImportant: true,
                   onAccept: () => {
+                    this.radQDM = true;
+                    this.sendStateToRadio();
                     this.missionStatusControlRef.current.changeStatus(StatusEnum.QDM);
                   },
                 });
