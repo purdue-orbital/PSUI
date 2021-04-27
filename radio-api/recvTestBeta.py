@@ -1,10 +1,11 @@
-from Radio import Radio
+from RadioBeta import Radio
 import _thread as thread
 import json
 import time
 
-gsradio = Radio(3, True)
-lsradio = Radio(3)
+gsradio = Radio(1, True)
+time.sleep(1)
+lsradio = Radio(1)
 
 
 def recv():
@@ -29,13 +30,13 @@ def recv():
 
 thread.start_new_thread(recv, ())
 
-time.sleep(3)
+time.sleep(3)   
 
 jsonData = {}
 jsonData['QDM'] = False
 jsonData['LAUNCH'] = True
 jsonData['ABORT'] = False
-jsonData['STAB'] = False    
+jsonData['STAB'] = False
 gsradio.send(json.dumps(jsonData))
 
 time.sleep(3)

@@ -1,9 +1,15 @@
-# Ignore everything in this directory
+# Rust API
 psui-api/target/
 psui-api/Cargo.lock
+
+# Python API
 radio-api/radio_api/
 radio-api/venv-radio/
 radio-api/__pycache__/
+radio-api/mission.log
+
+# Work space config
 .vscode/
+
 # Except this file
 !.gitignore

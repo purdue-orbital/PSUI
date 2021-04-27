@@ -4,6 +4,8 @@ import _thread as thread
 import os
 import json
 import logging
+import socket
+import time
 
 OK = "\u001b[32m"
 WARN = "\u001b[33m"
@@ -25,22 +27,28 @@ class Radio:
     TODO: Rework into singleton to maintain class timing across threads for backup QDM system. https://stackoverflow.com/questions/21974029/python-sharing-class-instance-among-threads
     """
 
-    def __init__(self, DEBUG=0):
+    def __init__(self, DEBUG=0, isGroundStation = False, hostname = '127.0.0.1'):
         """ 
-        Initializes states based on existance of persistent file. DEBUG modes are 0 for flight, 1 for radio testing, and 2 for internal testing.
+        Initializes states based on existance of persistent file. DEBUG modes are 0 for flight, 1 for radio testing, and 2 for ethernet testing, 3 for internal testing.
         During the first instantiation of this class in launch the caller must guarentee state.json does not exist or a state conflict may occur
         when in DEBUG 0. Additionally, when in DEBUG 0 or 1, confirm GNU Radio python file is in working directory.
         """
         try:
-            if DEBUG < 0 or DEBUG > 2:
-                raise TypeError("DEBUG must be 0, 1, or 2")
+            if DEBUG < 0 or DEBUG > 3:
+                raise TypeError("DEBUG must be 0, 1, 2, or 3")
+            if DEBUG != 2 and hostname != '127.0.0.1':
+                raise TypeError("hostname should not be changed unless in DEBUG mode 2")
             
             self.launch = False
             self.qdm = False
             self.abort = False
             self.stab = False
 
-            if DEBUG == 0:
+            self.DEBUG = DEBUG
+            self.isGroundStation = isGroundStation
+            self.hostname = (hostname)
+
+            if self.DEBUG == 0:
                 if os.path.exists("state.json"):
                     with open('state.json', 'r', encoding='utf-8') as stateFile:
                         state = json.loads(stateFile.read())
@@ -55,53 +63,86 @@ class Radio:
                 else:
                     self.saveState()    
 
-            logging.basicConfig(level=(logging.INFO, logging.DEBUG)[DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
+            logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
 
             self.queue = None
 
-            self.context = zmq.Context()
+            # Set reception up
+            if DEBUG == 1:
+                def receive(recv_socket):
+                    while True:
+                        try:
+                            # message is transmitted as binary and needs to be decoded
+                            message = recv_sock.recv().decode("utf-8")
+                            # message = pmt.to_python(pmt.deserialize_str(recv_sock.recv()))
+                            logging.info("Received: " + str(message))
 
-            def receive():
-                recv_sock = self.context.socket(zmq.PULL)
-                
+                            jsonData = json.loads(message)
+
+                            if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
+                                logging.warning("State mismatch, resending state")
+                                self.sendState()
+
+                            if self.queue is not None:
+                                self.queue.append(message)
+                            else:
+                                print("Queue unbound")
+                                logging.error("Queue unbound")    
+                        except Exception as e:
+                            print("Invalid message received")
+                            logging.error(e)
+
+                context = zmq.Context()  
+
+                recv_sock = context.socket(zmq.PULL)
                 recv_sock.bind("tcp://127.0.0.1:5001")
 
-                while True:
-                    try:
-                        # message is transmitted as binary and needs to be decoded
-                        message = recv_sock.recv().decode("utf-8")
-                        # message = pmt.to_python(pmt.deserialize_str(recv_sock.recv()))
-                        logging.info("Received: " + str(message))
+                thread.start_new_thread(receive, (recv_sock))
 
-                        jsonData = json.loads(message)
+                self.sock = context.socket(zmq.PUSH)
 
-                        if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
-                            logging.warning("State mismatch, resending state")
-                            self.sendState()
+            elif self.DEBUG == 2 or self.DEBUG == 3:
+                def receive():
+                    if self.isGroundStation:
+                        self.socket.listen(300) #Listen for 5 minutes
+                        (clientsocket, address) = self.socket.accept()
+                        self.socket = clientsocket
 
-                        if self.queue is not None:
-                            self.queue.append(message)
-                        else:
-                            print("Queue unbound")
-                            logging.error("Queue unbound")
-                    except Exception as e:
-                        print("Invalid message received")
-                        logging.error(e)
+                    while True:
+                        try:
+                            message = self.socket.recv(2048).decode("ascii")
+                            logging.info("Received: " + str(message))
 
-            thread.start_new_thread(receive, ())
+                            jsonData = json.loads(message)
 
-            self.sock = self.context.socket(zmq.PUSH)
+                            if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
+                                logging.warning("State mismatch, resending state")
+                                self.sendState()
 
-            if DEBUG == 2:
-                self.sock.connect("tcp://127.0.0.1:5001")
-            else:
-                self.sock.bind("tcp://127.0.0.1:5000")
+                            if self.queue is not None:
+                                self.queue.append(message)
+                            else:
+                                print("Queue unbound")
+                                logging.error("Queue unbound")    
+                        except Exception as e:
+                            print("Invalid message received")
+                            logging.error(e)
+
+                if self.isGroundStation:
+                    self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    self.socket.bind((('127.0.0.1', socket.gethostname()) [self.DEBUG == 2], 5000))
+                else:
+                    self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                    self.socket.connect((self.hostname, 5000))
+
+                thread.start_new_thread(receive, ())
 
         except Exception as e:
             print(e)
             logging.error(e)
 
-    def send(self, data, isGroundStation=False):
+
+    def send(self, data):
         """
         Sends JSON formatted data to the socket attached to radio interface.
         For single variable values, do not exceed one layer of depth.
@@ -114,7 +155,7 @@ class Radio:
             jsonData = json.loads(data)
 
             # Oneway communication, Ground Station controls state.
-            if isGroundStation:
+            if self.isGroundStation:
                 try:
                     self.launch = jsonData['LAUNCH']
                     self.qdm = jsonData['QDM']
@@ -129,28 +170,24 @@ class Radio:
                 jsonData['LAUNCH'] = self.launch
                 jsonData['QDM'] = self.qdm
                 jsonData['ABORT'] = self.abort
-                jsonData['STAB'] = self.stav
+                jsonData['STAB'] = self.stab
 
-        except Exception as e:
-            print(e)
-            logging.error(e)
-            return 0
-
-        try:
             logging.info("Sent: " + data)
-            self.sock.send_string(data)
-            # self.sock.send(pmt.serialize_str(pmt.to_pmt(data)))
+            print(type(data))
+            self.socket.send(data.encode('ascii'))
             print("Sent");
             return 1
+
         except KeyboardInterrupt:
             print ("interrupt received. shutting down.")
             self.sock.close()
-            self.context.term()
             exit()
+
         except Exception as e:
             print(e)
             logging.error(e)
             return 0
+
 
     def sendState(self):
         state = {}
@@ -163,14 +200,13 @@ class Radio:
             logging.info(state)
             message = str.encode(state)
             # self.sock.send(pmt.serialize_str(pmt.to_pmt(message)))
-            self.sock.send_string(message)
+            self.socket.send(message)
             logging.debug("State sent")
             return 1
 
         except KeyboardInterrupt:
             print ("interrupt received. shutting down.")
             self.sock.close()
-            self.context.term()
             exit()
         except Exception as e:
             print(e)
