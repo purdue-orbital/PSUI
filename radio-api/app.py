@@ -33,7 +33,7 @@ class RadioWrapper(object):
     @staticmethod
     def get_instance() -> Radio:
         if (RadioWrapper.instance == None):
-            RadioWrapper.instance = Radio(2)
+            RadioWrapper.instance = Radio(DEBUG=0, isGroundStation=True)
             RadioWrapper.instance.bindQueue(RadioWrapper.queue)
         return RadioWrapper.instance
 
@@ -66,7 +66,7 @@ def send_data() -> Response:
     try:
         dataStr = json.dumps(request.json)
         print(dataStr, file=sys.stderr)  # TODO: Remove
-        RadioWrapper.get_instance().send(dataStr, isGroundStation=True)
+        RadioWrapper.get_instance().send(dataStr)
         res = Response(response="", status=204)
     except Exception as e:
         print(e, file=sys.stderr)
