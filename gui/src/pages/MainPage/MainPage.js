@@ -56,7 +56,6 @@ class MainPage extends PopUpGenerator {
   }
 
   async sendStateToRadio() {
-    const currStatus = this.missionStatusControlRef.current.getStatus()
     try {
       const res = await fetch("http://localhost:5002/send", {
         method: "POST",
