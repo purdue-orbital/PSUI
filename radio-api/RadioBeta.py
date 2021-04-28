@@ -59,7 +59,7 @@ class Radio:
                     logging.error(e)
 
         try: 
-            if self.isGroundStation:
+            if not self.isGroundStation:
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.socket.bind((('127.0.0.1', socket.gethostname()) [self.DEBUG != 1], 5000))
             else:
