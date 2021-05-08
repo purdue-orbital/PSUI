@@ -33,8 +33,7 @@ class RadioWrapper(object):
     @classmethod
     def get_instance(cls) -> Radio:
         if (cls.instance == None):
-            print("Making instancve")
-            cls.instance = Radio(DEBUG=1, isGroundStation=True)
+            cls.instance = Radio(DEBUG=1, isGroundStation=True)  # TODO: Change this for prod
             cls.instance.bindQueue(RadioWrapper.queue)
         return cls.instance
 
@@ -67,7 +66,7 @@ def send_data() -> Response:
     res: Response = None
     try:
         dataStr = json.dumps(request.json)
-        print(dataStr, file=sys.stderr)  # TODO: Remove
+        # print(dataStr, file=sys.stderr)
         RadioWrapper.get_instance().send(dataStr)
         res = Response(response="", status=204)
     except Exception as e:
