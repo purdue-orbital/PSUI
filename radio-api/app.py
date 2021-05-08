@@ -33,7 +33,8 @@ class RadioWrapper(object):
     @classmethod
     def get_instance(cls) -> Radio:
         if (cls.instance == None):
-            cls.instance = Radio(DEBUG=0, isGroundStation=True)
+            print("Making instancve")
+            cls.instance = Radio(DEBUG=1, isGroundStation=True)
             cls.instance.bindQueue(RadioWrapper.queue)
         return cls.instance
 
@@ -47,6 +48,7 @@ class RadioWrapper(object):
 app = Flask(__name__,
             static_url_path='/')
 CORS(app)
+RadioWrapper.get_instance()
 
 
 @app.route('/rec', methods=['GET'])

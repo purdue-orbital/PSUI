@@ -55,16 +55,19 @@ class Radio:
                         print("Queue unbound")
                         logging.error("Queue unbound")    
                 except Exception as e:
-                    print("Invalid message received")
+                    # print("Invalid message received")
                     logging.error(e)
 
         try: 
             if not self.isGroundStation:
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.socket.bind((('127.0.0.1', socket.gethostname()) [self.DEBUG != 1], 5000))
+                print("Bound")
             else:
+                print(str(socket.AF_INET) + "  " + str(socket.SOCK_STREAM) + "   " + str(self.hostname))
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.socket.connect((self.hostname, 5000))
+                print("Connected")
 
             thread.start_new_thread(receive, ())
         except Exception as e:
