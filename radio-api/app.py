@@ -30,18 +30,18 @@ class RadioWrapper(object):
     def __init__(self) -> None:
         raise Exception("RadioWrapper Class should not be instanced directly")
 
-    @staticmethod
-    def get_instance() -> Radio:
-        if (RadioWrapper.instance == None):
-            RadioWrapper.instance = Radio(DEBUG=0, isGroundStation=True)
-            RadioWrapper.instance.bindQueue(RadioWrapper.queue)
-        return RadioWrapper.instance
+    @classmethod
+    def get_instance(cls) -> Radio:
+        if (cls.instance == None):
+            cls.instance = Radio(DEBUG=0, isGroundStation=True)
+            cls.instance.bindQueue(RadioWrapper.queue)
+        return cls.instance
 
-    @staticmethod
-    def get_data():
-        if len(RadioWrapper.queue) > 0:
-            RadioWrapper.lastDataPoint = RadioWrapper.queue.pop(0)
-        return RadioWrapper.lastDataPoint
+    @classmethod
+    def get_data(cls):
+        if len(cls.queue) > 0:
+            cls.lastDataPoint = cls.queue.pop(0)
+        return cls.lastDataPoint
 
 
 app = Flask(__name__,
