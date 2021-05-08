@@ -51,11 +51,20 @@ class MainPage extends PopUpGenerator {
       mission_start: false,
       launch_start: false
     });
+
+    // Radio reset
+    this.radLaunch = false;
+    this.radAbort = false;
+    this.radStability = false;
+    this.radQDM = false;
+
+    // Reset other compts
     this.graphSelectorRef.current.reset();
     this.missionStatusControlRef.current.reset();
   }
 
   async sendStateToRadio() {
+    if (this.props.testMode) { return; } // Do not send commands if test mode
     try {
       const res = await fetch("http://localhost:5002/send", {
         method: "POST",
