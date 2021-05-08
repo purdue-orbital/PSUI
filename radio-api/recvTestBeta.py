@@ -3,9 +3,9 @@ import _thread as thread
 import json
 import time
 
-gsradio = Radio(1, True)
-time.sleep(1)
 lsradio = Radio(1)
+time.sleep(1)
+gsradio = Radio(1, True)
 
 
 def recv():

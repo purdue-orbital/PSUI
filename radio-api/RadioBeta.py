@@ -24,7 +24,7 @@ class Radio:
         logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
 
         def receive():
-            if self.isGroundStation:
+            if not self.isGroundStation:
                 self.socket.listen(300) #Listen for 5 minutes
                 (clientsocket, address) = self.socket.accept()
                 self.socket = clientsocket
@@ -66,8 +66,7 @@ class Radio:
             else:
                 print(str(socket.AF_INET) + "  " + str(socket.SOCK_STREAM) + "   " + str(self.hostname))
                 self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.socket.connect((self.hostname, 5000))
-                print("Connected")
+                self.socket.connect(('127.0.0.1', 5000))
 
             thread.start_new_thread(receive, ())
         except Exception as e:
@@ -116,7 +115,6 @@ class Radio:
             exit()
 
         except Exception as e:
-            print("Here" + e)
             logging.error(e)
             return 0
 
