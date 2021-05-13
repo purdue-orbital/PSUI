@@ -1,4 +1,4 @@
-from RadioBeta import Radio
+from RadioAlpha2 import Radio
 import _thread as thread
 import json
 import time

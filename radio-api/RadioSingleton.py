@@ -3,7 +3,7 @@ import json
 
 
 class Singleton:
-    __instance = None  # FIXME: This is never used, I believe this is supoosed to exisit on RadioSingleton
+    __instance = None  # FIXME: This is never used, I believe this is supoosed to exisit on RadioSingleti
 
     def __init__(self, DEBUG=0, isGroundStation=False, hostname='127.0.0.1'):
         if RadioSingleton.__instance is not None:
