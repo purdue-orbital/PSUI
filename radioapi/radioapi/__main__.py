@@ -4,7 +4,7 @@ from flask_cors import CORS
 import sys
 import json
 
-from RadioAlpha2 import Radio
+from .RadioAlpha2 import Radio
 
 
 class RadioWrapper(object):

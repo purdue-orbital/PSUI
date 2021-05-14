@@ -6,6 +6,11 @@ psui-api/Cargo.lock
 radioapi/radio_api/
 radioapi/venv/
 radioapi/mission.log
+radioapi/dist/
+radioapi/build/
+radioapi/radioapi.egg-info/
+
+# All python caches
 **/__pycache__
 
 # Work space config
