@@ -3,9 +3,9 @@ psui-api/target/
 psui-api/Cargo.lock
 
 # Python API
-radio-api/radio_api/
-radio-api/venv-radio/
-radio-api/mission.log
+radioapi/radio_api/
+radioapi/venv/
+radioapi/mission.log
 **/__pycache__
 
 # Work space config
