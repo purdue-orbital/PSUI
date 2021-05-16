@@ -1,4 +1,4 @@
-from RadioAlpha2 import Radio
+from radioapi.radios.RadioAlpha2 import Radio
 import json
 import time
 

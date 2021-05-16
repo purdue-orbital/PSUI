@@ -1,4 +1,4 @@
-from Radio import Radio 
+from radioapi.radios.Radio import Radio 
 import json
 
 jsonData = {}

@@ -1,4 +1,4 @@
-from . import RadioAlpha2 as Radio
+from .RadioAlpha2 import Radio
 import json
 
 
