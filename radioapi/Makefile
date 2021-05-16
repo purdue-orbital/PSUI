@@ -5,9 +5,11 @@ dev:
 	python setup.py develop
 
 clean:
-	python setup.py develop --uninstall
 	pip uninstall -y radioapi
 	rm -rf build dist radioapi.egg-info
+
+enddev:
+	python setup.py develop --uninstall
 
 init:
 	pip install -r requirements.txt
