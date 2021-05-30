@@ -1,19 +1,33 @@
-all:
-	python setup.py install
+PY = python3
+PIP = pip3
 
-dev:
-	python setup.py develop
+
+all:
+	${PY} setup.py install
 
 clean:
-	pip uninstall -y radioapi
+	${PIP} uninstall -y radioapi
 	rm -rf build dist radioapi.egg-info
 
+dev:
+	${PY} setup.py develop
+
 enddev:
-	python setup.py develop --uninstall
+	${PY} setup.py develop --uninstall
+	rm -rf build dist radioapi.egg-info
 
 init:
-	pip install -r requirements.txt
+	${PIP} install -r requirements.txt
 
 reqs:
-	pip uninstall -y radioapi
-	pip freeze > requirements.txt
+	${PIP} uninstall -y radioapi
+	${PIP} freeze > requirements.txt
+
+help:
+	@echo "COMMANDS:"
+	@echo "  all:    Build and install package"
+	@echo "  clean:  Uninstall this package"
+	@echo "  dev:    Create links to package for hot development changes"
+	@echo "  enddev: Remove links to package for hot development changes"
+	@echo "  init:   Create a virutal enviornment and install the requirements"
+	@echo "  reqs:   Add all requirements to the requirements.txt file"
