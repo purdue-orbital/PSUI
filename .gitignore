@@ -11,12 +11,10 @@ radioapi/radioapi.egg-info/
 
 # All python caches
 **/__pycache__
+**/.mypy_cache
 
 # Work space config
 .vscode/
 
 # Ignore the mission output
 **/mission.log
-
-# Except this file
-!.gitignore
