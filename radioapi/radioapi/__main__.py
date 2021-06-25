@@ -4,12 +4,15 @@ from flask_cors import CORS
 import sys
 import json
 
+from typing import List
+from typing import Optional
+
 from radioapi.radios.RadioAlpha2 import Radio
 
 
 class RadioWrapper(object):
-    instance: Radio = None
-    queue: 'list[dict]' = []
+    _instance: Optional[Radio] = None
+    _queue: List[dict] = []
     lastDataPoint: dict = {
         'Acceleration': {
             'X': 0,
@@ -32,15 +35,15 @@ class RadioWrapper(object):
 
     @classmethod
     def get_instance(cls) -> Radio:
-        if (cls.instance == None):
-            cls.instance = Radio(DEBUG=1, isGroundStation=True)  # TODO: Change this for prod
-            cls.instance.bindQueue(RadioWrapper.queue)
-        return cls.instance
+        if cls._instance is None:
+            cls._instance = Radio(DEBUG=1, isGroundStation=True)  # TODO: Change this for prod
+            cls._instance.bindQueue(RadioWrapper._queue)
+        return cls._instance
 
     @classmethod
     def get_data(cls):
-        if len(cls.queue) > 0:
-            cls.lastDataPoint = cls.queue.pop(0)
+        if len(cls._queue) > 0:
+            cls.lastDataPoint = cls._queue.pop(0)
         return cls.lastDataPoint
 
 
@@ -52,7 +55,7 @@ RadioWrapper.get_instance()
 
 @app.route('/rec', methods=['GET'])
 def rec_data() -> Response:
-    res: Response = None
+    res: Optional[Response] = None
     try:
         res = jsonify(RadioWrapper.get_data())
     except Exception as e:
@@ -63,7 +66,7 @@ def rec_data() -> Response:
 
 @app.route('/send', methods=['POST'])
 def send_data() -> Response:
-    res: Response = None
+    res: Optional[Response] = None
     try:
         dataStr = json.dumps(request.json)
         # print(dataStr, file=sys.stderr)
