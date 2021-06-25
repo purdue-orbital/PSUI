@@ -1,8 +1,10 @@
 PY = python3
 PIP = pip3
 
-
 all:
+	${PY} setup.py sdist
+
+install:
 	${PY} setup.py install
 
 clean:
@@ -28,10 +30,11 @@ reqs:
 
 help:
 	@echo "COMMANDS:"
-	@echo "  all:    Build and install package"
-	@echo "  clean:  Uninstall this package"
-	@echo "  dev:    Create links to package for hot development changes"
-	@echo "  enddev: Remove links to package for hot development changes"
-	@echo "  init:   Install the requirements in the current enviornment"
-	@echo "  venv:   Create a virtual enviornment for the project"
-	@echo "  reqs:   Add all requirements to the requirements.txt file"
+	@echo "  all:     Build a distributible form of the package"
+	@echo "  install: Build and install package"
+	@echo "  clean:   Uninstall this package"
+	@echo "  dev:     Create links to package for hot development changes"
+	@echo "  enddev:  Remove links to package for hot development changes"
+	@echo "  init:    Install the requirements in the current enviornment"
+	@echo "  venv:    Create a virtual enviornment for the project"
+	@echo "  reqs:    Add all requirements to the requirements.txt file"
