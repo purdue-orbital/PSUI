@@ -1,5 +1,5 @@
 import React from 'react';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 
 import './Graph.css';
 
@@ -20,7 +20,7 @@ class Graph extends React.Component {
   componentDidMount() {
     this.__makeNewChart(this.props.datasets)
   }
-  
+
   __makeNewChart(datasets) {
     if (this.chart != null) {
       this.chart.destroy();
