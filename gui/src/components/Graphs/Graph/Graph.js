@@ -1,10 +1,15 @@
 import React from 'react';
 import {
-  Chart, CategoryScale, LinearScale,
+  Chart, CategoryScale, LinearScale, TimeScale,
   LineController, PointElement, LineElement
 } from 'chart.js';
+import 'chartjs-adapter-date-fns';
 
 import './Graph.css';
+
+
+Chart.register(CategoryScale, LinearScale, TimeScale,
+  LineController, PointElement, LineElement);
 
 class Graph extends React.Component {
   static defaultProps = {
@@ -18,8 +23,6 @@ class Graph extends React.Component {
     this.chart = null;
     this.data_points = [];
     this.start_time = Date.now();
-    Chart.register(CategoryScale, LinearScale, LineController,
-      PointElement, LineElement);
   }
 
   componentDidMount() {
@@ -59,15 +62,15 @@ class Graph extends React.Component {
           },
         },
         scales: {
-          xAxes: [{
+          x: {
             type: 'time',
             position: 'bottom',
             display: false,
             ticks: {
               suggestedMin: 0
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: {
               color: "rgba(0,0,0,0.2)"
             },
@@ -76,7 +79,7 @@ class Graph extends React.Component {
               suggestedMin: 0,
               suggestedMax: 1
             },
-          }],
+          },
         },
         animation: {
           duration: 0,
