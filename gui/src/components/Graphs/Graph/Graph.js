@@ -4,9 +4,7 @@ import {
   LineController, PointElement, LineElement
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-
 import './Graph.css';
-
 
 Chart.register(CategoryScale, LinearScale, TimeScale,
   LineController, PointElement, LineElement);
@@ -53,7 +51,7 @@ class Graph extends React.Component {
         },
         elements: {
           line: {
-            tension: 0
+            tension: 0,
           }
         },
         legend: {
@@ -67,17 +65,18 @@ class Graph extends React.Component {
             position: 'bottom',
             display: false,
             ticks: {
-              suggestedMin: 0
+              suggestedMin: 0,
+              source: 'data', // or 'auto'
             },
           },
           y: {
             gridLines: {
-              color: "rgba(0,0,0,0.2)"
+              color: "rgba(0,0,0,0.2)",
             },
             ticks: {
               fontColor: "rgb(0,0,0)",
               suggestedMin: 0,
-              suggestedMax: 1
+              suggestedMax: 1,
             },
           },
         },
