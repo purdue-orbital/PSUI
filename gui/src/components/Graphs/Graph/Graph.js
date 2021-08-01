@@ -1,5 +1,8 @@
 import React from 'react';
-import { Chart } from 'chart.js';
+import {
+  Chart, CategoryScale, LinearScale,
+  LineController, PointElement, LineElement
+} from 'chart.js';
 
 import './Graph.css';
 
@@ -15,6 +18,8 @@ class Graph extends React.Component {
     this.chart = null;
     this.data_points = [];
     this.start_time = Date.now();
+    Chart.register(CategoryScale, LinearScale, LineController,
+      PointElement, LineElement);
   }
 
   componentDidMount() {
@@ -28,7 +33,6 @@ class Graph extends React.Component {
     }
     const ctx = this.canvasRef.current.getContext("2d");
     this.chart = new Chart(ctx, {
-      // The type of chart we want to create
       type: 'line',
       data: {
         datasets: datasets
