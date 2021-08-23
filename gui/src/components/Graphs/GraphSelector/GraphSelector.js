@@ -8,25 +8,55 @@ const { ipcRenderer } = window.require("electron");
 
 class GraphSelector extends React.Component {
   static defaultProps = {
-    data: { defaultData: 0 }
+    data: { defaultData: 0 },
+    defaultStartGraph: null
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      currentGraph: Object.keys(this.props.data)[0],
+      currentGraph: this.defaultStartGraph,
     };
 
-    const startingDataSet = this.props.data;
+    this.graphChoices = null;
+    this.prevData = null;
+    this.__createEmptyGraphs(this.props.data);
+  }
+
+  componentDidMount() {
+    ipcRenderer.on("ChangeGraph", (_event, arg) => {
+      this.__changeCurentGraph(arg.newGraph);
+    });
+  }
+
+  reset() {
+    this.__createEmptyGraphs(this.props.data);
+  }
+
+  componentWillUnmount() {
+    // Not sure that this should be removing all? Maybe just the on created on mount?
+    ipcRenderer.removeAllListeners("ChangeGraph");
+  }
+
+
+  __createEmptyGraphs(startingDataSet) {
+    // Build (or rebuild) the arrays of data sets being displayed on the graphs
+
     this.prevData = this.__createDataHistory(startingDataSet);
 
     this.graphChoices = {};
     for (const k in startingDataSet) {
       const subsetDataset = this.__flattenDataObj(startingDataSet[k]);
       const subsetDatasetKeys = Object.keys(subsetDataset);
+
       if (subsetDatasetKeys.length === 0) {
+        // Dataset had no sub objects - add single dataset to the array
+        // of datasets to display on graph for this key 
         this.graphChoices[k] = [this.prevData[k]];
       } else {
+        // Dataset had sub objects - many datasets need to be displayed on graph
+        // for this key. Map the array of keys to the array of datasets in the prevData obj
+        // Also style the lines different colors
         const lineColors = ['rgb(255, 255, 0)', 'rgb(0, 255, 255)', 'rgb(255, 0, 255)', 'rgb(0, 0, 0)', 'rgb(255,188,18)', 'rgb(255, 0, 0)', 'rgb(0, 255, 0)', 'rgb(0, 0, 255)'];
         this.graphChoices[k] = subsetDatasetKeys.map((key, i) => {
           this.prevData[`${k}-${key}`].borderColor = lineColors[i % lineColors.length];
@@ -36,17 +66,9 @@ class GraphSelector extends React.Component {
     }
   }
 
-  componentDidMount() {
-    ipcRenderer.on("ChangeGraph", (event, arg) => {
-      this.__changeCurentGraph(arg.newGraph);
-    });
-  }
-
-  componentWillUnmount() {
-    ipcRenderer.removeAllListeners("ChangeGraph");
-  }
-
   __flattenDataObj(obj, options) {
+    // Reduces a multidimensional object of numbers to a single
+    // dimension object of number. Keys and sub keys are concated by '-'
     if (options === undefined) { options = {}; }
     if (options.featurePrefix === undefined) { options.featurePrefix = ""; }
 
@@ -73,6 +95,7 @@ class GraphSelector extends React.Component {
   }
 
   __createDataHistory(data) {
+    // Create and return an object 20 elements of each graph-able line
     const histLen = 20;
     const now = Date.now();
     const keys = Object.keys(this.__flattenDataObj(data));
@@ -98,7 +121,7 @@ class GraphSelector extends React.Component {
     for (const k in this.prevData) {
       const prevDataSet = this.prevData[k].data;
       const prevData = prevDataSet[prevDataSet.length - 1].y;
-      const newDataPoint = incomingData[k]; 
+      const newDataPoint = incomingData[k];
       if (prevData !== newDataPoint) {
         // If these are two different numbers, then data updated, returned the flattend data obj
         return incomingData;
@@ -118,10 +141,17 @@ class GraphSelector extends React.Component {
     }
   }
 
+  get defaultStartGraph() {
+    const defaultStart = this.props.defaultStartGraph;
+    if (defaultStart !== null && Object.keys(this.props.data).includes(defaultStart)) {
+      return defaultStart
+    }
+    return Object.keys(this.props.data)[0];
+  }
+
   render() {
     const showGraph = this.state.currentGraph;
     const datasets = this.graphChoices[showGraph];
-
     return (
       <div id="GraphSelectorDiv">
         <div id="GraphContainer">

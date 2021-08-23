@@ -17,7 +17,7 @@ class CurrentStatus extends PopUpGenerator {
 
   constructor(props) {
     super(props, {
-      status: sessionStorage.getItem("CurrentStatusStorage") || StatusEnum.STARTMISSION,
+      status: StatusEnum.STARTMISSION,
     });
   }
 
@@ -29,8 +29,11 @@ class CurrentStatus extends PopUpGenerator {
     if (newStatus === this.state.status) {
       return;
     }
-    sessionStorage.setItem("CurrentStatusStorage", newStatus);
     this.setState({ status: newStatus });
+  }
+
+  reset() {
+    this.changeStatus(StatusEnum.STARTMISSION);
   }
 
   __runIfAble(func) {
@@ -80,7 +83,7 @@ class CurrentStatus extends PopUpGenerator {
     const newStatus = StatusEnum.ABORTED;
 
     if (currStatus !== newStatus) {
-      this.nonblockingConfirmation("You are about to abort the mission; This action is irreversable!", {
+      this.nonblockingConfirmation("Pressing Continue will abort the mission!!!! [NOT REVERSIBLE]", {
         isImportant: true,
         onAccept: () => {
           // TODO: abort the launch

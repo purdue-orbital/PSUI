@@ -1,7 +1,13 @@
 import React from 'react';
-import Chart from 'chart.js';
-
+import {
+  Chart, CategoryScale, LinearScale, TimeScale,
+  LineController, PointElement, LineElement
+} from 'chart.js';
+import 'chartjs-adapter-date-fns';
 import './Graph.css';
+
+Chart.register(CategoryScale, LinearScale, TimeScale,
+  LineController, PointElement, LineElement);
 
 class Graph extends React.Component {
   static defaultProps = {
@@ -20,7 +26,7 @@ class Graph extends React.Component {
   componentDidMount() {
     this.__makeNewChart(this.props.datasets)
   }
-  
+
   __makeNewChart(datasets) {
     if (this.chart != null) {
       this.chart.destroy();
@@ -28,7 +34,6 @@ class Graph extends React.Component {
     }
     const ctx = this.canvasRef.current.getContext("2d");
     this.chart = new Chart(ctx, {
-      // The type of chart we want to create
       type: 'line',
       data: {
         datasets: datasets
@@ -46,7 +51,7 @@ class Graph extends React.Component {
         },
         elements: {
           line: {
-            tension: 0
+            tension: 0,
           }
         },
         legend: {
@@ -55,24 +60,25 @@ class Graph extends React.Component {
           },
         },
         scales: {
-          xAxes: [{
+          x: {
             type: 'time',
             position: 'bottom',
             display: false,
             ticks: {
-              suggestedMin: 0
+              suggestedMin: 0,
+              source: 'data', // or 'auto'
             },
-          }],
-          yAxes: [{
+          },
+          y: {
             gridLines: {
-              color: "rgba(0,0,0,0.2)"
+              color: "rgba(0,0,0,0.2)",
             },
             ticks: {
               fontColor: "rgb(0,0,0)",
               suggestedMin: 0,
-              suggestedMax: 1
+              suggestedMax: 1,
             },
-          }],
+          },
         },
         animation: {
           duration: 0,

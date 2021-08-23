@@ -40,3 +40,11 @@
   color: white;
 }
 
+.TimerClockContainerPastTime {
+  background-color: rgb(145, 0, 0);
+}
+
+.TimerClockContainerWithinTime {
+  background-color: rgb(0, 110, 0);
+}
+
