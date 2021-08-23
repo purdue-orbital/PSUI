@@ -20,6 +20,7 @@ class GraphWindow extends Window {
       this.__window = new BrowserWindow({
         webPreferences: {
           nodeIntegration: true,
+          contextIsolation: false, // Probably a better way to do this, needed for access to global 'window' on frontend
         },
       });
 

@@ -26,6 +26,7 @@ class MainWindow extends Window {
       minHeight: 590,
       webPreferences: {
         nodeIntegration: true,
+        contextIsolation: false, // Probably a better way to do this, needed for access to global 'window' on frontend
       },
     });
 
