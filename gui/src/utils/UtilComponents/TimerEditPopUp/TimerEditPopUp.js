@@ -68,7 +68,12 @@ class TimerEditPopUp extends React.Component {
           </form>
           <div className="modalActions">
             <button className="PopUpButton" onClick= {
-              () => add(1000 * (3600 * parseInt(this.state.dHours) + 60 * parseInt(this.state.dMinutes) + parseInt(this.state.dSeconds)))
+              () => {
+                console.log(`dSeconds - ${this.state.dSeconds}`);
+                console.log(`dMinutes - ${this.state.dMinutes}`);
+                console.log(`dHours - ${this.state.dHours}`);
+                 add(1000 * (3600 * parseInt(this.state.dHours) + 60 * parseInt(this.state.dMinutes) + parseInt(this.state.dSeconds)))
+              }
             }>Add</button>
             <button className="PopUpButton" onClick={
               () => sub(1000 * (3600 * parseInt(this.state.dHours) + 60 * parseInt(this.state.dMinutes) + parseInt(this.state.dSeconds)))
