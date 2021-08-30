@@ -6,7 +6,7 @@ import logging
 import socket
 import time
 
-class LS_Radio(Radio):
+class LSRadio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
