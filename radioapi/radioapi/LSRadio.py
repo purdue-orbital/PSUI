@@ -5,7 +5,7 @@ import json
 import logging
 import socket
 import time
-from Radio import Radio
+from .Radio import Radio
 
 class LSRadio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
@@ -22,7 +22,7 @@ class LSRadio(Radio):
             self.socket.bind((('127.0.0.1', socket.gethostname()) [self.DEBUG != 1], 5000))
             print("Bound")
 
-            thread.start_new_thread(receive, ())
+            thread.start_new_thread(self.receive, ())
         except Exception as e:
             print(e)
             print("test")

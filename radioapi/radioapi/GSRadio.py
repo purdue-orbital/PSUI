@@ -5,7 +5,7 @@ import json
 import logging
 import socket
 import time
-from Radio import Radio
+from .Radio import Radio
 
 class GSRadio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
@@ -30,7 +30,7 @@ class GSRadio(Radio):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect(('127.0.0.1', 5000))
 
-            thread.start_new_thread(receive, ())
+            thread.start_new_thread(self.receive, ())
         except Exception as e:
             print(e)
             print("test")
