@@ -1,10 +1,3 @@
-import zmq
-import _thread as thread
-import os
-import json
-import logging
-import socket
-import time
 from abc import ABC, abstractmethod
 
 class Radio(ABC):
@@ -17,8 +10,8 @@ class Radio(ABC):
         self.abort = False
         self.stab = False
 
-        self.DEBUG = DEBUG
-        self.hostname = (hostname)
+        self.__debug = DEBUG
+        self.__hostname = (hostname)
         self.queue = None
 
     @abstractmethod
@@ -55,3 +48,11 @@ class Radio(ABC):
 
     def getStabFlag(self):
         return self.stab
+
+    @property
+    def DEBUG(self):
+        return self.__debug
+
+    @property
+    def hostname(self):
+        return self.__hostname
