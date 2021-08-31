@@ -5,8 +5,9 @@ import json
 import logging
 import socket
 import time
+from abc import ABC, abstractmethod
 
-class Radio:
+class Radio(ABC):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
@@ -20,10 +21,11 @@ class Radio:
         self.hostname = (hostname)
         self.queue = None
 
-
-		def receive(self):
-				pass
-
+    @abstractmethod
+    def receive(self):
+        pass
+    
+    @abstractmethod
     def send(self, data):
         """
         Sends JSON formatted data to the socket attached to radio interface.
