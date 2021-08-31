@@ -5,6 +5,7 @@ import json
 import logging
 import socket
 import time
+from Radio import Radio
 
 class LS_Radio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
@@ -26,7 +27,7 @@ class LS_Radio(Radio):
             print(e)
             print("test")
 
-		def receive(self):
+    def receive(self):
             
             self.socket.listen(300) #Listen for 5 minutes
             (clientsocket, address) = self.socket.accept()
@@ -41,7 +42,7 @@ class LS_Radio(Radio):
                     
                     
                     #DEBUG
-                    if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
+                    # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                        #logging.info("State Updated:\nLaunch {0}\nQDM {1}\nAbort {2}\nStability {3}".format(jsonData['LAUNCH'], jsonData['QDM'], jsonData['ABORT'], jsonData['STAB']))
                     self.launch = jsonData['LAUNCH']
                     self.qdm = jsonData['QDM']
@@ -54,7 +55,7 @@ class LS_Radio(Radio):
                         print("Queue unbound")
                         #logging.error("Queue unbound")    
                 except Exception as e:
-                    # print("Invalid message received")
+                    print("Invalid message received")
                     #logging.error(e)
 
     def send(self, data):
@@ -78,7 +79,7 @@ class LS_Radio(Radio):
             jsonData['ABORT'] = self.abort
             jsonData['STAB'] = self.stab
 
-            #logging.info("Sent: " + data)
+            # logging.info("Sent: " + data)
             self.socket.send(data.encode('ascii'))
             print("Sent");
             return 1
@@ -88,7 +89,7 @@ class LS_Radio(Radio):
             self.sock.close()
             exit()
 
-        except Exception as e:
+        # except Exception as e:
             #logging.error(e)
             return 0
 

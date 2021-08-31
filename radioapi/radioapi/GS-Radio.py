@@ -5,6 +5,7 @@ import json
 import logging
 import socket
 import time
+from Radio import Radio
 
 class GS_Radio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
@@ -34,7 +35,7 @@ class GS_Radio(Radio):
             print(e)
             print("test")
 
-		def receive(self):
+    def receive(self):
         while True:
             try:
                 message = self.socket.recv(2048).decode("ascii")
@@ -42,7 +43,7 @@ class GS_Radio(Radio):
 
                 jsonData = json.loads(message)
                 
-                if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
+                # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                     #logging.warning("State mismatch, resending state")
                     # TODO Send State
 
@@ -52,7 +53,7 @@ class GS_Radio(Radio):
                     print("Queue unbound")
                     # logging.error("Queue unbound")    
             except Exception as e:
-                # print("Invalid message received")
+                print("Invalid message received")
                 # logging.error(e)
                     
     def send(self, data):
@@ -77,7 +78,7 @@ class GS_Radio(Radio):
                 self.stab = jsonData['STAB']
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
-                logging.error("Ground Station did not append state attributes to data")
+                # logging.error("Ground Station did not append state attributes to data")
 
             # logging.info("Sent: " + data)
             self.socket.send(data.encode('ascii'))
