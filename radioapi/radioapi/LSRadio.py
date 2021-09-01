@@ -1,4 +1,4 @@
-import _thread as thread
+import threading as thread
 import json
 import socket
 import sys
@@ -25,13 +25,13 @@ class LSRadio(Radio):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.bind(
                 (
-                    ('127.0.0.1', socket.gethostname())[self.DEBUG != 1],
+                    (hostname, socket.gethostname())[self.DEBUG != 1],
                     5000
                 )
             )
             print("Bound")
-
-            thread.start_new_thread(self.receive, ())
+            thread.Thread(target = self.receive).start()
+            # thread.start_new_thread(self.receive, ())
         except Exception as e:
             print(e)
             print("test")
@@ -99,3 +99,12 @@ class LSRadio(Radio):
         except Exception as e:
             # logging.error(e)
             return 0
+            
+    def int_to_bool_list(num):
+        return [bool(num & (1<<n)) for n in range(4)]
+
+    def bool_list_to_int(a):
+        sum = 0
+        for x in range(0,4):
+            sum =  sum + (a[x] * (2**x))
+        return sum

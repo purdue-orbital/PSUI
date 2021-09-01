@@ -1,4 +1,4 @@
-from radioapi._deprecated.radios.RadioAlpha2 import Radio
+from radioapi.GSRadio import GSRadio as Radio
 import json
 import time
 
@@ -7,7 +7,7 @@ import threading
 
 def main():
     q = []
-    gsradio = Radio(DEBUG=1, isGroundStation=True)
+    gsradio = Radio(DEBUG=1)
     gsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,

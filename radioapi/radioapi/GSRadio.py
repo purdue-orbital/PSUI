@@ -1,5 +1,5 @@
 import zmq
-import _thread as thread
+import threading as thread
 import os
 import json
 import logging
@@ -12,13 +12,14 @@ class GSRadio(Radio):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
+        super().__init__(DEBUG = DEBUG)
         self.launch = False
         self.qdm = False
         self.abort = False
         self.stab = False
 
-        self.DEBUG = DEBUG
-        self.hostname = (hostname)
+        self.__debug = DEBUG
+        self.__hostname = (hostname)
         self.queue = None
 
         #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
@@ -28,9 +29,9 @@ class GSRadio(Radio):
             
             print(str(socket.AF_INET) + "  " + str(socket.SOCK_STREAM) + "   " + str(self.hostname))
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.connect(('127.0.0.1', 5000))
-
-            thread.start_new_thread(self.receive, ())
+            self.socket.connect((hostname, 5000))
+            thread.Thread(target = self.receive).start()
+            # thread.start_new_thread(self.receive, ())
         except Exception as e:
             print(e)
             print("test")
@@ -79,9 +80,10 @@ class GSRadio(Radio):
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
                 # logging.error("Ground Station did not append state attributes to data")
-
+            # data_send = bool_list_to_int([self.launch, self.qdm, self.abort, self.stab])
             # logging.info("Sent: " + data)
             self.socket.send(data.encode('ascii'))
+            # self.socket.send(data_send.encode('ascii'))
             print("Sent");
             return 1
 
@@ -93,3 +95,13 @@ class GSRadio(Radio):
         except Exception as e:
             # logging.error(e)
             return 0
+            
+    def int_to_bool_list(num):
+        return [bool(num & (1<<n)) for n in range(4)]
+
+    def bool_list_to_int(a):
+        sum = 0
+        for x in range(0,4):
+            sum =  sum + (a[x] * (2**x))
+        return sum
+
