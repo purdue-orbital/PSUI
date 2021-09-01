@@ -1,7 +1,6 @@
-from radioapi.radios.RadioAlpha2 import Radio
+from radioapi.LSRadio import LSRadio as Radio
 import json
 import time
-
 
 def main():
     q = []
