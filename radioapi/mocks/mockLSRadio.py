@@ -1,9 +1,10 @@
 from radioapi.LSRadio import LSRadio as Radio
 import json
 import time
+q = []
 
 def main():
-    q = []
+
     lsradio = Radio(DEBUG=1)
     lsradio.bindQueue(q)
 

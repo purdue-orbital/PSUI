@@ -5,21 +5,15 @@ import json
 import logging
 import socket
 import time
-from .Radio import Radio
+from Radio import Radio
 
 class GSRadio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
-        self.launch = False
-        self.qdm = False
-        self.abort = False
-        self.stab = False
+        super().__init__(DEBUG=DEBUG, hostname=hostname)
 
-        self.DEBUG = DEBUG
-        self.hostname = (hostname)
-        self.queue = None
 
         #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
 
