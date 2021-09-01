@@ -1,10 +1,18 @@
+import sys
+
+sys.path.insert(1, '../mocks/')
+
+import mockLSRadio
+
 def main():
     command = "start"
+    LSRadio = mockLSRadio()
+
     while command!="quit" :
 
-        print("Enter command: ")
-        command = input()
-        if (command == "A") | (command == "S") | (command == "L") | (command == "Q"):
+        command = input("Enter command: ")
+
+        if (command == "A") or (command == "S") or (command == "L") or (command == "Q"):
             #send command
             print("Command: " + command)
 
@@ -12,5 +20,10 @@ def main():
         elif command != "quit":
             print("Invalid command.")
 
+        # print("-"*20)
 
-main()
+    LSRadio.q.append(command)
+    LSRadio.run()
+
+if __name__=='__main__':
+    main()
