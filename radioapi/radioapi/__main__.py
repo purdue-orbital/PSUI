@@ -82,7 +82,7 @@
 #     app.run(port=5002)
 
 
-import CLI.py
+import radioapi.CLI as cli
 
-if name == '__main__':
+if __name__ == '__main__':
     cli.main()

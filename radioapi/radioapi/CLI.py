@@ -2,7 +2,7 @@
 import sys
 import json
 
-from GSRadio import GSRadio
+from .GSRadio import GSRadio
 
 def main():
     command = "start"

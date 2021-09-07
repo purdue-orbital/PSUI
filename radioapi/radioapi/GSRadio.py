@@ -5,7 +5,7 @@ import json
 import logging
 import socket
 import time
-from Radio import Radio
+from .Radio import Radio
 
 class GSRadio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
