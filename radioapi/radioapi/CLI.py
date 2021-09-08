@@ -13,16 +13,26 @@ def main():
         canSend = True
         print("Enter command: ")
         command = input()
-        if (command == "A") :
-            #test json sending
-            states[0] = not states[0]
-
+        if command == "A":
+            if not states[0]:
+                states[0] = True
+            else:
+                print("Abort already activated.")
+                canSend = False
 
         elif command == "L":
-            states[1] = not states[1]
+            if not states[1]:
+                states[1] = True
+            else:
+                print("Launch already activated.")
+                canSend = False
 
         elif command == "Q":
-            states[2] = not states[2]
+            if not states[2]:
+                states[2] = True
+            else:
+                print("QDM already activated.")
+                canSend = False
 
         elif command == "S":
             states[3] = not states[3]
