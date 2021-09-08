@@ -52,6 +52,17 @@ class Radio(ABC):
     @property
     def DEBUG(self):
         return self.__debug
+        
+            
+    def int_to_bool_list(num):
+        return [bool(num & (1<<n)) for n in range(4)]
+
+    def bool_list_to_int(a):
+        sum = 0
+        for x in range(0,4):
+            sum =  sum + (a[x] * (2**x))
+        return sum
+
 
     @property
     def hostname(self):

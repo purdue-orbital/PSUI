@@ -5,9 +5,9 @@ import json
 import logging
 import socket
 import time
-from .Radio import Radio
+import Radio
 
-class GSRadio(Radio):
+class GSRadio(Radio.Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
@@ -39,7 +39,7 @@ class GSRadio(Radio):
     def receive(self):
         while True:
             try:
-                message = self.socket.recv(2048).decode("ascii")
+                message = self.socket.recv(2048).decode("ascii") # large byte size?
                 # logging.info("Received: " + str(message))
 
                 jsonData = json.loads(message)
@@ -80,10 +80,10 @@ class GSRadio(Radio):
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
                 # logging.error("Ground Station did not append state attributes to data")
-            # data_send = bool_list_to_int([self.launch, self.qdm, self.abort, self.stab])
+            data_send = bool_list_to_int([self.launch, self.qdm, self.abort, self.stab])
             # logging.info("Sent: " + data)
-            self.socket.send(data.encode('ascii'))
-            # self.socket.send(data_send.encode('ascii'))
+            # self.socket.send(data.encode('ascii'))
+            self.socket.send(data_send.encode('ascii'))
             print("Sent");
             return 1
 
@@ -95,13 +95,4 @@ class GSRadio(Radio):
         except Exception as e:
             # logging.error(e)
             return 0
-            
-    def int_to_bool_list(num):
-        return [bool(num & (1<<n)) for n in range(4)]
-
-    def bool_list_to_int(a):
-        sum = 0
-        for x in range(0,4):
-            sum =  sum + (a[x] * (2**x))
-        return sum
 

@@ -2,7 +2,7 @@ import threading as thread
 import json
 import socket
 import sys
-from .Radio import Radio
+import Radio
 
 # Unused for now
 # import zmq
@@ -10,7 +10,7 @@ from .Radio import Radio
 # import logging
 # import time
 
-class LSRadio(Radio):
+class LSRadio(Radio.Radio):
     def __init__(self, DEBUG=0, hostname='127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
@@ -43,18 +43,18 @@ class LSRadio(Radio):
 
         while True:
             try:
-                message = self.socket.recv(2048).decode("ascii")
-                #logging.info("Received: " + str(message))
+                message = self.socket.recv(2048).decode("ascii") # very large byte size?? only sending one int
+                # logging.info("Received: " + str(message))
 
-                jsonData = json.loads(message)
-
+                # jsonData = json.loads(message)
+                data_lst = int_to_bool_list(message)
                 # DEBUG
                 # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                 #     logging.info("State Updated:\nLaunch {0}\nQDM {1}\nAbort {2}\nStability {3}".format(jsonData['LAUNCH'], jsonData['QDM'], jsonData['ABORT'], jsonData['STAB']))
-                self.launch = jsonData['LAUNCH']
-                self.qdm = jsonData['QDM']
-                self.abort = jsonData['ABORT']
-                self.stab = jsonData['STAB']
+                self.launch = data_lst[0] # jsonData['LAUNCH']
+                self.qdm = data_lst[1] # jsonData['QDM']
+                self.abort = data_lst[2] # jsonData['ABORT']
+                self.stab = data_lst[3] # jsonData['STAB']
 
                 if self.queue is not None:
                     self.queue.append(message)
@@ -100,11 +100,4 @@ class LSRadio(Radio):
             # logging.error(e)
             return 0
             
-    def int_to_bool_list(num):
-        return [bool(num & (1<<n)) for n in range(4)]
 
-    def bool_list_to_int(a):
-        sum = 0
-        for x in range(0,4):
-            sum =  sum + (a[x] * (2**x))
-        return sum
