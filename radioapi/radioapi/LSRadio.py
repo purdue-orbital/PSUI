@@ -89,6 +89,7 @@ class LSRadio(Radio):
             # logging.info("Sent: " + data)
             self.socket.send(data.encode('ascii'))
             print("Sent")
+
             return 1
 
         except KeyboardInterrupt:

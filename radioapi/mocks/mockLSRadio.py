@@ -13,6 +13,7 @@ def main():
             parsed = json.loads(q.pop(0))
             print("Received new State:")
             print(json.dumps(parsed, indent=2, sort_keys=True))
+            
         time.sleep(1)
 
 
