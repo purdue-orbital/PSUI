@@ -7,6 +7,8 @@ import socket
 import time
 from .Radio import Radio
 
+from typing import ByteString, List
+
 class GSRadio(Radio):
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
         """
@@ -96,10 +98,10 @@ class GSRadio(Radio):
             # logging.error(e)
             return 0
             
-    def int_to_bool_list(num):
+    def int_to_bool_list(num: int) -> List[bool]:
         return [bool(num & (1<<n)) for n in range(4)]
 
-    def bool_list_to_int(a):
+    def bool_list_to_int(a: List[bool]) -> int:
         sum = 0
         for x in range(0,4):
             sum =  sum + (a[x] * (2**x))
