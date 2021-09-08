@@ -5,9 +5,11 @@ import json
 import logging
 import socket
 import time
-import Radio
+from .Radio import Radio
 
-class GSRadio(Radio.Radio):
+
+class GSRadio(Radio):
+
     def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
@@ -95,4 +97,5 @@ class GSRadio(Radio.Radio):
         except Exception as e:
             # logging.error(e)
             return 0
+
 
