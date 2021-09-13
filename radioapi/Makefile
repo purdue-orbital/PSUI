@@ -1,4 +1,4 @@
-PY = python3
+PY = ./venv/bin/python
 PIP = pip3
 
 all:
@@ -12,7 +12,7 @@ clean:
 	rm -rf build dist radioapi.egg-info
 
 dev:
-	${PY} setup.py develop
+	sudo ${PY} setup.py develop
 
 enddev:
 	${PY} setup.py develop --uninstall
@@ -27,6 +27,8 @@ venv:
 reqs:
 	${PIP} uninstall -y radioapi
 	${PIP} freeze > requirements.txt
+	
+
 
 help:
 	@echo "COMMANDS:"
