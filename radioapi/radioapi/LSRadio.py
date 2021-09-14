@@ -61,8 +61,9 @@ class LSRadio(Radio):
                 else:
                     print("Queue unbound")
                     # logging.error("Queue unbound")
-            except Exception as e:
-                print("Invalid message received")
+            except OSError as e:
+                print("Connection Forcibly Closed, Exiting")
+                break
                 # logging.error(e)
 
     def send(self, data):
