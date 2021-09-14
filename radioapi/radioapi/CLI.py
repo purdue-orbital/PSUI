@@ -53,15 +53,16 @@ def main_old():
 
 def main():
     radio = GSRadio()
+    states = [False, False, False, False]
 
-    listener = keyboard.Listener(on_press = lambda x: on_press(x, radio))
+    listener = keyboard.Listener(on_press = lambda x: on_press(x, radio, states))
     listener.start()
 
     print("started")
     while True:
         sleep(1)
 
-def on_press(key, radio):
+def on_press(key, radio, states):
     if key == keyboard.Key.esc:
         return False    # stops the listener on escape key
 
@@ -70,41 +71,44 @@ def on_press(key, radio):
     except:
         k = key.name
 
-    if k in ["a", "s", "q", "l"]:
+    if k in ["a", "s", "q", "l", "p"]:
+        canSend = True
+
         if k == "a":
-            print("A key pressed")
-            radio.send(json.dumps({
-                "LAUNCH": False,
-                "QDM": False,
-                "ABORT": True,
-                "STAB": False,
-            }))
+            if not states[0]:
+                states[0] = True
+            else:
+                print("Abort already activated.")
+                canSend = False
 
         elif k == "s":
-            print("S key pressed")
-            radio.send(json.dumps({
-                "LAUNCH": False,
-                "QDM": False,
-                "ABORT": False,
-                "STAB": True,
-            }))
+            states[3] = not states[3]
 
         elif k == "q":
-            print("Q key pressed")
-            radio.send(json.dumps({
-                "LAUNCH": False,
-                "QDM": True,
-                "ABORT": False,
-                "STAB": False,
-            }))
+            if not states[2]:
+                states[2] = True
+            else:
+                print("QDM already activated.")
+                canSend = False
 
         elif k == "l":
-            print("L key pressed")
+            if not states[1]:
+                states[1] = True
+            else:
+                print("Launch already activated.")
+                canSend = False
+        
+        elif k == "p":
+            print("\nAbort: " + str(states[0]) + "\nLaunch: " + str(states[1]) +
+                  "\nQDM: " + str(states[2]) + "\nStab: " + str(states[3]) + "\n")
+            canSend = False
+
+        if canSend:
             radio.send(json.dumps({
-                "LAUNCH": True,
-                "QDM": False,
-                "ABORT": False,
-                "STAB": False,
+                "ABORT": states[0],
+                "LAUNCH": states[1],
+                "QDM": states[2],
+                "STAB": states[3],
             }))
 
 if __name__=='__main__':
