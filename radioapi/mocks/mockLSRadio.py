@@ -4,6 +4,7 @@ import time
 
 def main():
     q = []
+
     lsradio = Radio(DEBUG=1)
     lsradio.bindQueue(q)
 

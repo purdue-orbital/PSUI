@@ -14,15 +14,9 @@ class GSRadio(Radio):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
-        super().__init__(DEBUG = DEBUG)
-        self.launch = False
-        self.qdm = False
-        self.abort = False
-        self.stab = False
 
-        self.__debug = DEBUG
-        self.__hostname = (hostname)
-        self.queue = None
+        super().__init__(DEBUG=DEBUG, hostname=hostname)
+
 
         #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
 
@@ -82,7 +76,7 @@ class GSRadio(Radio):
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
                 # logging.error("Ground Station did not append state attributes to data")
-            data_send = bool_list_to_int([self.launch, self.qdm, self.abort, self.stab])
+            data_send = self.bool_list_to_int([self.launch, self.qdm, self.abort, self.stab])
             # logging.info("Sent: " + data)
             # self.socket.send(data.encode('ascii'))
             self.socket.send(data_send.encode('ascii'))

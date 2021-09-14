@@ -47,7 +47,7 @@ class LSRadio(Radio):
                 # logging.info("Received: " + str(message))
 
                 # jsonData = json.loads(message)
-                data_lst = int_to_bool_list(message)
+                data_lst = self.int_to_bool_list(message)
                 # DEBUG
                 # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                 #     logging.info("State Updated:\nLaunch {0}\nQDM {1}\nAbort {2}\nStability {3}".format(jsonData['LAUNCH'], jsonData['QDM'], jsonData['ABORT'], jsonData['STAB']))
