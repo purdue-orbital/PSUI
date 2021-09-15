@@ -48,6 +48,8 @@ def main():
             #recieve return signal then loop again
         elif command != "quit":
             print("Invalid command.")
+            
+        print("command is " + command)
 
 if __name__=='__main__':
     main()

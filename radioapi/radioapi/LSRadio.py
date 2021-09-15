@@ -42,12 +42,13 @@ class LSRadio(Radio):
         self.socket = clientsocket
 
         while True:
-            try:
+            # try:
                 message = self.socket.recv(2048).decode("ascii") # very large byte size?? only sending one int
+                print("message is " + message)
                 # logging.info("Received: " + str(message))
-
                 # jsonData = json.loads(message)
                 data_lst = self.int_to_bool_list(message)
+                print(data_lst)
                 # DEBUG
                 # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                 #     logging.info("State Updated:\nLaunch {0}\nQDM {1}\nAbort {2}\nStability {3}".format(jsonData['LAUNCH'], jsonData['QDM'], jsonData['ABORT'], jsonData['STAB']))
@@ -55,14 +56,13 @@ class LSRadio(Radio):
                 self.qdm = data_lst[1] # jsonData['QDM']
                 self.abort = data_lst[2] # jsonData['ABORT']
                 self.stab = data_lst[3] # jsonData['STAB']
-
                 if self.queue is not None:
                     self.queue.append(message)
                 else:
                     print("Queue unbound")
                     # logging.error("Queue unbound")
-            except Exception as e:
-                print("Invalid message received")
+            # except Exception as e:
+                # print("Invalid message received")
                 # logging.error(e)
 
     def send(self, data):
@@ -85,7 +85,7 @@ class LSRadio(Radio):
             jsonData['QDM'] = self.qdm
             jsonData['ABORT'] = self.abort
             jsonData['STAB'] = self.stab
-
+            
             # logging.info("Sent: " + data)
             self.socket.send(data.encode('ascii'))
             print("Sent")
