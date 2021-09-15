@@ -117,6 +117,9 @@ def on_press(key, radio, states):
             # if not states[1]:
             if not states[0] and states[3] and not states[1] and not states[2]:
                 states[1] = True
+            elif states[2] and states[0]:
+                print("Cannot launch when QDM and aborted.")
+                canSend = False
             elif states[2]:
                 print("Cannot launch with QDM.")
                 canSend = False
