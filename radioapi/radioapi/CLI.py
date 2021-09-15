@@ -86,25 +86,46 @@ def on_press(key, radio, states):
         canSend = True
 
         if k == "a":
-            if not states[0]:
+            # if not states[0]:
+            if not states[1] and not states[0]:
                 states[0] = True
+            elif states[1]:
+                print("Cannot abort during/after launching")
+                canSend = False
             else:
                 print("Abort already activated.")
                 canSend = False
 
         elif k == "s":
+            if states[0]:
+                print("Cannot unstabilize during launch.")
+                canSend = False
             states[3] = not states[3]
 
         elif k == "q":
-            if not states[2]:
+            # if not states[2]:
+            if not states[2] and not states[1]:
                 states[2] = True
+            elif states[1]:
+                print("Cannot QDM during launch.")
+                canSend = False
             else:
                 print("QDM already activated.")
                 canSend = False
 
         elif k == "l":
-            if not states[1]:
+            # if not states[1]:
+            if not states[0] and states[3] and not states[1] and not states[2]:
                 states[1] = True
+            elif states[2]:
+                print("Cannot launch with QDM.")
+                canSend = False
+            elif states[0]:
+                print("Cannot launch when aborted.")
+                canSend = False
+            elif not states[3]:
+                print("Cannot launch when unstable.")
+                canSend = False
             else:
                 print("Launch already activated.")
                 canSend = False
@@ -121,6 +142,7 @@ def on_press(key, radio, states):
                 "QDM": states[2],
                 "STAB": states[3],
             }))
+
 
 if __name__=='__main__':
     main()
