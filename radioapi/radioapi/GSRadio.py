@@ -18,8 +18,8 @@ class GSRadio(Radio):
         #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
 
 
-        try: 
-            
+        try:
+
             print(str(socket.AF_INET) + "  " + str(socket.SOCK_STREAM) + "   " + str(self.hostname))
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.connect(('127.0.0.1', 5000))
@@ -36,7 +36,7 @@ class GSRadio(Radio):
                 # logging.info("Received: " + str(message))
 
                 jsonData = json.loads(message)
-                
+
                 # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
                     #logging.warning("State mismatch, resending state")
                     # TODO Send State
@@ -45,11 +45,17 @@ class GSRadio(Radio):
                     self.queue.append(message)
                 else:
                     print("Queue unbound")
-                    # logging.error("Queue unbound")    
-            except Exception as e:
-                print("Invalid message received")
+                    # logging.error("Queue unbound")
+            # When forcing an interrupt (Ctrl+C), catch the exception (OSError)
+            except OSError as e:
+                print(e)
+                break
                 # logging.error(e)
-                    
+
+            except Exception as e:
+                print(e)
+                print('Invalid message received')
+
     def send(self, data):
         """
         Sends JSON formatted data to the socket attached to radio interface.
