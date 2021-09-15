@@ -6,6 +6,8 @@ from pynput import keyboard
 
 from .GSRadio import GSRadio
 
+DELAY = 1
+
 # old main, not used
 def main_old():
     command = "start"
@@ -51,16 +53,25 @@ def main_old():
         elif command != "quit":
             print("Invalid command.")
 
+
 def main():
+
+    q = []
     radio = GSRadio()
+    radio.bindQueue(q)
     states = [False, False, False, False]
 
     listener = keyboard.Listener(on_press = lambda x: on_press(x, radio, states))
     listener.start()
 
     print("started")
-    while True:
-        sleep(1)
+    while True: # What is the need for this?
+        if len(q) > 0:
+            parsed = json.loads(q.pop(0))
+            print("Received new State:")
+            print(json.dumps(parsed, indent=2, sort_keys=True))
+        sleep(DELAY)
+
 
 def on_press(key, radio, states):
     if key == keyboard.Key.esc:
@@ -97,7 +108,7 @@ def on_press(key, radio, states):
             else:
                 print("Launch already activated.")
                 canSend = False
-        
+
         elif k == "p":
             print("\nAbort: " + str(states[0]) + "\nLaunch: " + str(states[1]) +
                   "\nQDM: " + str(states[2]) + "\nStab: " + str(states[3]) + "\n")

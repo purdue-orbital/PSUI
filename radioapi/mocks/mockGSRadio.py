@@ -6,6 +6,8 @@ import time
 import threading
 
 
+DELAY = 1
+
 def main():
     q = []
     # gsradio = Radio(DEBUG=1, isGroundStation=True
