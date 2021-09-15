@@ -65,6 +65,9 @@ class LSRadio(Radio):
                 print("Connection Forcibly Closed, Exiting")
                 break
                 # logging.error(e)
+            except Exception as e:
+                print(e)
+                print("Invalid Message Recived")
 
     def send(self, data):
         """
