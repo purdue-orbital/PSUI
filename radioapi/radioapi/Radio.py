@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
+from enum import Enum
+
 
 class Radio(ABC):
-    def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
+    def __init__(self, DEBUG=0, hostname='127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
@@ -17,7 +19,7 @@ class Radio(ABC):
     @abstractmethod
     def receive(self):
         pass
-    
+
     @abstractmethod
     def send(self, data):
         """
@@ -52,18 +54,17 @@ class Radio(ABC):
     @property
     def DEBUG(self):
         return self.__debug
-        
-            
-    def int_to_bool_list(self, st):
+
+    def _int_to_dict(self, st):
         num = int(st)
-        return [bool(num & (1<<n)) for n in range(4)]
+        return {label: bool(num & (1 << i))
+                for i, label in enumerate(["LAUNCH", "QDM", "ABORT", "STAB"])}
 
     def bool_list_to_int(self, a):
         sum = 0
-        for x in range(0,4):
-            sum =  sum + (a[x] * (2**x))
+        for x in range(0, 4):
+            sum = sum + (a[x] * (2**x))
         return sum
-
 
     @property
     def hostname(self):

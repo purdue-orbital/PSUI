@@ -86,7 +86,7 @@ class GSRadio(Radio):
             # logging.info("Sent: " + data)
             # self.socket.send(data.encode('ascii'))
             print("hello")
-            a = self.socket.send(str(data_send).encode('ascii'))
+            a = self.socket.send(chr(data_send).encode('ascii'))
             print("a is " + a)
             print("Sent");
             return 1
