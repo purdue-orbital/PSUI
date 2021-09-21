@@ -57,7 +57,7 @@ def main_old():
 def main():
 
     q = []
-    radio = LSRadio(hostname='128.210.106.76')
+    radio = LSRadio(hostname='0.0.0.0')
     radio.bindQueue(q)
     states = [False, False, False, False]
 
