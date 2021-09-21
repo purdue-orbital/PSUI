@@ -7,11 +7,12 @@ import threading
 
 
 DELAY = 1
+SERVER_IP = '10.186.74.74'
 
 def main():
     q = []
     # gsradio = Radio(DEBUG=1, isGroundStation=True
-    gsradio = Radio(DEBUG=1)
+    gsradio = Radio(hostname=SERVER_IP)
     gsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,

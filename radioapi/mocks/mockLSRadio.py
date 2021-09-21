@@ -10,7 +10,7 @@ DELAY = 1
 def main():
     q = []
 
-    lsradio = Radio(DEBUG=1)
+    lsradio = Radio(hostname='0.0.0.0')
     lsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,

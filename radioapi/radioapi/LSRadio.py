@@ -25,7 +25,7 @@ class LSRadio(Radio):
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.bind(
                 (
-                    ('127.0.0.1', socket.gethostname())[self.DEBUG != 1],
+                    (hostname, socket.gethostname())[self.DEBUG != 1],
                     5000
                 )
             )

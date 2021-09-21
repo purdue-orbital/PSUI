@@ -22,7 +22,7 @@ class GSRadio(Radio):
 
             print(str(socket.AF_INET) + "  " + str(socket.SOCK_STREAM) + "   " + str(self.hostname))
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.connect(('127.0.0.1', 5000))
+            self.socket.connect((hostname, 5000))
 
             thread.start_new_thread(self.receive, ())
         except Exception as e:
