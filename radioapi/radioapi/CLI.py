@@ -4,7 +4,7 @@ import json
 from time import sleep
 from pynput import keyboard
 
-from .GSRadio import GSRadio
+from .LSRadio import LSRadio
 
 DELAY = 1
 
@@ -57,7 +57,7 @@ def main_old():
 def main():
 
     q = []
-    radio = GSRadio()
+    radio = LSRadio(hostname='128.210.106.76')
     radio.bindQueue(q)
     states = [False, False, False, False]
 
