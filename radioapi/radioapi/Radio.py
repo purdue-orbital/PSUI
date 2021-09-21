@@ -60,7 +60,8 @@ class Radio(ABC):
         return {label: bool(num & (1 << i))
                 for i, label in enumerate(["LAUNCH", "QDM", "ABORT", "STAB"])}
 
-    def bool_list_to_int(self, a):
+    def dict_to_int(self, dixt):
+        a = list(dixt.values())
         sum = 0
         for x in range(0, 4):
             sum = sum + (a[x] * (2**x))

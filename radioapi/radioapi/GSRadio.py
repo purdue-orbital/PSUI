@@ -73,28 +73,19 @@ class GSRadio(Radio):
         try:
             jsonData = json.loads(data)
             
-            print(jsonData)
-            
             # Oneway communication, Ground Station controls state.
             try:
                 self.launch = jsonData['LAUNCH']
-                print(self.launch)
-                print(type(self.launch))
                 self.qdm = jsonData['QDM']
                 self.abort = jsonData['ABORT']
                 self.stab = jsonData['STAB']
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
                 # logging.error("Ground Station did not append state attributes to data")
-            data_send = self.bool_list_to_int([self.launch, self.qdm, self.abort, self.stab])
-            print(data_send)
-            print(type(data_send))
+            data_send = self.dict_to_int(jsonData)
             # logging.info("Sent: " + data)
             # self.socket.send(data.encode('ascii'))
-            print("hello")
-            a = self.socket.send(chr(data_send).encode('ascii'))
-            print("a is " + a)
-            print("Sent");
+            self.socket.send(chr(data_send).encode('ascii'))
             return 1
 
         except KeyboardInterrupt:
