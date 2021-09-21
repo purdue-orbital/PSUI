@@ -34,7 +34,7 @@ class LSRadio(Radio):
             thread.Thread(target=self.receive).start()
             # thread.start_new_thread(self.receive, ())
         except Exception as e:
-            print(e)
+            # print(e)
             print("test")
 
     def receive(self):
@@ -57,6 +57,11 @@ class LSRadio(Radio):
                 else:
                     print("Queue unbound")
                     # logging.error("Queue unbound")
+            except OSError as e:
+                print("Connection Forcibly Closed, Exiting")
+                print(e)
+                break
+
             except Exception as e:
                 print(f"Invalid message received:\n{e}")
                 # logging.error(e)
