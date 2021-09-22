@@ -5,12 +5,13 @@ import time
 import threading
 
 DELAY = 1
-
+IP = '0.0.0.0'
 
 def main():
     q = []
-
-    lsradio = Radio(hostname='0.0.0.0')
+    machine_ip = socket.gethostbyname(socket.gethostname())
+    print(f'{machine_ip} bound at {IP}')
+    lsradio = Radio(hostname=IP)
     lsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,
