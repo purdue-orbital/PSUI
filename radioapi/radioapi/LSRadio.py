@@ -29,7 +29,8 @@ class LSRadio(Radio):
                     port
                 )
             )
-            print(f"Bound to {hostname} at port {port}")
+            machine_ip = socket.gethostbyname(socket.gethostname())
+            print(f"Machine ip {machine_ip} bound to {hostname} at port {port}")
 
             thread.start_new_thread(self.receive, ())
         except Exception as e:

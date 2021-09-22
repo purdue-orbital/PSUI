@@ -9,8 +9,6 @@ IP = '0.0.0.0'
 
 def main():
     q = []
-    machine_ip = socket.gethostbyname(socket.gethostname())
-    print(f'{machine_ip} bound at {IP}')
     lsradio = Radio(hostname=IP)
     lsradio.bindQueue(q)
 
