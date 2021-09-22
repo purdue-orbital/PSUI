@@ -8,7 +8,7 @@ import time
 from .Radio import Radio
 
 class GSRadio(Radio):
-    def __init__(self, DEBUG = 0, hostname = '127.0.0.1'):
+    def __init__(self, DEBUG = 0, hostname = '127.0.0.1', port = 5000):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
@@ -22,7 +22,8 @@ class GSRadio(Radio):
 
             print(str(socket.AF_INET) + "  " + str(socket.SOCK_STREAM) + "   " + str(self.hostname))
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.socket.connect((hostname, 5000))
+            self.socket.connect((hostname, port))
+            print(f"Connected to {hostname} at port {port}")
 
             thread.start_new_thread(self.receive, ())
         except Exception as e:

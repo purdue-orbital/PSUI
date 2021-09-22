@@ -11,7 +11,7 @@ from .Radio import Radio
 # import time
 
 class LSRadio(Radio):
-    def __init__(self, DEBUG=0, hostname='127.0.0.1'):
+    def __init__(self, DEBUG=0, hostname='127.0.0.1', port = 5000):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
@@ -26,10 +26,10 @@ class LSRadio(Radio):
             self.socket.bind(
                 (
                     (hostname, socket.gethostname())[self.DEBUG != 1],
-                    5000
+                    port
                 )
             )
-            print("Bound")
+            print(f"Bound to {hostname} at port {port}")
 
             thread.start_new_thread(self.receive, ())
         except Exception as e:
