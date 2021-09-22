@@ -81,27 +81,13 @@
 # if __name__ == "__main__":
 #     app.run(port=5002)
 
-
-import radioapi.CLI_receiver as rcli
-import radioapi.CLI_sender as scli
+import radioapi.CLI as cli
 import sys
 
-SENDER = 'SENDER'
-RECEIVER = 'RECEIVER'
-
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print("Error: Must supply a hostname and run_type argument.")
+    if len(sys.argv) < 1:
+        print("Error: Must supply a hostname argument.")
         sys.exit()
 
-    # For receiver, try a ip 0.0.0.0 or 127.0.0.1
-    # For sender, use the machine's IPV4 address (found with ipconfig)
     hostname = sys.argv[1]
-    run_type = sys.argv[2] # Sender or receiver
-    if run_type.upper() == SENDER:
-        scli.main(hostname)
-    elif run_type.upper() == RECEIVER:
-        rcli.main(hostname)
-    else:
-        print("Error: Run type is not valid")
-        sys.exit()
+    cli.main(hostname)

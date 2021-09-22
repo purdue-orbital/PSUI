@@ -4,7 +4,7 @@ import json
 from time import sleep
 from pynput import keyboard
 
-from .LSRadio import LSRadio
+from .GSRadio import GSRadio
 
 DELAY = 1
 
@@ -54,10 +54,10 @@ def main_old():
             print("Invalid command.")
 
 
-def main():
+def main(ext_host_name):
 
     q = []
-    radio = LSRadio(hostname='0.0.0.0')
+    radio = GSRadio(hostname=ext_host_name)
     radio.bindQueue(q)
     states = [False, False, False, False]
 
@@ -148,4 +148,9 @@ def on_press(key, radio, states):
 
 
 if __name__=='__main__':
-    main()
+    if len(sys.argv) < 1:
+        print("Error: Must supply a hostname argument.")
+        sys.exit()
+
+    hostname = sys.argv[1]
+    main(hostname)
