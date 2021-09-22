@@ -90,12 +90,14 @@ SENDER = 'SENDER'
 RECEIVER = 'RECEIVER'
 
 if __name__ == '__main__':
-    if len(sys.argv) < 0:
+    if len(sys.argv) < 2:
         print("Error: Must supply a hostname and run_type argument.")
         sys.exit()
 
-    hostname = str(sys.argv[0])
-    run_type = sys.argv[1] # Sender or receiver
+    # For receiver, try a ip 0.0.0.0 or 127.0.0.1
+    # For sender, use the machine's IPV4 address (found with ipconfig)
+    hostname = sys.argv[1]
+    run_type = sys.argv[2] # Sender or receiver
     if run_type.upper() == SENDER:
         scli.main(hostname)
     elif run_type.upper() == RECEIVER:
