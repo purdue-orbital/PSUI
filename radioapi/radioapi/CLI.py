@@ -52,6 +52,8 @@ def main_old():
             #recieve return signal then loop again
         elif command != "quit":
             print("Invalid command.")
+            
+        print("command is " + command)
 
 
 def main():
