@@ -3,6 +3,7 @@ import sys
 import json
 from time import sleep
 from pynput import keyboard
+from colorama import Fore
 
 from .GSRadio import GSRadio
 
