@@ -72,9 +72,18 @@ def main(ext_host_name):
     while True:
         # Receives state changes from LSRadio and displays them
         if len(q) > 0:
-            parsed = json.loads(q.pop(0))
+            state = json.loads(q.pop(0))
             print("Received new State:")
-            print(json.dumps(parsed, indent=2, sort_keys=True))
+            color = Fore.RED if state["ABORT"] else Fore.GREEN
+            print(str(color) + f"ABORT = {state}")
+            color = Fore.RED if state["LAUNCH"] else Fore.GREEN
+            print(str(color) + f"LAUNCH = {state}")
+            color = Fore.RED if state["QDM"] else Fore.GREEN
+            print(str(color) + f"QDM = {state}")
+            color = Fore.RED if state["STAB"] else Fore.GREEN
+            print(str(color) + f"STAB = {state}")
+
+            # print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
         count += 1
 
@@ -105,15 +114,15 @@ def on_press(key, radio, states):
             if not states[1] and not states[0]:
                 states[0] = True
             elif states[1]:
-                print("Cannot abort during/after launching")
+                print(Fore.RED + "Cannot abort during/after launching")
                 canSend = False
             else:
-                print("Abort already activated.")
+                print(Fore.RED + "Abort already activated.")
                 canSend = False
 
         elif k == "s":
             if states[0]:
-                print("Cannot unstabilize during launch.")
+                print(Fore.RED + "Cannot unstabilize during launch.")
                 canSend = False
             states[3] = not states[3]
 
@@ -122,10 +131,10 @@ def on_press(key, radio, states):
             if not states[2] and not states[1]:
                 states[2] = True
             elif states[1]:
-                print("Cannot QDM during launch.")
+                print(Fore.RED + "Cannot QDM during launch.")
                 canSend = False
             else:
-                print("QDM already activated.")
+                print(Fore.RED + "QDM already activated.")
                 canSend = False
 
         elif k == "l":
@@ -133,19 +142,19 @@ def on_press(key, radio, states):
             if not states[0] and states[3] and not states[1] and not states[2]:
                 states[1] = True
             elif states[2] and states[0]:
-                print("Cannot launch when QDM and aborted.")
+                print(Fore.RED + "Cannot launch when QDM and aborted.")
                 canSend = False
             elif states[2]:
-                print("Cannot launch with QDM.")
+                print(Fore.RED + "Cannot launch with QDM.")
                 canSend = False
             elif states[0]:
-                print("Cannot launch when aborted.")
+                print(Fore.RED + "Cannot launch when aborted.")
                 canSend = False
             elif not states[3]:
-                print("Cannot launch when unstable.")
+                print(Fore.RED + "Cannot launch when unstable.")
                 canSend = False
             else:
-                print("Launch already activated.")
+                print(Fore.RED + "Launch already activated.")
                 canSend = False
 
         elif k == "p":
