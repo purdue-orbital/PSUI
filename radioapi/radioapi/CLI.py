@@ -61,7 +61,9 @@ def main():
     q = []
     radio = GSRadio()
     radio.bindQueue(q)
-    states = [False, False, False, False]
+
+    # [ABORT, LAUNCH, QDM, STAB, ARMED]
+    states = [False, False, False, False, False]
 
     listener = keyboard.Listener(on_press = lambda x: on_press(x, radio, states))
     listener.start()
@@ -86,6 +88,7 @@ def main():
                 "LAUNCH": states[1],
                 "QDM": states[2],
                 "STAB": states[3],
+                "ARMED": states[4],
             }))
             count = 0
 
@@ -98,30 +101,47 @@ def on_press(key, radio, states):
     except:
         k = key.name
 
-    if k in ["a", "s", "q", "l", "p"]:
+    if k in ["a", "s", "q", "l", "r", "p"]:
         canSend = True
 
-        if k == "a":
+        if k == "r":
+            if not states[4]:
+                states[4] = True
+            else:
+                print("Cannot unarm once armed.")
+                canSend = False
+
+        elif k == "a":
             # if not states[0]:
-            if not states[1] and not states[0]:
+            if not states[1] and not states[0] and states[4]:
                 states[0] = True
+            elif not states[4]:
+                print("Cannot abort while unarmed.")
+                canSend = False
             elif states[1]:
-                print("Cannot abort during/after launching")
+                print("Cannot abort during/after launching.")
                 canSend = False
             else:
                 print("Abort already activated.")
                 canSend = False
 
         elif k == "s":
-            if states[0]:
+            if states[4] and not states[0]:
+                states[3] = not states[3]
+            elif not states[4]:
+                print("Cannot stabilize while unarmed.")
+                canSend = False
+            else:
                 print("Cannot unstabilize during launch.")
                 canSend = False
-            states[3] = not states[3]
 
         elif k == "q":
             # if not states[2]:
-            if not states[2] and not states[1]:
+            if not states[2] and not states[1] and states[4]:
                 states[2] = True
+            elif not states[4]:
+                print("Cannot QDM while unarmed.")
+                canSend = False
             elif states[1]:
                 print("Cannot QDM during launch.")
                 canSend = False
@@ -131,8 +151,11 @@ def on_press(key, radio, states):
 
         elif k == "l":
             # if not states[1]:
-            if not states[0] and states[3] and not states[1] and not states[2]:
+            if not states[0] and states[3] and not states[1] and not states[2] and states[4]:
                 states[1] = True
+            elif not states[4]:
+                print("Cannot launch while unarmed.")
+                canSend = False
             elif states[2] and states[0]:
                 print("Cannot launch when QDM and aborted.")
                 canSend = False
@@ -151,7 +174,8 @@ def on_press(key, radio, states):
 
         elif k == "p":
             print("\nAbort: " + str(states[0]) + "\nLaunch: " + str(states[1]) +
-                  "\nQDM: " + str(states[2]) + "\nStab: " + str(states[3]) + "\n")
+                  "\nQDM: " + str(states[2]) + "\nStab: " + str(states[3]) + "\nArmed: "
+                  + str(states[4]) + "\n")
             canSend = False
 
         if canSend:
@@ -160,6 +184,7 @@ def on_press(key, radio, states):
                 "LAUNCH": states[1],
                 "QDM": states[2],
                 "STAB": states[3],
+                "ARMED": states[4],
             }))
 
 
