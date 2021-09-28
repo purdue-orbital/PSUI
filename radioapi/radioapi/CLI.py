@@ -6,7 +6,7 @@ from pynput import keyboard
 
 from .GSRadio import GSRadio
 
-DELAY = 1
+DELAY = 1 # in seconds
 
 # old main, not used
 def main_old():
@@ -64,14 +64,28 @@ def main():
     listener = keyboard.Listener(on_press = lambda x: on_press(x, radio, states))
     listener.start()
 
+    # The number of iterations, used for resending signals
+    count = 0
+
     print("started")
-    while True: # What is the need for this?
+    while True:
+        # Receives state changes from LSRadio and displays them
         if len(q) > 0:
             parsed = json.loads(q.pop(0))
             print("Received new State:")
             print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
+        count += 1
 
+        # Resend current state every 60 seconds
+        if count >= 60 // DELAY:
+            radio.send(json.dumps({
+                "ABORT": states[0],
+                "LAUNCH": states[1],
+                "QDM": states[2],
+                "STAB": states[3],
+            }))
+            count = 0
 
 def on_press(key, radio, states):
     if key == keyboard.Key.esc:
