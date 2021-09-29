@@ -3,27 +3,32 @@ import sys
 import json
 from time import sleep
 from pynput import keyboard
-
+from colorama import init, Fore
 from .GSRadio import GSRadio
 
-DELAY = 1 # in seconds
-AUTO_UPDATE_TIME = 60 # in seconds
+DELAY = 1  # in seconds
+AUTO_UPDATE_TIME = 60  # in seconds
+
+
+init(convert=True, autoreset=True)
 
 # old main, not used
+
+
 def main_old():
     command = "start"
 
     radio = GSRadio()
-    while command!="quit" :
+    while command != "quit":
 
         command = input("Enter command: ")
-        if (command == "A") :
-            #test json sending
+        if (command == "A"):
+            # test json sending
             radio.send(json.dumps({
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": True,
-            "STAB": False,
+                "LAUNCH": False,
+                "QDM": False,
+                "ABORT": True,
+                "STAB": False,
             }))
 
         elif command == "S":
@@ -50,23 +55,23 @@ def main_old():
                 "STAB": False,
             }))
 
-            #recieve return signal then loop again
+            # recieve return signal then loop again
         elif command != "quit":
             print("Invalid command.")
-            
+
         print("command is " + command)
 
 
-def main():
+def main(ext_host_name):
 
     q = []
-    radio = GSRadio()
+    radio = GSRadio(hostname=ext_host_name)
     radio.bindQueue(q)
 
     # [ABORT, LAUNCH, QDM, STAB, ARMED]
     states = [False, False, False, False, False]
 
-    listener = keyboard.Listener(on_press = lambda x: on_press(x, radio, states))
+    listener = keyboard.Listener(on_press=lambda x: on_press(x, radio, states))
     listener.start()
 
     # The number of iterations, used for resending signals
@@ -76,9 +81,18 @@ def main():
     while True:
         # Receives state changes from LSRadio and displays them
         if len(q) > 0:
-            parsed = json.loads(q.pop(0))
+            state = json.loads(q.pop(0))
             print("Received new State:")
-            print(json.dumps(parsed, indent=2, sort_keys=True))
+            color = Fore.GREEN if state["ABORT"] else Fore.RED
+            print(str(color) + f"ABORT = {state['ABORT']}")
+            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
+            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
+            color = Fore.GREEN if state["QDM"] else Fore.RED
+            print(str(color) + f"QDM = {state['QDM']}")
+            color = Fore.GREEN if state["STAB"] else Fore.RED
+            print(str(color) + f"STAB = {state['STAB']}")
+
+            # print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
         count += 1
 
@@ -92,6 +106,7 @@ def main():
                 "ARMED": states[4],
             }))
             count = 0
+
 
 def on_press(key, radio, states):
     if key == keyboard.Key.esc:
@@ -120,20 +135,20 @@ def on_press(key, radio, states):
                 print("Cannot abort while unarmed.")
                 canSend = False
             elif states[1]:
-                print("Cannot abort during/after launching.")
+                print(Fore.RED + "Cannot abort during/after launching")
                 canSend = False
             else:
-                print("Abort already activated.")
+                print(Fore.RED + "Abort already activated.")
                 canSend = False
 
         elif k == "s":
             if states[4] and not states[1]:
                 states[3] = not states[3]
             elif not states[4]:
-                print("Cannot stabilize while unarmed.")
+                print(Fore.RED + "Cannot stabilize while unarmed.")
                 canSend = False
             else:
-                print("Cannot unstabilize during launch.")
+                print(Fore.RED + "Cannot unstabilize during launch.")
                 canSend = False
 
         elif k == "q":
@@ -144,10 +159,10 @@ def on_press(key, radio, states):
                 print("Cannot QDM while unarmed.")
                 canSend = False
             elif states[1]:
-                print("Cannot QDM during launch.")
+                print(Fore.RED + "Cannot QDM during launch.")
                 canSend = False
             else:
-                print("QDM already activated.")
+                print(Fore.RED + "QDM already activated.")
                 canSend = False
 
         elif k == "l":
@@ -158,19 +173,19 @@ def on_press(key, radio, states):
                 print("Cannot launch while unarmed.")
                 canSend = False
             elif states[2] and states[0]:
-                print("Cannot launch when QDM and aborted.")
+                print(Fore.RED + "Cannot launch when QDM and aborted.")
                 canSend = False
             elif states[2]:
-                print("Cannot launch with QDM.")
+                print(Fore.RED + "Cannot launch with QDM.")
                 canSend = False
             elif states[0]:
-                print("Cannot launch when aborted.")
+                print(Fore.RED + "Cannot launch when aborted.")
                 canSend = False
             elif not states[3]:
-                print("Cannot launch when unstable.")
+                print(Fore.RED + "Cannot launch when unstable.")
                 canSend = False
             else:
-                print("Launch already activated.")
+                print(Fore.RED + "Launch already activated.")
                 canSend = False
 
         elif k == "p":
@@ -189,5 +204,10 @@ def on_press(key, radio, states):
             }))
 
 
-if __name__=='__main__':
-    main()
+if __name__ == '__main__':
+    if len(sys.argv) < 1:
+        print("Error: Must supply a hostname argument.")
+        sys.exit()
+
+    hostname = sys.argv[1]
+    main(hostname)
