@@ -7,7 +7,7 @@ from pynput import keyboard
 from .GSRadio import GSRadio
 
 DELAY = 1 # in seconds
-AUTO_UPDATE_TIME = 10 # in seconds
+AUTO_UPDATE_TIME = 60 # in seconds
 
 # old main, not used
 def main_old():
