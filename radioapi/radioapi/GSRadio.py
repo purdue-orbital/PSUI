@@ -1,5 +1,5 @@
 import zmq
-import _thread as thread
+import threading as thread
 import os
 import json
 import logging
@@ -25,7 +25,7 @@ class GSRadio(Radio):
             self.socket.connect((hostname, port))
             print(f"Connected to {hostname} at port {port}")
 
-            thread.start_new_thread(self.receive, ())
+            thread.Thread(target=self.receive, daemon=True).start()
         except Exception as e:
             print(e)
             print("test")

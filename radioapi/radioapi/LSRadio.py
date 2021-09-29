@@ -1,4 +1,4 @@
-import _thread as thread
+import threading as thread
 import json
 import socket
 import sys
@@ -32,7 +32,7 @@ class LSRadio(Radio):
             machine_ip = socket.gethostbyname(socket.gethostname())
             print(f"Machine ip {machine_ip} bound to {hostname} at port {port}")
 
-            thread.start_new_thread(self.receive, ())
+            thread.Thread(target=self.receive, daemon=True).start()
         except Exception as e:
             # print(e)
             print("test")
