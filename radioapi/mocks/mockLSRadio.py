@@ -20,9 +20,19 @@ def main():
 
     while True:
         if len(q) > 0:
-            parsed = json.loads(q.pop(0))
-            print("Received State:")
-            print(json.dumps(parsed, indent=2, sort_keys=True))
+            state = json.loads(q.pop(0))
+            print("Received new State:")
+            color = Fore.GREEN if state["ABORT"] else Fore.RED
+            print(str(color) + f"ABORT = {state['ABORT']}")
+            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
+            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
+            color = Fore.GREEN if state["QDM"] else Fore.RED
+            print(str(color) + f"QDM = {state['QDM']}")
+            color = Fore.GREEN if state["STAB"] else Fore.RED
+            print(str(color) + f"STAB = {state['STAB']}")
+            # parsed = json.loads(q.pop(0))
+            # print("Received State:")
+            # print(json.dumps(parsed, indent=2, sort_keys=True))
         time.sleep(DELAY)
 
 
