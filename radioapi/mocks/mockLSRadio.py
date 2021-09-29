@@ -1,10 +1,12 @@
 from radioapi.LSRadio import LSRadio as Radio
 import json
 import time
+from colorama import init, Fore
 
 import threading
 
 DELAY = 1
+init(convert=True, autoreset=True)
 IP = '0.0.0.0'
 
 def main():
