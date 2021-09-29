@@ -85,9 +85,18 @@ import radioapi.CLI as cli
 import sys
 
 if __name__ == '__main__':
-    if len(sys.argv) < 1:
-        print("Error: Must supply a hostname argument.")
+
+    opts = [opt for opt in sys.argv[1:] if opt.startswith("-")]
+    args = [arg for arg in sys.argv[1:] if not arg.startswith("-")]
+
+    # print(args)
+
+    if not len(args) and not len(opts):
+        print("Error: Must supply a hostname or -l argument.")
         sys.exit()
 
-    hostname = sys.argv[1]
-    cli.main(hostname)
+    if "-l" in opts:
+        cli.main('127.0.0.1')
+    else:
+        hostname = args[0]
+        cli.main(hostname)
