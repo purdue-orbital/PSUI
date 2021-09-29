@@ -7,6 +7,7 @@ from pynput import keyboard
 from .GSRadio import GSRadio
 
 DELAY = 1 # in seconds
+AUTO_UPDATE_TIME = 60 # in seconds
 
 # old main, not used
 def main_old():
@@ -82,7 +83,7 @@ def main():
         count += 1
 
         # Resend current state every 60 seconds
-        if count >= 60 // DELAY:
+        if count >= AUTO_UPDATE_TIME // DELAY:
             radio.send(json.dumps({
                 "ABORT": states[0],
                 "LAUNCH": states[1],
