@@ -74,13 +74,13 @@ def main(ext_host_name):
         if len(q) > 0:
             state = json.loads(q.pop(0))
             print("Received new State:")
-            color = Fore.RED if state["ABORT"] else Fore.GREEN
+            color = Fore.GREEN if state["ABORT"] else Fore.RED
             print(str(color) + f"ABORT = {state['ABORT']}")
-            color = Fore.RED if state["LAUNCH"] else Fore.GREEN
+            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
             print(str(color) + f"LAUNCH = {state['LAUNCH']}")
-            color = Fore.RED if state["QDM"] else Fore.GREEN
+            color = Fore.GREEN if state["QDM"] else Fore.RED
             print(str(color) + f"QDM = {state['QDM']}")
-            color = Fore.RED if state["STAB"] else Fore.GREEN
+            color = Fore.GREEN if state["STAB"] else Fore.RED
             print(str(color) + f"STAB = {state['STAB']}")
 
             # print(json.dumps(parsed, indent=2, sort_keys=True))
