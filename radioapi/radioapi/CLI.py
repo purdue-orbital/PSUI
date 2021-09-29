@@ -3,11 +3,11 @@ import sys
 import json
 from time import sleep
 from pynput import keyboard
-from colorama import Fore
-
+from colorama import init, Fore
 from .GSRadio import GSRadio
 
 DELAY = 1 # in seconds
+init(convert=True, autoreset=True)
 
 # old main, not used
 def main_old():
@@ -75,13 +75,13 @@ def main(ext_host_name):
             state = json.loads(q.pop(0))
             print("Received new State:")
             color = Fore.RED if state["ABORT"] else Fore.GREEN
-            print(str(color) + f"ABORT = {state}")
+            print(str(color) + f"ABORT = {state['ABORT']}")
             color = Fore.RED if state["LAUNCH"] else Fore.GREEN
-            print(str(color) + f"LAUNCH = {state}")
+            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
             color = Fore.RED if state["QDM"] else Fore.GREEN
-            print(str(color) + f"QDM = {state}")
+            print(str(color) + f"QDM = {state['QDM']}")
             color = Fore.RED if state["STAB"] else Fore.GREEN
-            print(str(color) + f"STAB = {state}")
+            print(str(color) + f"STAB = {state['STAB']}")
 
             # print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
