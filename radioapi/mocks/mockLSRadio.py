@@ -13,11 +13,11 @@ def main():
     lsradio = Radio(DEBUG=1)
     lsradio.bindQueue(q)
 
-    t = threading.Thread(target=send_state,
-                         args=(lsradio, ),
-                         daemon=True)
-    t.start()
-    time.sleep(1)
+    #t = threading.Thread(target=send_state,
+    #                     args=(lsradio, ),
+    #                     daemon=True)
+    #t.start()
+    #time.sleep(1)
 
     while True:
         if len(q) > 0:

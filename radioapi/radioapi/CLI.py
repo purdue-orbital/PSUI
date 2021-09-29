@@ -7,7 +7,7 @@ from pynput import keyboard
 from .GSRadio import GSRadio
 
 DELAY = 1 # in seconds
-AUTO_UPDATE_TIME = 60 # in seconds
+AUTO_UPDATE_TIME = 10 # in seconds
 
 # old main, not used
 def main_old():
@@ -82,7 +82,7 @@ def main():
         sleep(DELAY)
         count += 1
 
-        # Resend current state every 60 seconds
+        # Resend current state every AUTO_UPDATE_TIME seconds
         if count >= AUTO_UPDATE_TIME // DELAY:
             radio.send(json.dumps({
                 "ABORT": states[0],
@@ -127,7 +127,7 @@ def on_press(key, radio, states):
                 canSend = False
 
         elif k == "s":
-            if states[4] and not states[0]:
+            if states[4] and not states[1]:
                 states[3] = not states[3]
             elif not states[4]:
                 print("Cannot stabilize while unarmed.")

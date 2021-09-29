@@ -58,12 +58,12 @@ class Radio(ABC):
     def _int_to_dict(self, st):
         num = int(st)
         return {label: bool(num & (1 << i))
-                for i, label in enumerate(["LAUNCH", "QDM", "ABORT", "STAB", "ARMED"])}
+                for i, label in enumerate(["ABORT", "LAUNCH", "QDM", "STAB", "ARMED"])}
 
     def dict_to_int(self, dixt):
         a = list(dixt.values())
         sum = 0
-        for x in range(0, 5):
+        for x in range(5):
             sum = sum + (a[x] * (2**x))
         return sum
 
