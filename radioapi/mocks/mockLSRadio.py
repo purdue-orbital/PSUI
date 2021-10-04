@@ -9,16 +9,17 @@ DELAY = 1
 init(convert=True, autoreset=True)
 IP = '0.0.0.0'
 
+
 def main():
     q = []
     lsradio = Radio(hostname=IP)
     lsradio.bindQueue(q)
 
-    #t = threading.Thread(target=send_state,
-    #                     args=(lsradio, ),
-    #                     daemon=True)
-    #t.start()
-    #time.sleep(1)
+    t = threading.Thread(target=send_state,
+                         args=(lsradio, ),
+                         daemon=True)
+    t.start()
+    time.sleep(1)
 
     while True:
         if len(q) > 0:
