@@ -6,11 +6,21 @@ from pynput import keyboard
 from colorama import init, Fore
 from .GSRadio import GSRadio
 
-DELAY = 1  # in seconds
+
+PLATFORM_OS = sys.platform
+IS_WINDOWS = True
+WINDOWS = ['win32', 'cygwin']
+UNIX = ['linux', 'aix']
+MAC = ['darwin']
+
+if PLATFORM_OS in WINDOWS:
+    IS_WINDOWS = True
+elif PLATFORM_OS in UNIX or PLATFORM_OS in MAC:
+    IS_WINDOWS = False
+
+DELAY = 1 # in seconds
 AUTO_UPDATE_TIME = 60  # in seconds
-
-
-init(convert=True, autoreset=True)
+init(convert=IS_WINDOWS, autoreset=True)
 
 # old main, not used
 
