@@ -30,7 +30,7 @@ class IndicatorTable extends React.Component {
 
   __generateLayout() {
     const indicators = this.props.indicators;
-    const indicatorIndexes = Object.keys(indicators); // Get array of indexes of of indeicators in increasing order
+    const indicatorIndexes = Object.keys(indicators);
     const cols = this.props.cols;
     const rows = Math.ceil(indicatorIndexes.length / cols);
 
@@ -70,7 +70,7 @@ class IndicatorTable extends React.Component {
     const buildRow = (arrayOfIndices) => {
       return arrayOfIndices.map((index) => {
         if (index == null) { return (<td></td>); }
-        return (<td><GenericIndicator name={indicators[index].name} data={indicators[index].data} /></td>);
+        return (<td><GenericIndicator name={indicators[index].name ?? index} data={indicators[index].data} /></td>);
       });
     };
 

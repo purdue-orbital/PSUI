@@ -21,6 +21,8 @@ class GraphSelector extends React.Component {
     this.graphChoices = null;
     this.prevData = null;
     this.__createEmptyGraphs(this.props.data);
+    this.lastUpdateTime = Date.now();
+    this.lastUpdateData = null;
   }
 
   componentDidMount() {
@@ -31,6 +33,8 @@ class GraphSelector extends React.Component {
 
   reset() {
     this.__createEmptyGraphs(this.props.data);
+    this.lastUpdateTime = Date.now();
+    this.lastUpdateData = null;
   }
 
   componentWillUnmount() {
@@ -88,9 +92,16 @@ class GraphSelector extends React.Component {
 
   componentDidUpdate() {
     const updatedData = this.__getUpdatedData();
+    const now = Date.now()
     if (updatedData !== null) {
       // If there is a new data point, we need to update prev data
       this.__updateDataBuffers(updatedData);
+      this.lastUpdateTime = now;
+      this.lastUpdateData = updatedData;
+    } else if (now - this.lastUpdateTime > 5000 && this.lastUpdateData) {
+      // Update data with the same data point if graphs haven't updated in 5 second
+      this.__updateDataBuffers(this.lastUpdateData);
+      this.lastUpdateTime = now;
     }
   }
 
@@ -116,7 +127,7 @@ class GraphSelector extends React.Component {
   }
 
   __getUpdatedData() {
-    // Used to determine if new data point recieved or if the grah just changed
+    // Used to determine if new data point recieved or if the graph just changed
     const incomingData = this.__flattenDataObj(this.props.data);
     for (const k in this.prevData) {
       const prevDataSet = this.prevData[k].data;
