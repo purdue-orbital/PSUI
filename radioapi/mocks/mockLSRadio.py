@@ -1,29 +1,40 @@
 from radioapi.LSRadio import LSRadio as Radio
 import json
 import time
+from colorama import init, Fore
 
 import threading
 
 DELAY = 1
-
+init(convert=True, autoreset=True)
+IP = '0.0.0.0'
 
 def main():
     q = []
-
-    lsradio = Radio(DEBUG=1)
+    lsradio = Radio(hostname=IP)
     lsradio.bindQueue(q)
 
-    t = threading.Thread(target=send_state,
-                         args=(lsradio, ),
-                         daemon=True)
-    t.start()
-    time.sleep(1)
+    #t = threading.Thread(target=send_state,
+    #                     args=(lsradio, ),
+    #                     daemon=True)
+    #t.start()
+    #time.sleep(1)
 
     while True:
         if len(q) > 0:
-            parsed = json.loads(q.pop(0))
-            print("Received State:")
-            print(json.dumps(parsed, indent=2, sort_keys=True))
+            state = json.loads(q.pop(0))
+            print("Received new State:")
+            color = Fore.GREEN if state["ABORT"] else Fore.RED
+            print(str(color) + f"ABORT = {state['ABORT']}")
+            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
+            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
+            color = Fore.GREEN if state["QDM"] else Fore.RED
+            print(str(color) + f"QDM = {state['QDM']}")
+            color = Fore.GREEN if state["STAB"] else Fore.RED
+            print(str(color) + f"STAB = {state['STAB']}")
+            # parsed = json.loads(q.pop(0))
+            # print("Received State:")
+            # print(json.dumps(parsed, indent=2, sort_keys=True))
         time.sleep(DELAY)
 
 
