@@ -78,8 +78,8 @@ def main(ext_host_name):
     radio = GSRadio(hostname=ext_host_name)
     radio.bindQueue(q)
 
-    # [ABORT, LAUNCH, QDM, STAB, ARMED]
-    states = [False, False, False, False, False]
+    # [ABORT, ARMED]
+    states = [False, False]
 
     listener = keyboard.Listener(on_press=lambda x: on_press(x, radio, states))
     listener.start()
@@ -95,12 +95,6 @@ def main(ext_host_name):
             print("Received new State:")
             color = Fore.GREEN if state["ABORT"] else Fore.RED
             print(str(color) + f"ABORT = {state['ABORT']}")
-            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
-            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
-            color = Fore.GREEN if state["QDM"] else Fore.RED
-            print(str(color) + f"QDM = {state['QDM']}")
-            color = Fore.GREEN if state["STAB"] else Fore.RED
-            print(str(color) + f"STAB = {state['STAB']}")
 
             # print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
@@ -110,10 +104,7 @@ def main(ext_host_name):
         if count >= AUTO_UPDATE_TIME // DELAY:
             radio.send(json.dumps({
                 "ABORT": states[0],
-                "LAUNCH": states[1],
-                "QDM": states[2],
-                "STAB": states[3],
-                "ARMED": states[4],
+                "ARMED": states[1],
             }))
             count = 0
 
@@ -127,91 +118,27 @@ def on_press(key, radio, states):
     except:
         k = key.name
 
-    if k in ["a", "s", "q", "l", "r", "p"]:
+    if k in ["a", "r", "p"]:
         canSend = True
 
         if k == "r":
-            if not states[4]:
-                states[4] = True
-            else:
-                print("Cannot unarm once armed.")
-                canSend = False
+            states[1] = True
 
         elif k == "a":
-            # if not states[0]:
-            if not states[1] and not states[0] and states[4]:
-                states[0] = True
-            elif not states[4]:
-                print("Cannot abort while unarmed.")
-                canSend = False
-            elif states[1]:
-                print(Fore.RED + "Cannot abort during/after launching")
-                canSend = False
-            else:
-                print(Fore.RED + "Abort already activated.")
-                canSend = False
-
-        elif k == "s":
-            if states[4] and not states[1]:
-                states[3] = not states[3]
-            elif not states[4]:
-                print(Fore.RED + "Cannot stabilize while unarmed.")
-                canSend = False
-            else:
-                print(Fore.RED + "Cannot unstabilize during launch.")
-                canSend = False
-
-        elif k == "q":
-            # if not states[2]:
-            if not states[2] and not states[1] and states[4]:
-                states[2] = True
-            elif not states[4]:
-                print("Cannot QDM while unarmed.")
-                canSend = False
-            elif states[1]:
-                print(Fore.RED + "Cannot QDM during launch.")
-                canSend = False
-            else:
-                print(Fore.RED + "QDM already activated.")
-                canSend = False
-
-        elif k == "l":
-            # if not states[1]:
-            if not states[0] and states[3] and not states[1] and not states[2] and states[4]:
-                states[1] = True
-            elif not states[4]:
-                print("Cannot launch while unarmed.")
-                canSend = False
-            elif states[2] and states[0]:
-                print(Fore.RED + "Cannot launch when QDM and aborted.")
-                canSend = False
-            elif states[2]:
-                print(Fore.RED + "Cannot launch with QDM.")
-                canSend = False
-            elif states[0]:
-                print(Fore.RED + "Cannot launch when aborted.")
-                canSend = False
-            elif not states[3]:
-                print(Fore.RED + "Cannot launch when unstable.")
-                canSend = False
-            else:
-                print(Fore.RED + "Launch already activated.")
-                canSend = False
+            states[0] = True
 
         elif k == "p":
-            print("\nAbort: " + str(states[0]) + "\nLaunch: " + str(states[1]) +
-                  "\nQDM: " + str(states[2]) + "\nStab: " + str(states[3]) + "\nArmed: "
-                  + str(states[4]) + "\n")
+            print("\nAbort: " + str(states[0                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     ]) + "\nArmed: "+ str(states[1]) + "\n")
             canSend = False
 
         if canSend:
             radio.send(json.dumps({
                 "ABORT": states[0],
-                "LAUNCH": states[1],
-                "QDM": states[2],
-                "STAB": states[3],
-                "ARMED": states[4],
+                "ARMED": states[1],
             }))
+
+            print("Disconnecting")
+            radio.close()
 
 
 if __name__ == '__main__':

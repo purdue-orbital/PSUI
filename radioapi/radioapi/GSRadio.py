@@ -75,10 +75,10 @@ class GSRadio(Radio):
             
             # Oneway communication, Ground Station controls state.
             try:
-                self.launch = jsonData['LAUNCH']
-                self.qdm = jsonData['QDM']
+                #self.launch = jsonData['LAUNCH']
+                #self.qdm = jsonData['QDM']
                 self.abort = jsonData['ABORT']
-                self.stab = jsonData['STAB']
+                #self.stab = jsonData['STAB']
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
                 # logging.error("Ground Station did not append state attributes to data")
@@ -96,5 +96,8 @@ class GSRadio(Radio):
         except Exception as e:
             # logging.error(e)
             return 0
+    
+    def close(self):
+        self.socket.close()
 
 
