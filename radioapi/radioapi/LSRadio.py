@@ -66,6 +66,7 @@ class LSRadio(Radio):
             except Exception as e:
                 print(f"Invalid message received:\n{e}")
                 # logging.error(e)
+                break
 
     def send(self, data):
         """
