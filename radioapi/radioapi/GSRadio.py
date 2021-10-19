@@ -52,6 +52,8 @@ class GSRadio(Radio):
             # When forcing an interrupt (Ctrl+C), catch the exception (OSError)
             except OSError as e:
                 print(e)
+                #if we want to add any extra stuff right here would kind of be the best option
+                print("Closing the Program...")
                 break
                 # logging.error(e)
 
