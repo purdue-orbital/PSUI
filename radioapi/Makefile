@@ -2,7 +2,7 @@ PY = ./venv/bin/python
 PIP = pip3
 
 all:
-	${PY} setup.py sdist
+	sudo ${PY} setup.py sdist
 
 install:
 	${PY} setup.py install

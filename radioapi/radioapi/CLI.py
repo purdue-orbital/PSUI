@@ -139,7 +139,8 @@ def on_press(key, radio, states):
 
         elif k == "a":
             # if not states[0]:
-            if not states[1] and not states[0] and states[4]:
+            # if not states[1] and not states[0] and states[4]:
+            if not states[1] and not states[0]:
                 states[0] = True
             elif not states[4]:
                 print("Cannot abort while unarmed.")
@@ -212,6 +213,7 @@ def on_press(key, radio, states):
                 "STAB": states[3],
                 "ARMED": states[4],
             }))
+            print('Safe to disconeect with ^C! :) ')
 
 
 if __name__ == '__main__':
