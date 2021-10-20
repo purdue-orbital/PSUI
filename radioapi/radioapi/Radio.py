@@ -1,8 +1,27 @@
 from abc import ABC, abstractmethod
-from enum import Enum
-
+from dataclasses import dataclass
+import json
+from typing import Union
 
 class Radio(ABC):
+    @dataclass(frozen=True, kw_only=True)
+    class Message:
+        arm: bool
+        abort: bool
+        launch: bool
+        qdm: bool
+        stabilized: bool
+
+        def to_string(self):
+            return json.dumps(
+                {
+                    'ARM': self.arm,
+                    'ABORT': self.abort,
+                    'LAUNCH': self.launch,
+                    'QDM': self.qdm,
+                    "STAB": self.stabilized
+                })
+
     def __init__(self, DEBUG=0, hostname='127.0.0.1'):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
@@ -21,7 +40,7 @@ class Radio(ABC):
         pass
 
     @abstractmethod
-    def send(self, data: str) -> bool:
+    def send(self, data: Union[str, Message]) -> bool:
         """
         Sends JSON formatted data to the socket attached to radio interface.
         For single variable values, do not exceed one layer of depth.
