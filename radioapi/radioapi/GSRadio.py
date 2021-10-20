@@ -82,7 +82,7 @@ class GSRadio(Radio):
             except Exception as e:
                 print("Ground Station did not append state attributes to data")
                 # logging.error("Ground Station did not append state attributes to data")
-            data_send = self.dict_to_int(jsonData)
+            data_send = jsonData
             # logging.info("Sent: " + data)
             # self.socket.send(data.encode('ascii'))
             self.socket.send(chr(data_send).encode('ascii'))

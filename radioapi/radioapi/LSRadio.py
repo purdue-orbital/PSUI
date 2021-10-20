@@ -48,7 +48,7 @@ class LSRadio(Radio):
                 message = ord(self.socket.recv(2048).decode("ascii"))  # very large byte size?? only sending one int
                 # logging.info("Received: " + str(message))
                 # jsonData = json.loads(message)
-                jsonData = self._int_to_dict(message)
+                jsonData = message
                 self.launch = jsonData['LAUNCH']
                 self.qdm = jsonData['QDM']
                 self.stab = jsonData['STAB']

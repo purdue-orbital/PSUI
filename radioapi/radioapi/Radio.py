@@ -55,18 +55,6 @@ class Radio(ABC):
     def DEBUG(self):
         return self.__debug
 
-    def _int_to_dict(self, st):
-        num = int(st)
-        return {label: bool(num & (1 << i))
-                for i, label in enumerate(["ABORT", "LAUNCH", "QDM", "STAB", "ARMED"])}
-
-    def dict_to_int(self, dixt):
-        a = list(dixt.values())
-        sum = 0
-        for x in range(5):
-            sum = sum + (a[x] * (2**x))
-        return sum
-
     @property
     def hostname(self):
         return self.__hostname
