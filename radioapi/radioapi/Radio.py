@@ -17,11 +17,11 @@ class Radio(ABC):
         self.queue = None
 
     @abstractmethod
-    def receive(self):
+    def receive(self) -> None:
         pass
 
     @abstractmethod
-    def send(self, data):
+    def send(self, data: str) -> bool:
         """
         Sends JSON formatted data to the socket attached to radio interface.
         For single variable values, do not exceed one layer of depth.

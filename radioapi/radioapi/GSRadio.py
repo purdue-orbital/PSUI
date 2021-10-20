@@ -9,16 +9,14 @@ from .Radio import Radio
 
 
 class GSRadio(Radio):
-    def __init__(self, DEBUG = 0, hostname = '127.0.0.1', port = 5000):
+    def __init__(self, DEBUG=0, hostname='127.0.0.1', port=5000):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
 
         super().__init__(DEBUG=DEBUG, hostname=hostname)
 
-
         #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
-
 
         try:
 
@@ -35,14 +33,14 @@ class GSRadio(Radio):
     def receive(self):
         while True:
             try:
-                message = self.socket.recv(2048).decode("ascii") # large byte size?
+                message = self.socket.recv(2048).decode("ascii")  # large byte size?
                 # logging.info("Received: " + str(message))
 
                 jsonData = json.loads(message)
 
                 # if self.launch != jsonData['LAUNCH'] or self.qdm != jsonData['QDM'] or self.abort != jsonData['ABORT'] or self.stab != jsonData['STAB']:
-                    #logging.warning("State mismatch, resending state")
-                    # TODO Send State
+                #logging.warning("State mismatch, resending state")
+                # TODO Send State
 
                 if self.queue is not None:
                     self.queue.append(message)
@@ -59,7 +57,7 @@ class GSRadio(Radio):
                 print(e)
                 print('Invalid message received')
 
-    def send(self, data):
+    def send(self, data: str) -> bool:
         """
         Sends JSON formatted data to the socket attached to radio interface.
         For single variable values, do not exceed one layer of depth.
@@ -72,7 +70,7 @@ class GSRadio(Radio):
         # logging.info(data)
         try:
             jsonData = json.loads(data)
-            
+
             # Oneway communication, Ground Station controls state.
             try:
                 self.launch = jsonData['LAUNCH']
@@ -84,17 +82,14 @@ class GSRadio(Radio):
                 # logging.error("Ground Station did not append state attributes to data")
             data_send = jsonData
             # logging.info("Sent: " + data)
-            # self.socket.send(data.encode('ascii'))
-            self.socket.send(chr(data_send).encode('ascii'))
-            return 1
+            self.socket.send(data.encode('ascii'))
+            return True
 
         except KeyboardInterrupt:
-            print ("interrupt received. shutting down.")
+            print("interrupt received. shutting down.")
             self.socket.close()
             exit()
 
         except Exception as e:
             # logging.error(e)
-            return 0
-
-
+            return False

@@ -12,7 +12,7 @@ from .Radio import Radio
 
 
 class LSRadio(Radio):
-    def __init__(self, DEBUG=0, hostname='127.0.0.1', port = 5000):
+    def __init__(self, DEBUG=0, hostname='127.0.0.1', port=5000):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
@@ -38,17 +38,16 @@ class LSRadio(Radio):
             # print(e)
             print("test")
 
-    def receive(self):
+    def receive(self) -> None:
         self.socket.listen(300)  # Listen for 5 minutes
         (clientsocket, address) = self.socket.accept()
         self.socket = clientsocket
 
         while True:
             try:
-                message = ord(self.socket.recv(2048).decode("ascii"))  # very large byte size?? only sending one int
+                message: str = self.socket.recv(2048).decode("ascii")
                 # logging.info("Received: " + str(message))
-                # jsonData = json.loads(message)
-                jsonData = message
+                jsonData = json.loads(message)
                 self.launch = jsonData['LAUNCH']
                 self.qdm = jsonData['QDM']
                 self.stab = jsonData['STAB']
@@ -65,9 +64,10 @@ class LSRadio(Radio):
 
             except Exception as e:
                 print(f"Invalid message received:\n{e}")
+                break
                 # logging.error(e)
 
-    def send(self, data):
+    def send(self, data: str) -> bool:
         """
         Sends JSON formatted data to the socket attached to radio interface.
         For single variable values, do not exceed one layer of depth.
@@ -91,7 +91,7 @@ class LSRadio(Radio):
             # logging.info("Sent: " + data)
             self.socket.send(data.encode('ascii'))
             print("Sent")
-            return 1
+            return True
 
         except KeyboardInterrupt:
             print("interrupt received. shutting down.")
@@ -100,4 +100,4 @@ class LSRadio(Radio):
 
         except Exception as e:
             # logging.error(e)
-            return 0
+            return False
