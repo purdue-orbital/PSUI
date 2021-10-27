@@ -48,6 +48,11 @@ class LSRadio(Radio):
                 message = ord(self.socket.recv(2048).decode("ascii"))  # very large byte size?? only sending one int
                 # logging.info("Received: " + str(message))
                 # jsonData = json.loads(message)
+                print("Message recieved\n")
+                if message == "fuckoff":
+                    print("GS Socket Closed... Closing Radio Connection")
+                    self.socket.close()
+                    break
                 jsonData = self._int_to_dict(message)
                 self.launch = jsonData['LAUNCH']
                 self.qdm = jsonData['QDM']
@@ -61,6 +66,7 @@ class LSRadio(Radio):
             except OSError as e:
                 print("Connection Forcibly Closed, Exiting")
                 print(e)
+                self.socket.close()
                 break
 
             except Exception as e:

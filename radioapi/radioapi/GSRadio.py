@@ -34,6 +34,7 @@ class GSRadio(Radio):
 
     def receive(self):
         while True:
+            print("we here")
             try:
                 message = self.socket.recv(2048).decode("ascii") # large byte size?
                 # logging.info("Received: " + str(message))
@@ -46,6 +47,7 @@ class GSRadio(Radio):
 
                 if self.queue is not None:
                     self.queue.append(message)
+                    print("we there")
                 else:
                     print("Queue unbound")
                     # logging.error("Queue unbound")
@@ -54,6 +56,7 @@ class GSRadio(Radio):
                 print(e)
                 #if we want to add any extra stuff right here would kind of be the best option
                 print("Closing the Program...")
+                self.socket.close()
                 break
                 # logging.error(e)
 

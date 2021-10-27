@@ -89,6 +89,9 @@ def main(ext_host_name):
 
     print("started")
     while True:
+        if not listener.is_alive():
+            break
+
         # Receives state changes from LSRadio and displays them
         if len(q) > 0:
             state = json.loads(q.pop(0))
@@ -127,7 +130,7 @@ def on_press(key, radio, states):
     except:
         k = key.name
 
-    if k in ["a", "s", "q", "l", "r", "p"]:
+    if k in ["a", "s", "q", "l", "r", "p", "x"]:
         canSend = True
 
         if k == "r":
@@ -204,6 +207,14 @@ def on_press(key, radio, states):
                   "\nQDM: " + str(states[2]) + "\nStab: " + str(states[3]) + "\nArmed: "
                   + str(states[4]) + "\n")
             canSend = False
+        
+        elif k == "x":
+            radio.send('{ "message": "fuckoff" }')
+            print("Closing Radio Socket...")
+            sleep(5)
+            radio.socket.close()
+            print("Socket Closed\n")
+            return False
 
         if canSend:
             radio.send(json.dumps({
@@ -213,7 +224,7 @@ def on_press(key, radio, states):
                 "STAB": states[3],
                 "ARMED": states[4],
             }))
-            print('Safe to disconeect with ^C! :) ')
+            # print('Safe to disconeect with ^C! :) ')
 
 
 if __name__ == '__main__':
