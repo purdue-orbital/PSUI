@@ -38,13 +38,21 @@ class SerialComs:
             func(self.ser.read())
 
     def write(self, msg: SerialComMessage):
-        pass
+        self.ser.write(json.dumps(msg.as_dict).encode())
+        self.ser.flush()
         
 
 
 if __name__ == '__main__':
     d = SerialComMessage.from_string('{"ABORT": 1, "QDM": 1, "STAB": 1, "LAUNCH": 1, "ARM": 0}')
+
     print(d)
     print(d.ARM)
     print(d['ARM'])
     print(d)
+
+    print(type('mystr'.encode()))
+
+    # c = SerialComs('/dev/ttyUSB0', 9600)
+    # c.recieve_forever(lambda x: print(f'Message: {x}'))
+
