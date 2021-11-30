@@ -23,7 +23,7 @@ def main():
 
     while True:
         if len(q) > 0:
-            state = json.loads(q.pop(0))
+            state = q.pop(0)
             print("Received new State:")
             color = Fore.GREEN if state["ABORT"] else Fore.RED
             print(str(color) + f"ABORT = {state['ABORT']}")
