@@ -4,6 +4,8 @@ import socket
 import sys
 from .Radio import Radio
 
+from .serialcoms.serialcoms import SerialComs
+
 # Unused for now
 # import zmq
 # import os
@@ -23,6 +25,8 @@ class LSRadio(Radio):
         #                     format='%(asctime)s %(levelname)s:%(message)s')
 
         try:
+            self.serial_com = SerialComs('/dev/ttyUSB0', 9600)
+
             self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.socket.bind(
                 (
@@ -39,6 +43,12 @@ class LSRadio(Radio):
             print("test")
 
     def receive(self):
+        def _rec(m):
+            self.queue.append(m)
+            print(m)
+        self.serial_com.recieve_forever(_rec)
+    
+    def DEPRICATED_SOCKET_receive(self):
         self.socket.listen(300)  # Listen for 5 minutes
         (clientsocket, address) = self.socket.accept()
         self.socket = clientsocket
