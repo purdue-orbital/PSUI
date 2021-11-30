@@ -35,10 +35,10 @@ class SerialComs:
 
     def recieve_forever(self, func: Callable[[str], None]) -> None:
         while True:
-            func(self.ser.read())
+            func(self.ser.read_until())
 
     def write(self, msg: SerialComMessage):
-        self.ser.write(json.dumps(msg.as_dict).encode())
+        self.ser.write(f"{json.dumps(msg.as_dict)}\n".encode())
         self.ser.flush()
         
 
