@@ -1,9 +1,8 @@
 from abc import ABC, abstractmethod
-from enum import Enum
-
+from .coms.serialcoms import SerialComs
 
 class Radio(ABC):
-    def __init__(self, DEBUG=0, hostname='127.0.0.1'):
+    def __init__(self, DEBUG=0, port='/dev/ttyUSB0', baudrate=9600, coms=None):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
@@ -13,8 +12,15 @@ class Radio(ABC):
         self.stab = False
 
         self.__debug = DEBUG
-        self.__hostname = (hostname)
         self.queue = None
+
+        if coms is None:
+            coms = SerialComs
+        
+        try:
+            self._serial_com = coms(port, baudrate)
+        except Exception as e:
+            raise Exception("Failed to create Radio serial coms")
 
     @abstractmethod
     def receive(self):
@@ -55,18 +61,10 @@ class Radio(ABC):
     def DEBUG(self):
         return self.__debug
 
-    def _int_to_dict(self, st):
-        num = int(st)
-        return {label: bool(num & (1 << i))
-                for i, label in enumerate(["ABORT", "LAUNCH", "QDM", "STAB", "ARMED"])}
-
-    def dict_to_int(self, dixt):
-        a = list(dixt.values())
-        sum = 0
-        for x in range(5):
-            sum = sum + (a[x] * (2**x))
-        return sum
+    @property
+    def port(self):
+        return self._serial_com.port
 
     @property
-    def hostname(self):
-        return self.__hostname
+    def baudrate(self):
+        return self._serial_com.baudrate

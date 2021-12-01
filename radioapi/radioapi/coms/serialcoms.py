@@ -4,17 +4,17 @@ import serial
 import json
 
 from dataclasses import dataclass
-from typing import Callable
+from typing import Callable, Union, Optional
 
 
 @dataclass(frozen=True)
 class SerialComMessage:
-    ABORT: bool
-    QDM: bool
-    STAB: bool
-    LAUNCH: bool
-    ABORT: bool
-    ARM: bool
+    ABORT: int
+    QDM: int
+    STAB: int
+    LAUNCH: int
+    ABORT: int
+    ARMED: Optional[int] = None
 
     @classmethod
     def from_string(cls, s: str):
@@ -30,6 +30,8 @@ class SerialComMessage:
 
 class SerialComs:
     def __init__(self, port: str, baudrate: int) -> None:
+        self.__port = port
+        self.__baudrate = baudrate
         self.ser = serial.Serial(port, baudrate)
 
     def recieve_forever(self, func: Callable[[SerialComMessage], None]) -> None:
@@ -37,11 +39,25 @@ class SerialComs:
         while True:
             c = self.ser.read().decode()
             if c == '&':
-                func(SerialComMessage.from_string(msg))
-                msg = ''
+                try:
+                    func(SerialComMessage.from_string(msg))
+                except Exception:
+                    print(f'Invalid Messge Recieved: {msg}')
+                finally:
+                    msg = ''
             else:
                 msg += c
 
-    def write(self, msg: SerialComMessage):
+    def write(self, msg: Union[SerialComMessage, str]):
+        if isinstance(msg, str):
+            msg = SerialComMessage.from_string(msg)
         self.ser.write(f"{json.dumps(msg.as_dict)}&".encode())
         self.ser.flush()
+
+    @property
+    def port(self):
+        return self.__port
+
+    @property
+    def baudrate(self):
+        return self.__baudrate
