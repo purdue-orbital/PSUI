@@ -12,7 +12,7 @@ SERVER_IP = '10.186.74.74'
 def main():
     q = []
     # gsradio = Radio(DEBUG=1, isGroundStation=True
-    gsradio = Radio(hostname=SERVER_IP)
+    gsradio = Radio()
     gsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,
@@ -31,28 +31,32 @@ def main():
 def send_state(radio: Radio):
     states = [
         {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": False,
+            "LAUNCH": 0,
+            "QDM": 0,
+            "ABORT": 0,
+            "STAB": 0,
+            "ARMED": 0,
         },
         {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": True,
+            "LAUNCH": 0,
+            "QDM": 0,
+            "ABORT": 0,
+            "STAB": 1,
+            "ARMED": 0,
         },
         {
-            "LAUNCH": True,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": True,
+            "LAUNCH": 1,
+            "QDM": 0,
+            "ABORT": 0,
+            "STAB": 1,
+            "ARMED": 0,
         },
         {
-            "LAUNCH": True,
-            "QDM": True,
-            "ABORT": False,
-            "STAB": True,
+            "LAUNCH": 1,
+            "QDM": 1,
+            "ABORT": 0,
+            "STAB": 1,
+            "ARMED": 0,
         }
     ]
     for state in states:

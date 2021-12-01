@@ -12,7 +12,7 @@ IP = '0.0.0.0'
 
 def main():
     q = []
-    lsradio = Radio(hostname=IP)
+    lsradio = Radio()
     lsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,
@@ -23,7 +23,7 @@ def main():
 
     while True:
         if len(q) > 0:
-            state = json.loads(q.pop(0))
+            state = q.pop(0)
             print("Received new State:")
             color = Fore.GREEN if state["ABORT"] else Fore.RED
             print(str(color) + f"ABORT = {state['ABORT']}")
@@ -42,28 +42,32 @@ def main():
 def send_state(radio: Radio):
     states = [
         {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": False,
+            "LAUNCH": 0,
+            "QDM": 0,
+            "ABORT": 0,
+            "STAB": 0,
+            "ARMED": 0,
         },
         {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": True,
+            "LAUNCH": 0,
+            "QDM": 0,
+            "ABORT": 0,
+            "STAB": 1,
+            "ARMED": 0,
         },
         {
-            "LAUNCH": True,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": True,
+            "LAUNCH": 1,
+            "QDM": 0,
+            "ABORT": 0,
+            "STAB": 1,
+            "ARMED": 0,
         },
         {
-            "LAUNCH": True,
-            "QDM": True,
-            "ABORT": False,
-            "STAB": True,
+            "LAUNCH": 1,
+            "QDM": 1,
+            "ABORT": 0,
+            "STAB": 1,
+            "ARMED": 0,
         }
     ]
     for state in states:

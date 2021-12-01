@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='radioapi',
-    version='0.0.1',
+    version='0.0.2',
     description='Purdue Orbital Radio API',
     long_description='TODO',
     author='Matt Drozt',
