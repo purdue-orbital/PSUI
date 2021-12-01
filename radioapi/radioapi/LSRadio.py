@@ -22,9 +22,7 @@ class LSRadio(Radio):
             raise Exception("Could not start LS recieve thread") from e
 
     def receive(self) -> None:
-        def _rec(m):
-            self.queue.append(m)
-        self._serial_com.recieve_forever(_rec)
+        self._serial_com.recieve_forever(lambda m: self.queue.append(m))
 
     def send(self, data: Union[dict, str]) -> bool:
         """

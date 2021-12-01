@@ -10,7 +10,7 @@ class GSRadio(Radio):
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
 
-        super().__init__(DEBUG=DEBUG, port=port, baudrate=9600)
+        super().__init__(DEBUG=DEBUG, port=port, baudrate=baudrate)
 
         #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
         try:
@@ -19,9 +19,7 @@ class GSRadio(Radio):
             raise Exception("Could not start GS Recieving Thread") from e
 
     def receive(self) -> None:
-        def _rec(m):
-            self.queue.append(m)
-        self._serial_com.recieve_forever(_rec)
+        self._serial_com.recieve_forever(lambda m: self.queue.append(m))
 
     def send(self, data: Union[dict, str]) -> bool:
         """

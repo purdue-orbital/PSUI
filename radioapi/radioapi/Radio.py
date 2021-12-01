@@ -20,7 +20,7 @@ class Radio(ABC):
         try:
             self._serial_com = coms(port, baudrate)
         except Exception as e:
-            raise Exception("Failed to create Radio serial coms")
+            raise Exception("Failed to create Radio serial coms") from e
 
     @abstractmethod
     def receive(self):
