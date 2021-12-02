@@ -13,7 +13,6 @@ class SerialComMessage:
     QDM: int
     STAB: int
     LAUNCH: int
-    ABORT: int
     ARMED: Optional[int] = None
     DATA: Optional[dict] = None
 
