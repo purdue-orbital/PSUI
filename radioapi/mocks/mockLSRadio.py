@@ -1,6 +1,7 @@
 from radioapi.LSRadio import LSRadio as Radio
 import json
 import time
+import sys
 from colorama import init, Fore
 
 import threading
@@ -12,7 +13,7 @@ IP = '0.0.0.0'
 
 def main():
     q = []
-    lsradio = Radio()
+    lsradio = Radio(port=sys.argv[1] if len(sys.argv) > 1 else '/dev/ttyUSB0')
     lsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,
@@ -42,36 +43,112 @@ def main():
 def send_state(radio: Radio):
     states = [
         {
-            "LAUNCH": 0,
-            "QDM": 0,
-            "ABORT": 0,
-            "STAB": 0,
-            "ARMED": 0,
+            "LAUNCH": False,
+            "QDM": False,
+            "ABORT": False,
+            "STAB": False,
+            "ARMED": False,
+            "DATA":  {
+                "origin": "balloon",
+                "GPS": {
+                    "long": 0,
+                    "lat": 0,
+                    "alt": 0
+                },
+                "gyro": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "temp": 0,
+                "acc": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
         },
         {
-            "LAUNCH": 0,
-            "QDM": 0,
-            "ABORT": 0,
-            "STAB": 1,
-            "ARMED": 0,
+            "LAUNCH": False,
+            "QDM": False,
+            "ABORT": False,
+            "STAB": False,
+            "ARMED": True,
+            "DATA":  {
+                "origin": "balloon",
+                "GPS": {
+                    "long": 0,
+                    "lat": 0,
+                    "alt": 0
+                },
+                "gyro": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "temp": 0,
+                "acc": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
         },
         {
-            "LAUNCH": 1,
-            "QDM": 0,
-            "ABORT": 0,
-            "STAB": 1,
-            "ARMED": 0,
+            "LAUNCH": False,
+            "QDM": False,
+            "ABORT": False,
+            "STAB": True,
+            "ARMED": True,
+            "DATA":  {
+                "origin": "balloon",
+                "GPS": {
+                    "long": 0,
+                    "lat": 0,
+                    "alt": 0
+                },
+                "gyro": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "temp": 0,
+                "acc": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
         },
         {
-            "LAUNCH": 1,
-            "QDM": 1,
-            "ABORT": 0,
-            "STAB": 1,
-            "ARMED": 0,
-        }
+            "LAUNCH": False,
+            "QDM": True,
+            "ABORT": False,
+            "STAB": True,
+            "ARMED": True,
+            "DATA":  {
+                "origin": "balloon",
+                "GPS": {
+                    "long": 0,
+                    "lat": 0,
+                    "alt": 0
+                },
+                "gyro": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                },
+                "temp": 0,
+                "acc": {
+                    "x": 0,
+                    "y": 0,
+                    "z": 0
+                }
+            }
+        },
     ]
     for state in states:
-        radio.send(json.dumps(state))
+        radio.send(state)
         time.sleep(5)
     print("No more states to send!")
 

@@ -2,6 +2,7 @@
 from radioapi.GSRadio import GSRadio as Radio
 import json
 import time
+import sys
 
 import threading
 
@@ -12,7 +13,7 @@ SERVER_IP = '10.186.74.74'
 def main():
     q = []
     # gsradio = Radio(DEBUG=1, isGroundStation=True
-    gsradio = Radio()
+    gsradio = Radio(port=sys.argv[1] if len(sys.argv) > 1 else '/dev/ttyUSB0')
     gsradio.bindQueue(q)
 
     t = threading.Thread(target=send_state,
