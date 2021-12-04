@@ -23,9 +23,9 @@ def main():
 
     while True:
         if len(q) > 0:
-            parsed = json.loads(q.pop(0))
+            parsed = q.pop(0)
             print("Received new Data:")
-            print(json.dumps(parsed, indent=2, sort_keys=True))
+            print(parsed)
         time.sleep(1)
 
 
@@ -61,7 +61,7 @@ def send_state(radio: Radio):
         }
     ]
     for state in states:
-        radio.send(json.dumps(state))
+        radio.send(state)
         time.sleep(5)
     print("No more states to send!")
 
