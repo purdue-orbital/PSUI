@@ -1,6 +1,8 @@
 
 import sys
 import json
+import datetime
+
 from time import sleep
 from pynput import keyboard
 from colorama import init, Fore
@@ -45,8 +47,8 @@ def main(port: str = "/dev/ttyUSB0", baudrate: int = 9600):
         # Receives state changes from LSRadio and displays them
         if len(q) > 0:
             state = q.pop(0)
-            print("Received new State:")
-            print("===========================================")
+            print(f"Received new State ({datetime.datetime.now()}):")
+            print("================================================")
             color = Fore.GREEN if state.ABORT else Fore.RED
             print(str(color) + f"ABORT = {state.ABORT}")
             color = Fore.GREEN if state.LAUNCH else Fore.RED
@@ -60,7 +62,7 @@ def main(port: str = "/dev/ttyUSB0", baudrate: int = 9600):
                     print(f"Data: {json.dumps(state.DATA, indent=2, sort_keys=True)}")
                 except Exception:
                     pass
-            print("===========================================")
+            print("================================================\n\n")
 
             # print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
@@ -173,7 +175,6 @@ def on_press(key, radio, states):
                 "STAB": states[3],
                 "ARMED": states[4],
             })
-            print('Safe to disconeect with ^C! :) ')
 
 
 if __name__ == '__main__':
