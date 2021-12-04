@@ -57,7 +57,9 @@ def main(port: str = "/dev/ttyUSB0", baudrate: int = 9600):
             print(str(color) + f"QDM = {state.QDM}")
             color = Fore.GREEN if state.STAB else Fore.RED
             print(str(color) + f"STAB = {state.STAB}")
-            if state.DATA:
+            if state.ARMED is not None:
+                print(f"ARMED = {state.ARMED}")
+            if state.DATA is not None:
                 try:
                     print(f"Data: {json.dumps(state.DATA, indent=2, sort_keys=True)}")
                 except Exception:
