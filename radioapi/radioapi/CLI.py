@@ -4,8 +4,11 @@ import json
 from time import sleep
 from pynput import keyboard
 from colorama import init, Fore
-from .GSRadio import GSRadio
 
+from .GSRadio import GSRadio
+from .coms.serialcoms import SerialComMessage
+
+from typing import List
 
 PLATFORM_OS = sys.platform
 IS_WINDOWS = True
@@ -18,64 +21,14 @@ if PLATFORM_OS in WINDOWS:
 elif PLATFORM_OS in UNIX or PLATFORM_OS in MAC:
     IS_WINDOWS = False
 
-DELAY = 1 # in seconds
+DELAY = 1  # in seconds
 AUTO_UPDATE_TIME = 60  # in seconds
 init(convert=IS_WINDOWS, autoreset=True)
 
-# old main, not used
 
-
-def main_old():
-    command = "start"
-
-    radio = GSRadio()
-    while command != "quit":
-
-        command = input("Enter command: ")
-        if (command == "A"):
-            # test json sending
-            radio.send(json.dumps({
-                "LAUNCH": False,
-                "QDM": False,
-                "ABORT": True,
-                "STAB": False,
-            }))
-
-        elif command == "S":
-            radio.send(json.dumps({
-                "LAUNCH": False,
-                "QDM": False,
-                "ABORT": False,
-                "STAB": True,
-            }))
-
-        elif command == "Q":
-            radio.send(json.dumps({
-                "LAUNCH": False,
-                "QDM": True,
-                "ABORT": False,
-                "STAB": False,
-            }))
-
-        elif command == "L":
-            radio.send(json.dumps({
-                "LAUNCH": True,
-                "QDM": False,
-                "ABORT": False,
-                "STAB": False,
-            }))
-
-            # recieve return signal then loop again
-        elif command != "quit":
-            print("Invalid command.")
-
-        print("command is " + command)
-
-
-def main(ext_host_name):
-
-    q = []
-    radio = GSRadio(hostname=ext_host_name)
+def main(port: str = "/dev/ttyUSB0", baudrate: int = 9600):
+    q: List[SerialComMessage] = []
+    radio = GSRadio(port=port, baudrate=baudrate)
     radio.bindQueue(q)
 
     # [ABORT, LAUNCH, QDM, STAB, ARMED]
@@ -91,16 +44,23 @@ def main(ext_host_name):
     while True:
         # Receives state changes from LSRadio and displays them
         if len(q) > 0:
-            state = json.loads(q.pop(0))
+            state = q.pop(0)
             print("Received new State:")
-            color = Fore.GREEN if state["ABORT"] else Fore.RED
-            print(str(color) + f"ABORT = {state['ABORT']}")
-            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
-            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
-            color = Fore.GREEN if state["QDM"] else Fore.RED
-            print(str(color) + f"QDM = {state['QDM']}")
-            color = Fore.GREEN if state["STAB"] else Fore.RED
-            print(str(color) + f"STAB = {state['STAB']}")
+            print("===========================================")
+            color = Fore.GREEN if state.ABORT else Fore.RED
+            print(str(color) + f"ABORT = {state.ABORT}")
+            color = Fore.GREEN if state.LAUNCH else Fore.RED
+            print(str(color) + f"LAUNCH = {state.LAUNCH}")
+            color = Fore.GREEN if state.QDM else Fore.RED
+            print(str(color) + f"QDM = {state.QDM}")
+            color = Fore.GREEN if state.STAB else Fore.RED
+            print(str(color) + f"STAB = {state.STAB}")
+            if state.DATA:
+                try:
+                    print(f"Data: {json.dumps(state.DATA, indent=2, sort_keys=True)}")
+                except Exception:
+                    pass
+            print("===========================================")
 
             # print(json.dumps(parsed, indent=2, sort_keys=True))
         sleep(DELAY)
@@ -108,13 +68,13 @@ def main(ext_host_name):
 
         # Resend current state every AUTO_UPDATE_TIME seconds
         if count >= AUTO_UPDATE_TIME // DELAY:
-            radio.send(json.dumps({
+            radio.send({
                 "ABORT": states[0],
                 "LAUNCH": states[1],
                 "QDM": states[2],
                 "STAB": states[3],
                 "ARMED": states[4],
-            }))
+            })
             count = 0
 
 
@@ -206,13 +166,13 @@ def on_press(key, radio, states):
             canSend = False
 
         if canSend:
-            radio.send(json.dumps({
+            radio.send({
                 "ABORT": states[0],
                 "LAUNCH": states[1],
                 "QDM": states[2],
                 "STAB": states[3],
                 "ARMED": states[4],
-            }))
+            })
             print('Safe to disconeect with ^C! :) ')
 
 
