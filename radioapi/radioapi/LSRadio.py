@@ -1,7 +1,4 @@
 import threading as thread
-
-from typing import Union
-
 from .Radio import Radio
 
 
@@ -24,7 +21,7 @@ class LSRadio(Radio):
     def receive(self) -> None:
         self._serial_com.recieve_forever(lambda m: self.queue.append(m))
 
-    def send(self, data: Union[dict, str]) -> bool:
+    def send(self, data: dict) -> bool:
         """
         Sends JSON formatted data to the socket attached to radio interface.
         For single variable values, do not exceed one layer of depth.
@@ -35,7 +32,7 @@ class LSRadio(Radio):
         Ground Station must append state.
         """
         try:
-            self._serial_com.write(str(data))
+            self._serial_com.write(data)
             return True
         except Exception:
             return False

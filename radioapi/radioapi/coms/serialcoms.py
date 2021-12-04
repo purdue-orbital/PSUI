@@ -13,8 +13,8 @@ class SerialComMessage:
     QDM: int
     STAB: int
     LAUNCH: int
-    ABORT: int
     ARMED: Optional[int] = None
+    DATA: Optional[dict] = None
 
     @classmethod
     def from_string(cls, s: str):
@@ -37,7 +37,7 @@ class SerialComs:
     def recieve_forever(self, func: Callable[[SerialComMessage], None]) -> None:
         msg = ''
         while True:
-            c = self.ser.read().decode()
+            c = self.ser.read().decode(errors='ignore')
             if c == '&':
                 try:
                     func(SerialComMessage.from_string(msg))
@@ -48,7 +48,9 @@ class SerialComs:
             else:
                 msg += c
 
-    def write(self, msg: Union[SerialComMessage, str]):
+    def write(self, msg: Union[SerialComMessage, str, dict]):
+        if isinstance(msg, dict):
+            msg = json.dumps(msg)
         if isinstance(msg, str):
             msg = SerialComMessage.from_string(msg)
         self.ser.write(f"{json.dumps(msg.as_dict)}&".encode())
