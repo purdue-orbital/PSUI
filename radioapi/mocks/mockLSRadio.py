@@ -1,6 +1,6 @@
 from typing import List
-from radioapi.LSRadio import LSRadio as Radio
-from radioapi.coms.serialcoms import SerialComMessage
+from radioapi import LSRadio as Radio
+from radioapi.coms import ComMessage
 
 import time
 import sys
@@ -11,7 +11,7 @@ DELAY = 1
 
 
 def main():
-    q: List[SerialComMessage] = []
+    q: List[ComMessage] = []
     lsradio = Radio(port=sys.argv[1] if len(sys.argv) > 1 else '/dev/ttyUSB0')
     lsradio.bindQueue(q)
 

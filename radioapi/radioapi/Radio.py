@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from .coms.serialcoms import SerialComMessage, SerialComs
+from .coms import SerialComs, ComMessage
 
 class Radio(ABC):
     def __init__(self, DEBUG=0, port='/dev/ttyUSB0', baudrate=9600, coms=None):
@@ -61,7 +61,7 @@ class Radio(ABC):
     def getArmedFlag(self):
         return self.armed
 
-    def set_flags(self, m: SerialComMessage):
+    def set_flags(self, m: ComMessage):
         """
         Function to bulk set status flags on the radio
         """

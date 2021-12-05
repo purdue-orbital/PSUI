@@ -1,6 +1,6 @@
 import threading as thread
 
-from .coms.serialcoms import SerialComMessage
+from .coms import ComMessage
 from .Radio import Radio
 
 
@@ -21,10 +21,10 @@ class LSRadio(Radio):
             raise Exception("Could not start LS recieve thread") from e
 
     def receive(self) -> None:
-        def _r(m: SerialComMessage) -> None:
+        def _r(m: ComMessage) -> None:
             self.set_flags(m)
             self.queue.append(m)
-        self._serial_com.recieve_forever(_r)
+        self._serial_com.read_forever(_r)
 
     def send(self, data: dict) -> bool:
         """

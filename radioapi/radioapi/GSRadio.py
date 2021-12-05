@@ -1,7 +1,7 @@
 import threading as thread
 
 from .Radio import Radio
-from .coms.serialcoms import SerialComMessage
+from .coms import ComMessage
 
 
 class GSRadio(Radio):
@@ -19,10 +19,10 @@ class GSRadio(Radio):
             raise Exception("Could not start GS Recieving Thread") from e
 
     def receive(self) -> None:
-        def _r(m: SerialComMessage) -> None:
+        def _r(m: ComMessage) -> None:
             self.set_flags(m)
             self.queue.append(m)
-        self._serial_com.recieve_forever(_r)
+        self._serial_com.read_forever(_r)
 
     def send(self, data: dict) -> bool:
         """

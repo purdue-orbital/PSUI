@@ -8,7 +8,7 @@ from pynput import keyboard
 from colorama import init, Fore
 
 from .GSRadio import GSRadio
-from .coms.serialcoms import SerialComMessage
+from .coms import ComMessage
 
 from typing import List
 
@@ -29,7 +29,7 @@ init(convert=IS_WINDOWS, autoreset=True)
 
 
 def main(port: str = "/dev/ttyUSB0", baudrate: int = 9600):
-    q: List[SerialComMessage] = []
+    q: List[ComMessage] = []
     radio = GSRadio(port=port, baudrate=baudrate)
     radio.bindQueue(q)
 
