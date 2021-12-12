@@ -16,6 +16,7 @@ class ComMessageParseError(ValueError):
 @dataclass(frozen=True)
 class ComMessage:
     """Message Specs to be sent by Coms"""
+
     ABORT: int
     QDM: int
     STAB: int

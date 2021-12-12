@@ -14,16 +14,16 @@ class SerialComs(Coms):
         self.ser = serial.Serial(port, baudrate)
 
     def read_forever(self, func: Callable[[ComMessage], None]) -> None:
-        msg = ''
+        msg = ""
         while True:
-            c = self.ser.read().decode(errors='ignore')
-            if c == '&':
+            c = self.ser.read().decode(errors="ignore")
+            if c == "&":
                 try:
                     func(ComMessage.from_string(msg))
                 except Exception:
-                    print(f'Invalid Messge Recieved: {msg}')
+                    print(f"Invalid Messge Recieved: {msg}")
                 finally:
-                    msg = ''
+                    msg = ""
             else:
                 msg += c
 
