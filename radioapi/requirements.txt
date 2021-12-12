@@ -17,7 +17,6 @@ pynput==1.7.3
 pyserial==3.5
 python-xlib==0.31
 pyzmq==22.0.3
--e git+https://github.com/purdue-orbital/PSUI.git@765231bb540cd668d56200ad3951cc31bd00655e#egg=radioapi&subdirectory=radioapi
 six==1.15.0
 toml==0.10.2
 tomli==1.2.2
