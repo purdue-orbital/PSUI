@@ -5,14 +5,14 @@ from .coms import ComMessage
 
 
 class GSRadio(Radio):
-    def __init__(self, DEBUG=0, port='/dev/ttyUSB0', baudrate=9600):
+    def __init__(self, DEBUG=0, port="/dev/ttyUSB0", baudrate=9600):
         """
         DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
         """
 
         super().__init__(DEBUG=DEBUG, port=port, baudrate=baudrate)
 
-        #logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
+        # logging.basicConfig(level=(logging.INFO, logging.DEBUG)[self.DEBUG > 0], filename='mission.log', format='%(asctime)s %(levelname)s:%(message)s')
         try:
             thread.Thread(target=self.receive, daemon=True).start()
         except Exception as e:
@@ -22,6 +22,7 @@ class GSRadio(Radio):
         def _r(m: ComMessage) -> None:
             self.set_flags(m)
             self.queue.append(m)
+
         self._serial_com.read_forever(_r)
 
     def send(self, data: dict) -> bool:

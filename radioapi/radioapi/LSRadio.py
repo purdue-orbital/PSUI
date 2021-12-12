@@ -5,9 +5,11 @@ from .Radio import Radio
 
 
 class LSRadio(Radio):
-    def __init__(self, DEBUG=0, port='/dev/ttyUSB0', baudrate=9600):
+    def __init__(self, DEBUG=0, port="/dev/ttyUSB0", baudrate=9600):
         """
-        DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
+        DEBUG 0 is for communication between two computers, for which hostname
+        must also be defined. DEBUG 1 is for local communication uses localhost
+        hostname.
         """
         super().__init__(DEBUG=DEBUG, port=port, baudrate=baudrate)
 
@@ -24,6 +26,7 @@ class LSRadio(Radio):
         def _r(m: ComMessage) -> None:
             self.set_flags(m)
             self.queue.append(m)
+
         self._serial_com.read_forever(_r)
 
     def send(self, data: dict) -> bool:
@@ -32,7 +35,8 @@ class LSRadio(Radio):
         For single variable values, do not exceed one layer of depth.
         For multi-variable values, do not exceed two layers of depth.
 
-        JSON formatting is maintained by Matt Drozt. TODO: Example will be included at a later date.
+        JSON formatting is maintained by Matt Drozt.
+        TODO: Example will be included at a later date.
 
         Ground Station must append state.
         """

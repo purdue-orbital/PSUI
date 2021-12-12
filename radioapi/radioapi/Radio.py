@@ -1,10 +1,13 @@
 from abc import ABC, abstractmethod
 from .coms import SerialComs, ComMessage
 
+
 class Radio(ABC):
-    def __init__(self, DEBUG=0, port='/dev/ttyUSB0', baudrate=9600, coms=None):
+    def __init__(self, DEBUG=0, port="/dev/ttyUSB0", baudrate=9600, coms=None):
         """
-        DEBUG 0 is for communication between two computers, for which hostname must also be defined. DEBUG 1 is for local communication uses localhost hostname.
+        DEBUG 0 is for communication between two computers, for which hostname
+        must also be defined. DEBUG 1 is for local communication uses localhost
+        hostname.
         """
         self.launch = False
         self.qdm = False
@@ -17,7 +20,7 @@ class Radio(ABC):
 
         if coms is None:
             coms = SerialComs
-        
+
         try:
             self._serial_com = coms(port, baudrate)
         except Exception as e:
@@ -34,7 +37,8 @@ class Radio(ABC):
         For single variable values, do not exceed one layer of depth.
         For multi-variable values, do not exceed two layers of depth.
 
-        JSON formatting is maintained by Matt Drozt. TODO: Example will be included at a later date.
+        JSON formatting is maintained by Matt Drozt.
+        TODO: Example will be included at a later date.
 
         Ground Station must append state.
         """
