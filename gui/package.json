@@ -15,8 +15,8 @@
     "electron-squirrel-startup": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^4.0.3"
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "^5.0.0"
   },
   "main": "electron/main.js",
   "homepage": "./",
@@ -54,7 +54,7 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.54",
     "@electron-forge/maker-zip": "^6.0.0-beta.54",
     "concurrently": "^6.2.0",
-    "electron": "^13.1.5",
+    "electron": "^16.0.5",
     "rimraf": "^3.0.2",
     "wait-on": "^6.0.0"
   },
