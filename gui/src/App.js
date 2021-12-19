@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 
 import MainPage from './pages/MainPage/MainPage.js';
 import MultigraphPage from './pages/MultigraphPage/MultigraphPage.js'
@@ -47,8 +47,10 @@ class App extends React.Component {
     const currData = this.state.currData;
     return (
       <HashRouter>
-        <Route exact path="/" render={props => <MainPage {...props} ref={this.pageRef} currentData={currData} testMode={isTestMode} />} />
-        <Route path="/multigraph" render={props => <MultigraphPage {...props} ref={this.pageRef} currentData={currData} />} />
+        <Routes>
+          <Route exact path="/" element={<MainPage ref={this.pageRef} currentData={currData} testMode={isTestMode} />} />
+          <Route path="/multigraph" element={<MultigraphPage ref={this.pageRef} currentData={currData} />} />
+        </Routes>
       </HashRouter>
     );
   }
