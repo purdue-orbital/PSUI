@@ -1,8 +1,7 @@
 import json
-import serial
-import json
-
 from typing import Callable
+
+import serial
 
 from .coms import ComMessage, Coms, ParsableComType, construct_message
 

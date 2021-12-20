@@ -1,11 +1,9 @@
 from __future__ import annotations
 
-from abc import ABC
-import json
-
 import dataclasses
+import json
+from abc import ABC
 from dataclasses import dataclass
-
 from typing import Callable, Optional, Union
 
 
