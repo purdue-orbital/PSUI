@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-
-from .coms import ComMessage, SerialComs
+from .coms import SerialComsDriver, ComsMessage
 
 
 class Radio(ABC):
@@ -20,7 +19,7 @@ class Radio(ABC):
         self.queue = None
 
         if coms is None:
-            coms = SerialComs
+            coms = SerialComsDriver
 
         try:
             self._serial_com = coms(port, baudrate)
@@ -66,7 +65,7 @@ class Radio(ABC):
     def getArmedFlag(self):
         return self.armed
 
-    def set_flags(self, m: ComMessage):
+    def set_flags(self, m: ComsMessage):
         """
         Function to bulk set status flags on the radio
         """
