@@ -1,6 +1,16 @@
-from typing import Any, Callable
-from ..drivers import BaseComsDriver
-from ..messages import ComsMessage
+from __future__ import annotations
+
+from typing import Any, Callable, TYPE_CHECKING, Protocol
+
+
+if TYPE_CHECKING:
+    from ..messages import ComsMessage
+    from ..drivers import BaseComsDriver
+
+
+class ComsSubscriberLike(Protocol):
+    def update(self, message: ComsMessage, driver: BaseComsDriver) -> Any:
+        ...
 
 
 class ComsSubscription:

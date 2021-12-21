@@ -1,7 +1,6 @@
 from .drivers import (
     BaseComsDriver,
     ComsDriverReadLooop,
-    ComsSubscriberLike,
     LocalComsDriver,
     SerialComsDriver,
 )
@@ -18,6 +17,7 @@ from .messages import (
 )
 
 from .subscribers import (
+    ComsSubscriberLike,
     ComsSubscription,
     OneTimeComsSubscription,
 )
@@ -25,7 +25,6 @@ from .subscribers import (
 __all__ = [
     "BaseComsDriver",
     "ComsDriverReadLooop",
-    "ComsSubscriberLike",
     "LocalComsDriver",
     "SerialComsDriver",
     "ComsMessageParseError",
@@ -33,6 +32,7 @@ __all__ = [
     "ParsableComType",
     "ComsMessage",
     "construct_message",
+    "ComsSubscriberLike",
     "ComsSubscription",
     "OneTimeComsSubscription",
 ]

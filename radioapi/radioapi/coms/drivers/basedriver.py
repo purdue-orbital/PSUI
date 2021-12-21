@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Optional, Protocol, Set, Union
+from typing import TYPE_CHECKING, Any, Callable, Optional, Set, Union
 
 from threading import Condition, Event, Thread
 
-from ..messages import ComsMessage, ParsableComType
 from ..errors import ComsDriverReadError
+from ..subscribers import OneTimeComsSubscription
+
+if TYPE_CHECKING:
+    from ..subscribers import ComsSubscriberLike
+    from ..messages import ComsMessage, ParsableComType
 
 
 class BaseComsDriver(ABC):
@@ -46,8 +50,6 @@ class BaseComsDriver(ABC):
             with cv:
                 message = m
                 cv.notify()
-
-        from ..subscribers import OneTimeComsSubscription
 
         self.register_subscriber(OneTimeComsSubscription(_get_next))
         with cv:
@@ -98,8 +100,3 @@ class ComsDriverReadLooop(Thread):
     def stop(self, timeout: Union[float, None] = None) -> None:
         self._stop_event.set()
         self.join(timeout=timeout)
-
-
-class ComsSubscriberLike(Protocol):
-    def update(self, message: ComsMessage, driver: BaseComsDriver) -> Any:
-        ...
