@@ -4,22 +4,24 @@ import json
 
 from typing import Callable
 
-from .coms import ComMessage, Coms, ParsableComType, construct_message
+from ..messages import ComsMessage, ParsableComType, construct_message
+from .basedriver import BaseComsDriver
 
+# TODO: This file needs to comply with the new ComsDriver Format
 
-class SerialComs(Coms):
+class SerialComsDriver(BaseComsDriver):
     def __init__(self, port: str, baudrate: int) -> None:
         self.__port = port
         self.__baudrate = baudrate
         self.ser = serial.Serial(port, baudrate)
 
-    def read_forever(self, func: Callable[[ComMessage], None]) -> None:
+    def read_forever(self, func: Callable[[ComsMessage], None]) -> None:
         msg = ""
         while True:
             c = self.ser.read().decode(errors="ignore")
             if c == "&":
                 try:
-                    func(ComMessage.from_string(msg))
+                    func(ComsMessage.from_string(msg))
                 except Exception:
                     print(f"Invalid Messge Recieved: {msg}")
                 finally:

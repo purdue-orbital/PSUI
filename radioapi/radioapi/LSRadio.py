@@ -1,6 +1,6 @@
 import threading as thread
 
-from .coms import ComMessage
+from .coms import ComsMessage
 from .Radio import Radio
 
 
@@ -23,7 +23,7 @@ class LSRadio(Radio):
             raise Exception("Could not start LS recieve thread") from e
 
     def receive(self) -> None:
-        def _r(m: ComMessage) -> None:
+        def _r(m: ComsMessage) -> None:
             self.set_flags(m)
             self.queue.append(m)
 
