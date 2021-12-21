@@ -7,7 +7,15 @@ from threading import Condition, Event, Thread
 import dataclasses
 from dataclasses import dataclass
 
-from typing import Any, Callable, Iterable, Mapping, Optional, Protocol, Set, Union
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    Optional,
+    Protocol,
+    Set,
+    Union,
+)
 
 
 class ComMessageParseError(ValueError):
@@ -23,24 +31,24 @@ class ComMessage:
     STAB: int
     LAUNCH: int
     ARMED: Optional[int] = None
-    DATA: Optional[dict] = None
+    DATA: Optional[Dict[str, Any]] = None
 
     @classmethod
     def from_string(cls, s: str) -> ComMessage:
         return cls(**json.loads(s))
 
-    def __getitem__(self, _item):
+    def __getitem__(self, _item: str) -> Any:
         return self.as_dict[_item]
 
     @property
-    def as_dict(self) -> dict:
+    def as_dict(self) -> Dict[str, Any]:
         return dataclasses.asdict(self)
 
 
 ParsableComType = Union[ComMessage, str, dict]
 
 
-def construct_message(m: ParsableComType):
+def construct_message(m: ParsableComType) -> ComMessage:
     try:
         if isinstance(m, ComMessage):
             return m
@@ -92,7 +100,7 @@ class ComsDriverReadLooop(Thread):
             self.read()
             self._stop_event.wait(1)
 
-    def stop(self, timeout: Union[float, None] = None):
+    def stop(self, timeout: Union[float, None] = None) -> None:
         self._stop_event.set()
         self.join(timeout=timeout)
 
@@ -114,7 +122,7 @@ class ComsDriver(ABC):
             self._read_loop.join()
         return self._read_loop
 
-    def end_read_loop(self):
+    def end_read_loop(self) -> None:
         if self._read_loop:
             if self._read_loop.is_alive():
                 self._read_loop.stop()
@@ -129,7 +137,7 @@ class ComsDriver(ABC):
         cv = Condition()
         message: Optional[ComMessage] = None
 
-        def _get_next(m: ComMessage):
+        def _get_next(m: ComMessage) -> None:
             nonlocal message
             with cv:
                 message = m
@@ -160,6 +168,6 @@ class ComsDriver(ABC):
         if sub in self.subscrbers:
             self.subscrbers.remove(sub)
 
-    def _notify_subscribers(self, m: ComMessage):
+    def _notify_subscribers(self, m: ComMessage) -> None:
         for s in self.subscrbers.copy():
             s.update(m, self)
