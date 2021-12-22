@@ -41,6 +41,10 @@ class BaseComsDriver(ABC):
             lambda: self._notify_subscribers(self._read()), daemon=True
         )
 
+    @property
+    def is_reading(self) -> bool:
+        return self._read_loop and self._read_loop.is_alive()
+
     def read(self) -> ComsMessage:
         cv = Condition()
         message: Optional[ComsMessage] = None
