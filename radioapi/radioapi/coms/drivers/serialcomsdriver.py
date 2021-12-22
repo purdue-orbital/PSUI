@@ -1,6 +1,7 @@
 import json
 import serial
 
+import serial
 from ..messages import ComsMessage, ParsableComType, construct_message
 from .basedriver import BaseComsDriver
 

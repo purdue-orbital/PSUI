@@ -1,5 +1,6 @@
-import radioapi.CLI as cli
 import sys
+
+import radioapi.CLI as cli
 
 
 def main():

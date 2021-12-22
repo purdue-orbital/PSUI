@@ -1,2 +1,2 @@
-from .LSRadio import LSRadio
 from .GSRadio import GSRadio
+from .LSRadio import LSRadio

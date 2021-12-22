@@ -1,15 +1,14 @@
-import sys
-import json
 import datetime
-
+import json
+import sys
 from time import sleep
-from pynput import keyboard
-from colorama import init, Fore
-
-from .GSRadio import GSRadio
-from .coms import ComMessage
-
 from typing import List
+
+from colorama import Fore, init
+from pynput import keyboard
+
+from .coms import ComMessage
+from .GSRadio import GSRadio
 
 PLATFORM_OS = sys.platform
 IS_WINDOWS = True
