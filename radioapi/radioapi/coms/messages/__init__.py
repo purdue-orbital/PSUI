@@ -1,8 +1,4 @@
-from .message import (
-    ParsableComType,
-    ComsMessage,
-    construct_message,
-)
+from .message import ComsMessage, ParsableComType, construct_message
 
 __all__ = [
     "ParsableComType",

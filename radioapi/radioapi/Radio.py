@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
-from .coms import SerialComsDriver, ComsMessage
+
+from .coms import ComsMessage, SerialComsDriver
 
 
 class Radio(ABC):

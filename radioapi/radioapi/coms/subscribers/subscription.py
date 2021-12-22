@@ -1,11 +1,10 @@
 from __future__ import annotations
 
-from typing import Any, Callable, TYPE_CHECKING, Protocol
-
+from typing import TYPE_CHECKING, Any, Callable, Protocol
 
 if TYPE_CHECKING:
-    from ..messages import ComsMessage
     from ..drivers import BaseComsDriver
+    from ..messages import ComsMessage
 
 
 class ComsSubscriberLike(Protocol):

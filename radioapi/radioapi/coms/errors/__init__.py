@@ -1,7 +1,4 @@
-from .errors import (
-    ComsMessageParseError,
-    ComsDriverReadError,
-)
+from .errors import ComsDriverReadError, ComsMessageParseError
 
 __all__ = [
     "ComsMessageParseError",

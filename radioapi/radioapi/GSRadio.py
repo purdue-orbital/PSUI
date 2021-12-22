@@ -1,7 +1,7 @@
 import threading as thread
 
-from .Radio import Radio
 from .coms import ComsMessage
+from .Radio import Radio
 
 
 class GSRadio(Radio):

@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
 import dataclasses
-
 import json
+from dataclasses import dataclass
 from typing import Any, Dict, Optional, Union
 
 from ..errors.errors import ComsMessageParseError

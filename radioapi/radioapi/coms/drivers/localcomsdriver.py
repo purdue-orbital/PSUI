@@ -1,10 +1,10 @@
 from __future__ import annotations
-from typing import List, Set, Tuple
 
 from time import sleep
+from typing import List, Set, Tuple
 
-from .basedriver import BaseComsDriver
 from ..messages import ComsMessage, ParsableComType, construct_message
+from .basedriver import BaseComsDriver
 
 
 class LocalComsDriver(BaseComsDriver):

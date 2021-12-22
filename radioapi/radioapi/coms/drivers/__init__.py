@@ -1,8 +1,4 @@
-from .basedriver import (
-    BaseComsDriver,
-    ComsDriverReadLooop,
-)
-
+from .basedriver import BaseComsDriver, ComsDriverReadLooop
 from .localcomsdriver import LocalComsDriver
 from .serialcomsdriver import SerialComsDriver
 

@@ -1,16 +1,15 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import TYPE_CHECKING, Any, Callable, Optional, Set, Union
-
 from threading import Condition, Event, Thread
+from typing import TYPE_CHECKING, Any, Callable, Optional, Set, Union
 
 from ..errors import ComsDriverReadError
 from ..subscribers import OneTimeComsSubscription
 
 if TYPE_CHECKING:
-    from ..subscribers import ComsSubscriberLike
     from ..messages import ComsMessage, ParsableComType
+    from ..subscribers import ComsSubscriberLike
 
 
 class BaseComsDriver(ABC):
