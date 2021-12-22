@@ -1,13 +1,9 @@
 import json
 import serial
-import json
-
-from typing import Callable
 
 from ..messages import ComsMessage, ParsableComType, construct_message
 from .basedriver import BaseComsDriver
 
-# TODO: This file needs to comply with the new ComsDriver Format
 
 class SerialComsDriver(BaseComsDriver):
     def __init__(self, port: str, baudrate: int) -> None:
@@ -15,13 +11,13 @@ class SerialComsDriver(BaseComsDriver):
         self.__baudrate = baudrate
         self.ser = serial.Serial(port, baudrate)
 
-    def read_forever(self, func: Callable[[ComsMessage], None]) -> None:
+    def _read(self) -> ComsMessage:
         msg = ""
         while True:
             c = self.ser.read().decode(errors="ignore")
             if c == "&":
                 try:
-                    func(ComsMessage.from_string(msg))
+                    return ComsMessage.from_string(msg)
                 except Exception:
                     print(f"Invalid Messge Recieved: {msg}")
                 finally:
@@ -29,15 +25,15 @@ class SerialComsDriver(BaseComsDriver):
             else:
                 msg += c
 
-    def write(self, msg: ParsableComType):
+    def _write(self, msg: ParsableComType) -> None:
         m = construct_message(msg)
         self.ser.write(f"{json.dumps(m.as_dict)}&".encode())
         self.ser.flush()
 
     @property
-    def port(self):
+    def port(self) -> str:
         return self.__port
 
     @property
-    def baudrate(self):
+    def baudrate(self) -> int:
         return self.__baudrate

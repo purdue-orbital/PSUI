@@ -23,10 +23,9 @@ class LocalComsDriver(BaseComsDriver):
                 return self._messages.pop(0)
             sleep(1)
 
-    def _write(self, m: ParsableComType) -> bool:
+    def _write(self, m: ParsableComType) -> None:
         for l in self._listening:
             l._messages.append(construct_message(m))
-        return True
 
     def listen_to(self, com: LocalComsDriver) -> None:
         com._listening.add(self)

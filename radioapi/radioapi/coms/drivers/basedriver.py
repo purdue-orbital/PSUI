@@ -62,11 +62,17 @@ class BaseComsDriver(ABC):
     def _read(self) -> ComsMessage:
         pass
 
-    def write(self, m: ParsableComType) -> bool:
-        return self._write(m)
+    def write(self, m: ParsableComType, suppress_errors: bool = False) -> bool:
+        try:
+            self._write(m)
+            return True
+        except Exception:
+            if suppress_errors:
+                return False
+            raise
 
     @abstractmethod
-    def _write(self, m: ParsableComType) -> bool:
+    def _write(self, m: ParsableComType) -> None:
         pass
 
     def register_subscriber(self, sub: ComsSubscriberLike) -> None:
