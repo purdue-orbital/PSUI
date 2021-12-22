@@ -21,14 +21,15 @@ enddev:
 init:
 	${PIP} install -r requirements.txt
 
+style:
+	black radioapi --exclude radioapi/_deprecated
+
 venv:
 	$(PY) -m venv venv
 
 reqs:
 	${PIP} uninstall -y radioapi
 	${PIP} freeze > requirements.txt
-	
-
 
 help:
 	@echo "COMMANDS:"
@@ -39,4 +40,5 @@ help:
 	@echo "  enddev:  Remove links to package for hot development changes"
 	@echo "  init:    Install the requirements in the current enviornment"
 	@echo "  venv:    Create a virtual enviornment for the project"
+	@echo "  style:   Format the code base to meet pep8 standards"
 	@echo "  reqs:    Add all requirements to the requirements.txt file"

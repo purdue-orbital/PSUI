@@ -1,6 +1,5 @@
 # from radioapi._deprecated.radios.RadioAlpha2 import Radio
-from radioapi.GSRadio import GSRadio as Radio
-import json
+from radioapi import GSRadio as Radio
 import time
 import sys
 

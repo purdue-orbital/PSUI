@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=42.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# mypy configuration
+[tool.mypy]
+python_version = "3.8"
+namespace_packages = true
+files = "radioapi"
+
+[[tool.mypy.overrides]]
+module = "radioapi._deprecated.*"
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+module = [
+  "flask-cors",
+  "serial",
+  "colorama",
+  "pynput",
+]
+ignore_missing_imports = true

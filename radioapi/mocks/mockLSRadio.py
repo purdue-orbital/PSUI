@@ -1,21 +1,21 @@
-from radioapi.LSRadio import LSRadio as Radio
-import json
+from typing import List
+from radioapi import LSRadio as Radio
+from radioapi.coms import ComMessage
+
 import time
 import sys
-from colorama import init, Fore
-
 import threading
+import random
 
 DELAY = 1
-init(convert=True, autoreset=True)
-IP = '0.0.0.0'
 
 
 def main():
-    q = []
+    q: List[ComMessage] = []
     lsradio = Radio(port=sys.argv[1] if len(sys.argv) > 1 else '/dev/ttyUSB0')
     lsradio.bindQueue(q)
 
+    print("Starting")
     t = threading.Thread(target=send_state,
                          args=(lsradio, ),
                          daemon=True)
@@ -25,15 +25,15 @@ def main():
     while True:
         if len(q) > 0:
             state = q.pop(0)
+            print("===============================")
             print("Received new State:")
-            color = Fore.GREEN if state["ABORT"] else Fore.RED
-            print(str(color) + f"ABORT = {state['ABORT']}")
-            color = Fore.GREEN if state["LAUNCH"] else Fore.RED
-            print(str(color) + f"LAUNCH = {state['LAUNCH']}")
-            color = Fore.GREEN if state["QDM"] else Fore.RED
-            print(str(color) + f"QDM = {state['QDM']}")
-            color = Fore.GREEN if state["STAB"] else Fore.RED
-            print(str(color) + f"STAB = {state['STAB']}")
+            print("===============================")
+            print(f"ARMED = {state.ARMED}")
+            print(f"ABORT = {state.ABORT}")
+            print(f"LAUNCH = {state.LAUNCH}")
+            print(f"QDM = {state.QDM}")
+            print(f"STAB = {state.STAB}")
+            print("===============================\n\n")
             # parsed = json.loads(q.pop(0))
             # print("Received State:")
             # print(json.dumps(parsed, indent=2, sort_keys=True))
@@ -41,116 +41,35 @@ def main():
 
 
 def send_state(radio: Radio):
-    states = [
-        {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": False,
-            "ARMED": False,
+    while True:
+        if not radio.send({
+            "LAUNCH": radio.getLaunchFlag(),
+            "QDM": radio.getQDMFlag(),
+            "ABORT": radio.getAbortFlag(),
+            "STAB": radio.getStabFlag(),
+            "ARMED": radio.getArmedFlag(),
             "DATA":  {
                 "origin": "balloon",
                 "GPS": {
-                    "long": 0,
-                    "lat": 0,
-                    "alt": 0
+                "long": random.uniform(0, 1),
+                "lat": random.uniform(0, 1),
+                "alt": random.uniform(0, 1),
                 },
                 "gyro": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
+                "x": random.uniform(0, 1),
+                "y": random.uniform(0, 1),
+                "z": random.uniform(0, 1),
                 },
-                "temp": 0,
+                "temp": random.uniform(0, 1),
                 "acc": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
+                "x": random.uniform(0, 1),
+                "y": random.uniform(0, 1),
+                "z": random.uniform(0, 1),
                 }
             }
-        },
-        {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": False,
-            "ARMED": True,
-            "DATA":  {
-                "origin": "balloon",
-                "GPS": {
-                    "long": 0,
-                    "lat": 0,
-                    "alt": 0
-                },
-                "gyro": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                },
-                "temp": 0,
-                "acc": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                }
-            }
-        },
-        {
-            "LAUNCH": False,
-            "QDM": False,
-            "ABORT": False,
-            "STAB": True,
-            "ARMED": True,
-            "DATA":  {
-                "origin": "balloon",
-                "GPS": {
-                    "long": 0,
-                    "lat": 0,
-                    "alt": 0
-                },
-                "gyro": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                },
-                "temp": 0,
-                "acc": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                }
-            }
-        },
-        {
-            "LAUNCH": False,
-            "QDM": True,
-            "ABORT": False,
-            "STAB": True,
-            "ARMED": True,
-            "DATA":  {
-                "origin": "balloon",
-                "GPS": {
-                    "long": 0,
-                    "lat": 0,
-                    "alt": 0
-                },
-                "gyro": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                },
-                "temp": 0,
-                "acc": {
-                    "x": 0,
-                    "y": 0,
-                    "z": 0
-                }
-            }
-        },
-    ]
-    for state in states:
-        radio.send(state)
-        time.sleep(5)
-    print("No more states to send!")
+        }):
+            print("WARNING: Failed to send state!")
+        time.sleep(1)
 
 
 if __name__ == "__main__":

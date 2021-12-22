@@ -1,5 +1,6 @@
-import radioapi.CLI as cli
 import sys
+
+import radioapi.CLI as cli
 
 
 def main():
@@ -10,5 +11,5 @@ def main():
     cli.main(port)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
