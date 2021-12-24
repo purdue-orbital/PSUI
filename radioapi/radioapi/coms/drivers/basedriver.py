@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from threading import Condition, Event, Thread
-from typing import TYPE_CHECKING, Any, Callable, Optional, Set, Union
+from typing import TYPE_CHECKING, Any, Callable, Optional, Set
 
 from ..errors import ComsDriverReadError
 from ..subscribers import OneTimeComsSubscription
@@ -42,7 +42,7 @@ class BaseComsDriver(ABC):
 
     @property
     def is_reading(self) -> bool:
-        return self._read_loop and self._read_loop.is_alive()
+        return self._read_loop is not None and self._read_loop.is_alive()
 
     def read(self) -> ComsMessage:
         cv = Condition()
@@ -63,7 +63,7 @@ class BaseComsDriver(ABC):
 
     @abstractmethod
     def _read(self) -> ComsMessage:
-        pass
+        ...
 
     def write(self, m: ParsableComType, suppress_errors: bool = False) -> bool:
         try:
@@ -76,7 +76,7 @@ class BaseComsDriver(ABC):
 
     @abstractmethod
     def _write(self, m: ParsableComType) -> None:
-        pass
+        ...
 
     def register_subscriber(self, sub: ComsSubscriberLike) -> None:
         self.subscrbers.add(sub)
@@ -94,8 +94,8 @@ class ComsDriverReadLooop(Thread):
     def __init__(
         self,
         read: Callable[[], Any],
-        name: Union[str, None] = None,
-        daemon: Union[bool, None] = None,
+        name: Optional[str] = None,
+        daemon: Optional[bool] = None,
     ) -> None:
         super().__init__(name=name, daemon=daemon)
         self._stop_event = Event()
@@ -106,6 +106,6 @@ class ComsDriverReadLooop(Thread):
             self.read()
             self._stop_event.wait(1)
 
-    def stop(self, timeout: Union[float, None] = None) -> None:
+    def stop(self, timeout: Optional[float] = None) -> None:
         self._stop_event.set()
         self.join(timeout=timeout)
